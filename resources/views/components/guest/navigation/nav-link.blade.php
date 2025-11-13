@@ -7,7 +7,7 @@
 @php
     $styles = [
         'mobile' => [
-            'base' => 'block text- px-4 py-3 rounded-lg font-medium transition-colors',
+            'base' => 'block text-lg px-4 py-3 rounded-lg font-medium transition-colors',
             'default' => 'text-grayscale-text-body hover:text-primary-text-link-label hover:bg-primary-surface-default-subtle',
             'active' => 'text-primary-text-link-label font-semibold',
         ],
