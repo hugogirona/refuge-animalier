@@ -7,15 +7,6 @@
 
 @theme {
 
-    /* Custom styles */
-    body {
-        font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
-    }
-
-    h1, h2, h3, h4, h5, h6 {
-        font-family: 'Poppins', ui-sans-serif, system-ui, sans-serif;
-    }
-
     /* Colors : Primitives */
 
     --colors-red-50: #fef2f2;
@@ -317,7 +308,7 @@
     --color-primary-border-default-dark: var(--colors-orange-800);
 
     --color-primary-text-link-light: var(--colors-orange-500);
-    --color-primary-text-link-\-label: var(--colors-orange-600);
+    --color-primary-text-link-label: var(--colors-orange-600);
     --color-primary-text-link-dark: var(--colors-amber-800);
 
 
@@ -396,7 +387,7 @@
     --color-grayscale-text-caption: var(--colors-zinc-400);
     --color-grayscale-text-title: var(--colors-zinc-900);
     --color-grayscale-text-subtitle: var(--colors-zinc-600);
-    --color-grayscale-text-negative: var(--colors-neutral-50);
+    --color-grayscale-negative: var(--colors-neutral-50);
     --color-grayscale-text-body: var(--colors-neutral-800);
     --color-grayscale-text-white: white;
 }
