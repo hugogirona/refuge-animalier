@@ -12,8 +12,8 @@
         </li>
         <li>
             <x-guest.navigation.nav-link
-                href="/animals"
-                :active="request()->routeIs('animals.*')"
+                href="/pets"
+                :active="request()->routeIs('pets.*')"
                 mobile
             >
                 Nos animaux

@@ -11,8 +11,8 @@
         </li>
         <li>
             <x-guest.navigation.footer-link
-                href="{{ route('animals.index') }}"
-                :active="request()->routeIs('animals.*')"
+                href="{{ route('pets.index') }}"
+                :active="request()->routeIs('pets.*')"
             >
                 Nos animaux
             </x-guest.navigation.footer-link>

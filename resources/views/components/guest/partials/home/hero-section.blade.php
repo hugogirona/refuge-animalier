@@ -1,5 +1,5 @@
 <section class="hero-section pt-12 pb-20 px-5 relative overflow-hidden">
-    <div class="container flex flex-col gap-10">
+    <div class="container flex flex-col-reverse gap-10">
         <div class="absolute top-0 right-0">
             <svg width="192" height="74" viewBox="0 0 192 74" xmlns="http://www.w3.org/2000/svg">
                 <path d="M166.925 45.8621C169.098 44.436 169.597 41.3771 168.039 39.0424C166.482 36.7079 163.448 35.9684 161.276 37.3945C159.104 38.8202 158.605 41.8797 160.162 44.2143C161.72 46.549 164.754 47.2878 166.925 45.8621Z" fill="#FFF7ED"/>
@@ -20,31 +20,32 @@
             </svg>
         </div>
 
+        <div class="flex flex-col space-y-6 items-start">
+            <h2 class="text-grayscale-text-title text-4xl flex flex-col"><i class="not-italic">Trouvez votre</i> <i class="text-primary-text-link-light not-italic">compagnon idéal</i></h2>
+            <x-cta-button
+                href="{{ route('pets.index') }}"
+                icon="arrow-right"
+            >
+                Voir tous nos animaux
+            </x-cta-button>
+        </div>
+
         <div>
             <picture>
                 <source
-                    srcset="{{ asset('storage/images/home/hero-dog@x1.webp') }} 1x,
-                            {{ asset('storage/images/home/hero-dog@x2.webp') }} 2x,
-                            {{ asset('storage/images/home/hero-dog@x3.webp') }} 3x"
+                    srcset="{{ asset('storage/images/home/hero-dog_1x.webp') }} 1x,
+                            {{ asset('storage/images/home/hero-dog_2x.webp') }} 2x,
+                            {{ asset('storage/images/home/hero-dog_3x.webp') }} 3x"
                     type="image/webp"
                 >
                 <img
-                    src="{{ asset('storage/images/home/hero-dog@x2.webp') }}"
-                    alt="Chien joyeux attendant une famille au refuge"
+                    src="{{ asset('storage/images/home/hero-dog_2x.webp') }}"
+                    alt="Photo d'un chien joyeux attendant une famille au refuge"
                     class="w-full h-auto"
                     loading="eager"
                 >
             </picture>
         </div>
 
-        <div class="flex flex-col space-y-6 items-start">
-            <h2 class="text-grayscale-text-title text-4xl flex flex-col"><i class="not-italic">Trouvez votre</i> <i class="text-primary-text-link-light not-italic">compagnon idéal</i></h2>
-            <x-guest.cta-button
-                href="{{ route('animals.index') }}"
-                icon="arrow-right"
-            >
-                Voir tous nos animaux
-            </x-guest.cta-button>
-        </div>
     </div>
 </section>

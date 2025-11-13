@@ -1,5 +1,5 @@
 <section class="text-center mb-12">
-    <h2 class="text-xl md:text-2xl font-bold mb-6">Nos informations</h2>
+    <h2 class="text-xl md:text-2xl font-bold mb-6 !text-white">Nos informations</h2>
     <ul class="space-y-4 text-neutral-300 flex flex-col items-center">
 
         <x-guest.navigation.footer-info icon="location">
