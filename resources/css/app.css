@@ -1,11 +1,17 @@
 @import 'tailwindcss';
 
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap');
+
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 @source '../**/*.blade.php';
 @source '../**/*.js';
 
 @theme {
+
+    --font-body: 'Inter', ui-sans-serif, system-ui, sans-serif;
+    --font-heading: 'Poppins', ui-sans-serif, system-ui, sans-serif;
+    --background-image-hero: url('../../storage/app/public/images/home/hero-bg_1x.webp');
 
     /* Colors : Primitives */
 
@@ -371,6 +377,20 @@
     --color-success-text-link-\-label: var(--colors-green-700);
     --color-success-text-link-dark: var(--colors-green-800);
 
+    --color-purple-surface-default-subtle: var(--colors-purple-50);
+    --color-purple-surface-default-light: var(--colors-purple-400);
+    --color-purple-surface-default: var(--colors-purple-500);
+    --color-purple-surface-default-dark: var(--colors-purple-700);
+
+    --color-purple-border-default-subtle: var(--colors-purple-200);
+    --color-purple-border-default-light: var(--colors-purple-300);
+    --color-purple-border-default: var(--colors-purple-500);
+    --color-purple-border-default-dark: var(--colors-purple-800);
+
+    --color-purple-text-link-light: var(--colors-purple-500);
+    --color-purple-text-link-\-label: var(--colors-purple-700);
+    --color-purple-text-link-dark: var(--colors-purple-800);
+
 
     --color-grayscale-surface-default-subtle: var(--colors-zinc-50);
     --color-grayscale-surface-default-light: var(--colors-zinc-200);
@@ -390,4 +410,14 @@
     --color-grayscale-negative: var(--colors-neutral-50);
     --color-grayscale-text-body: var(--colors-neutral-800);
     --color-grayscale-text-white: white;
+}
+
+body {
+    font-family: var(--font-body);
+    color: var(--color-grayscale-text-body);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    color: var(--color-grayscale-text-title);
 }
