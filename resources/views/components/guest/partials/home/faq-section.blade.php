@@ -1,4 +1,3 @@
-
 <section class="faq-section py-16 md:py-24 bg-grayscale-negative">
     <div class="container mx-auto px-4 flex justify-center">
         <div class="max-w-4xl flex flex-col items-center justify-center">

@@ -1,7 +1,7 @@
 <button
     @click="menuOpen = !menuOpen"
     :aria-pressed="menuOpen.toString()"
-    class="group inline-flex w-12 h-12 text-slate-800 bg-white text-center items-center justify-center rounded hover:shadow-[0_1px_0_theme(colors.slate.950/.04),0_4px_8px_theme(colors.slate.950/.12),inset_0_-2px_0_theme(colors.slate.950/.04)] transition z-50 relative">
+    class="md:hidden group inline-flex w-12 h-12 text-slate-800 bg-white text-center items-center justify-center rounded hover:shadow-[0_1px_0_theme(colors.slate.950/.04),0_4px_8px_theme(colors.slate.950/.12),inset_0_-2px_0_theme(colors.slate.950/.04)] transition z-50 relative">
     <span class="sr-only">Menu</span>
     <svg class="w-6 h-6 fill-current pointer-events-none" viewBox="0 0 16 16"
          xmlns="http://www.w3.org/2000/svg">

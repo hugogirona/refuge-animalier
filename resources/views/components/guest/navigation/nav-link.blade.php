@@ -12,7 +12,7 @@
             'active' => 'text-primary-text-link-label font-semibold',
         ],
         'desktop' => [
-            'base' => 'text-base inline-flex items-center px-4 py-2 text-sm font-medium transition-colors',
+            'base' => 'text-base inline-flex items-center px-4 py-2 text-sm font-lg transition-colors',
             'default' => 'text-grayscale-text-body hover:text-primary-text-link-label hover:bg-primary-surface-default-subtle',
             'active' => 'text-primary-text-link-label font-semibold',
         ],

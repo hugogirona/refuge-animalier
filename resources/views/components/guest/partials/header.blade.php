@@ -1,6 +1,6 @@
-<header class="fixed w-full top-0 z-50 bg-white border-b border-neutral-100 shadow-sm">
-    <div class="container mx-auto px-4" x-data="{ menuOpen: false }">
-        <div class="flex items-center justify-between h-16">
+<header class="bg-white shadow-sm w-full fixed top-0 z-50" x-data="{ menuOpen: false }">
+    <div class="container mx-auto max-w-7xl px-5">
+        <div class="flex items-center justify-between h-16 md:h-20">
             <!-- Logo -->
             <a href="/" class="flex items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" width="38" height="33" viewBox="0 0 38 33">
@@ -11,33 +11,37 @@
                 <span class="text-md text-neutral-900 ml-2">Les Pattes Heureuses</span>
             </a>
             <!-- Burger Menu Button -->
-            <x-guest.navigation.burger-menu-icon></x-guest.navigation.burger-menu-icon>
-        </div>
+            <x-guest.navigation.burger-menu-icon/>
 
-        <!-- Menu Tel -->
+
+            <!-- Navigation Desktop (cachée sur mobile) -->
+            <x-guest.navigation.navbar-desktop/>
+
+        </div>
+    </div>
+
+    <!-- Menu Mobile (slide-right) -->
+    <div
+        x-show="menuOpen"
+        @click="menuOpen = false"
+        class="fixed top-16 left-0 right-0 bottom-0 z-40 lg:hidden"
+        style="display: none;">
+
         <div
+            @click.stop
             x-show="menuOpen"
-            @click="menuOpen = false"
-            class="fixed top-16 left-0 right-0 bottom-0 z-40"
+            x-transition:enter="transition ease-out duration-300 transform"
+            x-transition:enter-start="translate-x-full"
+            x-transition:enter-end="translate-x-0"
+            x-transition:leave="transition ease-in duration-200 transform"
+            x-transition:leave-start="translate-x-0"
+            x-transition:leave-end="translate-x-full"
+            class="absolute right-0 top-0 h-full w-full bg-white shadow-2xl overflow-y-auto"
             style="display: none;">
 
-            <div
-                @click.stop
-                x-show="menuOpen"
-                x-transition:enter="transition ease-out duration-300 transform"
-                x-transition:enter-start="translate-x-full"
-                x-transition:enter-end="translate-x-0"
-                x-transition:leave="transition ease-in duration-200 transform"
-                x-transition:leave-start="translate-x-0"
-                x-transition:leave-end="translate-x-full"
-                class="absolute right-0 top-0 h-full w-full bg-white shadow-2xl overflow-y-auto"
-                style="display: none;">
-
-                <div class="p-6">
-                    <x-guest.navigation.navbar></x-guest.navigation.navbar>
-                </div>
+            <div class="p-6">
+                <x-guest.navigation.navbar></x-guest.navigation.navbar>
             </div>
         </div>
-
     </div>
 </header>

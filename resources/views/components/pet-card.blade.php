@@ -9,7 +9,17 @@
     'status'
 ])
 
-<article class="bg-white border border-neutral-200 rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+<article class="bg-white border
+                border-neutral-200
+                rounded-xl
+                overflow-hidden
+                shadow
+                hover:shadow-md
+                transition-all
+                duration-200
+                hover:-translate-y-1
+                relative
+                ">
     {{-- Image --}}
     <div class="relative">
         <picture>
@@ -50,13 +60,15 @@
             <span>{{ $trait }}</span>
         </div>
 
-        <x-cta-button
-            href="{{ route('pets.show', ['slug' => $slug]) }}"
-            variant="outline"
-            class="w-full justify-center"
-        >
-            Découvrir {{ $name }}
-        </x-cta-button>
+        <div class="flex justify-end">
+            <x-cta-button variant="secondary" size="sm" icon="arrow-right">
+                Découvrir {{$name}}
+            </x-cta-button>
+        </div>
+        <a class="absolute right-0 top-0 bottom-0 left-0"
+            href="{{route('pets.show')}}">&nbsp;</a>
+
+
     </div>
 </article>
 

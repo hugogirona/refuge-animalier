@@ -1,6 +1,6 @@
-<nav>
-    <h2 class="hidden">Navigation de pied de page</h2>
-    <ul class="flex flex-col items-center space-y-3 text-center">
+<nav class="text-center lg:text-left lg:order-first">
+    <h2 class="text-xl md:text-2xl font-bold mb-6 !text-grayscale-text-disabled">Navigation </h2>
+    <ul class="flex flex-col items-center space-y-3 text-center lg:items-start">
         <li>
             <x-guest.navigation.footer-link
                 href="{{ route('home') }}"

@@ -1,6 +1,6 @@
-<section class="text-center mb-12">
-    <h2 class="text-xl md:text-2xl font-bold mb-6 !text-white">Nos informations</h2>
-    <ul class="space-y-4 text-neutral-300 flex flex-col items-center">
+<section class="text-center lg:text-left">
+    <h2 class="text-xl md:text-2xl font-bold mb-6 !text-grayscale-text-disabled">Nos informations</h2>
+    <ul class="space-y-4 text-neutral-300 flex flex-col items-center lg:items-start">
 
         <x-guest.navigation.footer-info icon="location">
             123 rue des animaux, 1000 Bruxelles
