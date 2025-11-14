@@ -376,6 +376,20 @@
     --color-success-text-link-\-label: var(--colors-green-700);
     --color-success-text-link-dark: var(--colors-green-800);
 
+    --color-purple-surface-default-subtle: var(--colors-purple-50);
+    --color-purple-surface-default-light: var(--colors-purple-400);
+    --color-purple-surface-default: var(--colors-purple-500);
+    --color-purple-surface-default-dark: var(--colors-purple-700);
+
+    --color-purple-border-default-subtle: var(--colors-purple-200);
+    --color-purple-border-default-light: var(--colors-purple-300);
+    --color-purple-border-default: var(--colors-purple-500);
+    --color-purple-border-default-dark: var(--colors-purple-800);
+
+    --color-purple-text-link-light: var(--colors-purple-500);
+    --color-purple-text-link-\-label: var(--colors-purple-700);
+    --color-purple-text-link-dark: var(--colors-purple-800);
+
 
     --color-grayscale-surface-default-subtle: var(--colors-zinc-50);
     --color-grayscale-surface-default-light: var(--colors-zinc-200);

@@ -13,40 +13,43 @@
             vector-effect="non-scaling-stroke"
         />
     </svg>
-    <div class="bg-primary-surface-default-subtle px-5 py-8 flex flex-col items-start space-y-4">
-        <h2 class="text-2xl font-semibold">
-            Les Pattes Heureuses
-        </h2>
+    <div class="bg-primary-surface-default-subtle px-5 py-8 flex justify-center">
+        <div class="max-w-6xl flex flex-col md:flex-row-reverse md:gap-6 items-start space-y-4 md:space-y-0">
 
-        <picture class="w-full">
-            <source
-                srcset="{{ asset('storage/images/home/cat-about_1x.webp') }} 1x,
+            <picture class="w-full md:w-1/2">
+                <source
+                    srcset="{{ asset('storage/images/home/cat-about_1x.webp') }} 1x,
                             {{ asset('storage/images/home/cat-about_2x.webp') }} 2x,
                             {{ asset('storage/images/home/cat-about_3x.webp') }} 3x"
-                type="image/webp"
-            >
-            <img
-                src="{{ asset('storage/images/home/cat-about_2x.webp') }}"
-                alt="Photo d'un petit chat en train de se reposer"
-                class="w-full h-auto block aspect-video object-cover rounded-lg"
-                loading="eager"
-            >
-        </picture>
+                    type="image/webp"
+                >
+                <img
+                    src="{{ asset('storage/images/home/cat-about_2x.webp') }}"
+                    alt="Photo d'un petit chat en train de se reposer"
+                    class="w-full h-auto block aspect-video md:aspect-[4/3] object-cover rounded-lg"
+                    loading="eager"
+                >
+            </picture>
 
-        <div class="flex flex-col space-y-2">
-            <p>
-                Depuis 2018, notre refuge accueille et soigne des animaux abandonnés ou maltraités. Notre mission est de
-                leur offrir une seconde chance et de les accompagner vers une adoption responsable.
-            </p>
-            <p>
-                Chaque animal est suivi par notre équipe de bénévoles passionnés et reçoit tous les soins nécessaires
-                avant son adoption.
-            </p>
+            <div class="flex flex-col items-start space-y-4 md:w-1/2">
+                <h2 class="text-2xl font-semibold">
+                    Les Pattes Heureuses
+                </h2>
+
+                <div class="flex flex-col space-y-2">
+                    <p>
+                        Depuis 2018, notre refuge accueille et soigne des animaux abandonnés ou maltraités. Notre
+                        mission est de leur offrir une seconde chance et de les accompagner vers une adoption responsable.
+                    </p>
+                    <p>
+                        Chaque animal est suivi par notre équipe de bénévoles passionnés et reçoit tous les soins nécessaires avant son adoption.
+                    </p>
+                </div>
+
+                <x-cta-button href="{{ route('about') }}" variant="secondary">
+                    À propos de nous
+                </x-cta-button>
+            </div>
         </div>
-
-        <x-cta-button href="{{ route('about') }}" variant="secondary">
-            À propos de nous
-        </x-cta-button>
     </div>
 </section>
-

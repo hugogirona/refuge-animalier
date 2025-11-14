@@ -1,0 +1,23 @@
+@props(['stats'])
+
+<section class="stats-section py-16 bg-white">
+    <div class="container mx-auto px-4">
+
+        <div class="text-center mb-12">
+            <h2 class="text-2xl font-semibold">
+                Notre impact
+            </h2>
+        </div>
+
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 max-w-5xl mx-auto">
+            @foreach($stats as $stat)
+                <x-stat-card
+                    :number="$stat['number']"
+                    :label="$stat['label']"
+                    :color="$stat['color']"
+                    :iconName="$stat['icon']"
+                />
+            @endforeach
+        </div>
+    </div>
+</section>

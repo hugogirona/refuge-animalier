@@ -35,8 +35,34 @@ Route::get('/', function () {
             'status' =>'Disponible'
         ],
     ];
+    $stats = [
+        [
+            'number' => 127,
+            'label' => 'Adoptions réussies',
+            'color' => 'orange',
+            'icon' => 'heart'
+        ],
+        [
+            'number' => 12,
+            'label' => 'Bénévoles actifs',
+            'color' => 'green',
+            'icon' => 'users'
+        ],
+        [
+            'number' => 23,
+            'label' => 'Animaux au refuge',
+            'color' => 'blue',
+            'icon' => 'paw'
+        ],
+        [
+            'number' => 5,
+            'label' => 'Années d\'existence',
+            'color' => 'purple',
+            'icon' => 'calendar'
+        ],
+    ];
 
-    return view('guest.home', compact('featuredAnimals'));
+    return view('guest.home', compact('featuredAnimals', 'stats'));
 })->name('home');
 
 
