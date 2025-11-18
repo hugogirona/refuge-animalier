@@ -67,7 +67,100 @@ Route::get('/', function () {
 
 
 Route::get('/pets', function () {
-    return view('guest.animals.index');
+
+    $featuredAnimals = [
+        [
+            'name' => 'Moka',
+            'breed' => 'Caniche',
+            'age' => 5,
+            'sex' => 'Mâle',
+            'trait' => 'Affectueux',
+            'image' => 'moka',
+            'slug' => 'moka',
+            'status' =>'Disponible'
+        ],
+        [
+            'name' => 'Luna',
+            'breed' => 'Berger Australien',
+            'age' => 3,
+            'sex' => 'Femelle',
+            'trait' => 'Affectueux',
+            'image' => 'luna',
+            'slug' => 'luna',
+            'status' =>'Indisponible'
+        ],
+        [
+            'name' => 'Rex',
+            'breed' => 'Berger Allemand',
+            'age' => 4,
+            'sex' => 'Mâle',
+            'trait' => 'Joueur',
+            'image' => 'rex',
+            'slug' => 'rex',
+            'status' =>'Disponible'
+        ],
+        [
+            'name' => 'Rex',
+            'breed' => 'Berger Allemand',
+            'age' => 4,
+            'sex' => 'Mâle',
+            'trait' => 'Joueur',
+            'image' => 'rex',
+            'slug' => 'rex',
+            'status' =>'Disponible'
+        ],
+        [
+            'name' => 'Rex',
+            'breed' => 'Berger Allemand',
+            'age' => 4,
+            'sex' => 'Mâle',
+            'trait' => 'Joueur',
+            'image' => 'rex',
+            'slug' => 'rex',
+            'status' =>'Disponible'
+        ],
+        [
+            'name' => 'Rex',
+            'breed' => 'Berger Allemand',
+            'age' => 4,
+            'sex' => 'Mâle',
+            'trait' => 'Joueur',
+            'image' => 'rex',
+            'slug' => 'rex',
+            'status' =>'Disponible'
+        ],
+        [
+            'name' => 'Rex',
+            'breed' => 'Berger Allemand',
+            'age' => 4,
+            'sex' => 'Mâle',
+            'trait' => 'Joueur',
+            'image' => 'rex',
+            'slug' => 'rex',
+            'status' =>'Disponible'
+        ],
+        [
+            'name' => 'Rex',
+            'breed' => 'Berger Allemand',
+            'age' => 4,
+            'sex' => 'Mâle',
+            'trait' => 'Joueur',
+            'image' => 'rex',
+            'slug' => 'rex',
+            'status' =>'Disponible'
+        ],
+        [
+            'name' => 'Rex',
+            'breed' => 'Berger Allemand',
+            'age' => 4,
+            'sex' => 'Mâle',
+            'trait' => 'Joueur',
+            'image' => 'rex',
+            'slug' => 'rex',
+            'status' =>'Disponible'
+        ],
+    ];
+    return view('guest.animals.index', compact('featuredAnimals'));
 })->name('pets.index');
 
 Route::get('/pets/moka', function () {

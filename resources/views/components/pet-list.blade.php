@@ -27,7 +27,7 @@
         </div>
 
 
-        <div class="text-center">
+        <div class="text-center self-end">
             <x-cta-button
                 href="{{ route('pets.index') }}"
                 icon="arrow-right"

@@ -17,9 +17,26 @@
             </x-cta-button>
         </div>
 
-        <!-- Image du chien -->
-        <div class="md:w-1/2 lg:w-3/5">
-            <picture class="flex justify-center lg:justify-end">
+        <!-- Image du chien avec svg blurry -->
+        <div class="md:w-1/2 lg:w-3/5 relative overflow-visible">
+            <svg class="absolute top-0 left-0" xmlns="http://www.w3.org/2000/svg" lenght="auto" viewBox="0 0 803 982" fill="none">
+                <g filter="url(#filter0_f_768_14819)">
+                    <path d="M568.566 458.023C696.42 632.009 641.645 764.92 425.146 767.939C334.634 774.141 252.095 645.444 240.791 480.485C229.486 315.526 293.697 176.772 384.21 170.569C474.723 164.367 557.262 293.064 568.566 458.023Z" fill="url(#paint0_radial_768_14819)" fill-opacity="0.85"/>
+                </g>
+                <defs>
+                    <filter id="filter0_f_768_14819" x="0" y="-69.1455" width="876.121" height="1076.8" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                        <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                        <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+                        <feGaussianBlur stdDeviation="119.75" result="effect1_foregroundBlur_768_14819"/>
+                    </filter>
+                    <radialGradient id="paint0_radial_768_14819" cx="0" cy="0" r="1" gradientTransform="matrix(41.6373 287.23 -184.737 25.4901 411.925 479.511)" gradientUnits="userSpaceOnUse">
+                        <stop offset="0.00173591" stop-color="#FBBF24"/>
+                        <stop offset="1" stop-color="#DCDCDC"/>
+                    </radialGradient>
+                </defs>
+            </svg>
+
+            <picture class="flex  justify-center lg:justify-end">
                 <source
                     srcset="{{ asset('storage/images/home/hero-dog_1x.webp') }} 1x,
                             {{ asset('storage/images/home/hero-dog_2x.webp') }} 2x,
@@ -29,9 +46,10 @@
                 <img
                     src="{{ asset('storage/images/home/hero-dog_2x.webp') }}"
                     alt="Photo d'un chien joyeux attendant une famille au refuge"
-                    class="w-full h-auto max-w-lg md:max-w-xl"
+                    class="w-full h-auto max-w-lg md:max-w-xl z-1"
                     loading="eager"
                 >
+
             </picture>
         </div>
     </div>

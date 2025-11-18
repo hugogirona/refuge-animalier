@@ -1,5 +1,5 @@
 <header class="bg-white shadow-sm w-full fixed top-0 z-50" x-data="{ menuOpen: false }">
-    <div class="container mx-auto max-w-7xl px-5">
+    <div class="container mx-auto max-w-7xl px-5 lg:px-0">
         <div class="flex items-center justify-between h-16 md:h-20">
             <!-- Logo -->
             <a href="/" class="flex items-center">
@@ -16,7 +16,6 @@
 
             <!-- Navigation Desktop (cachée sur mobile) -->
             <x-guest.navigation.navbar-desktop/>
-
         </div>
     </div>
 

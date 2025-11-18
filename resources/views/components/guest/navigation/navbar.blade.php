@@ -13,7 +13,7 @@
         <li>
             <x-guest.navigation.nav-link
                 href="/pets"
-                :active="request()->routeIs('pets.*')"
+                :active="request()->routeIs('pets.index')"
                 mobile
             >
                 Nos animaux
