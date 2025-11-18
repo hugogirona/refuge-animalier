@@ -1,7 +1,7 @@
 @props(['animals'])
 
-<section class="pet-list-section py-8 px-4 bg-white ">
-    <div class="container max-w-6xl mx-auto flex flex-col items-center lg:items-start justify-center ">
+<section class=" max-w-7xl mx-auto py-8 px-4 lg:px-8 bg-white ">
+    <div class="container flex flex-col items-center lg:items-start justify-center ">
         <div class="mb-6 space-y-1">
             <h2 class="text-2xl font-semibold text-center lg:text-left">
                 Ils attendent une famille
@@ -11,7 +11,7 @@
             </p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto mb-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto mb-6">
             @foreach($animals as $animal)
                 <x-pet-card
                     :name="$animal['name']"
@@ -27,14 +27,16 @@
         </div>
 
 
-        <div class="text-center self-end">
-            <x-cta-button
-                href="{{ route('pets.index') }}"
-                icon="arrow-right"
-            >
-                Voir tous nos animaux
-            </x-cta-button>
-        </div>
+        @if(!request()->routeIs('pets.index'))
+            <div class="text-center self-end">
+                <x-cta-button
+                    href="{{ route('pets.index') }}"
+                    icon="arrow-right"
+                >
+                    Voir tous nos animaux
+                </x-cta-button>
+            </div>
+        @endif
 
     </div>
 </section>

@@ -34,6 +34,16 @@ Route::get('/', function () {
             'slug' => 'rex',
             'status' =>'Disponible'
         ],
+        [
+            'name' => 'Rex',
+            'breed' => 'Berger Allemand',
+            'age' => 4,
+            'sex' => 'Mâle',
+            'trait' => 'Joueur',
+            'image' => 'rex',
+            'slug' => 'rex',
+            'status' =>'Disponible'
+        ],
     ];
     $stats = [
         [
@@ -164,7 +174,51 @@ Route::get('/pets', function () {
 })->name('pets.index');
 
 Route::get('/pets/moka', function () {
-    return view('guest.animals.show');
+
+    $featuredAnimals = [
+        [
+            'name' => 'Moka',
+            'breed' => 'Caniche',
+            'age' => 5,
+            'sex' => 'Mâle',
+            'trait' => 'Affectueux',
+            'image' => 'moka',
+            'slug' => 'moka',
+            'status' =>'Disponible'
+        ],
+        [
+            'name' => 'Luna',
+            'breed' => 'Berger Australien',
+            'age' => 3,
+            'sex' => 'Femelle',
+            'trait' => 'Affectueux',
+            'image' => 'luna',
+            'slug' => 'luna',
+            'status' =>'Indisponible'
+        ],
+        [
+            'name' => 'Rex',
+            'breed' => 'Berger Allemand',
+            'age' => 4,
+            'sex' => 'Mâle',
+            'trait' => 'Joueur',
+            'image' => 'rex',
+            'slug' => 'rex',
+            'status' =>'Disponible'
+        ],
+        [
+            'name' => 'Rex',
+            'breed' => 'Berger Allemand',
+            'age' => 4,
+            'sex' => 'Mâle',
+            'trait' => 'Joueur',
+            'image' => 'rex',
+            'slug' => 'rex',
+            'status' =>'Disponible'
+        ],
+    ];
+
+    return view('guest.animals.show', compact('featuredAnimals'));
 })->name('pets.show');
 
 Route::get('/adoption', function () {

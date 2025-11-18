@@ -1,5 +1,5 @@
-<nav class="mt-12 space-y-2" x-data>
-    <h2 class="hidden">Menu de navigation</h2>
+<nav class="mt-12 space-y-2" aria-label="Menu de navigation">
+
     <ul>
         <li>
             <x-guest.navigation.nav-link
