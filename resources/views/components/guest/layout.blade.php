@@ -12,8 +12,6 @@
 </head>
 <body class="bg-white overflow-visible" style="min-height: calc(100vh - 4rem); min-width: 370px">
 
-<h1 class="hidden">{{$title ?? 'Les Pattes Heureuses'}}</h1>
-
 <x-guest.partials.header></x-guest.partials.header>
 
 <main class="pt-20 overflow-visible">
