@@ -1,5 +1,4 @@
-<nav class="hidden md:flex gap-4">
-    <h2 class="sr-only">Menu de navigation</h2>
+<nav class="hidden md:flex gap-4" aria-label="Menu de navigation">
     <ul class="flex items-center space-x-1 lg:space-x-2">
         <li>
             <x-guest.navigation.nav-link

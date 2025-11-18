@@ -31,6 +31,7 @@
         'plus' => '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>',
         'external' => '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>',
         'check' => '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>',
+        'copy' =>' <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>'
     ];
 
     $variantClass = $variants[$variant] ?? $variants['primary'];
@@ -42,7 +43,7 @@
 
 <a
     href="{{ $href }}"
-    {{ $attributes->merge(['class' => "inline-flex items-center gap-2 font-semibold rounded transition-all transform duration-200 {$variantClass} {$sizeClass}"]) }}
+    {{ $attributes->merge(['class' => "inline-flex justify-center items-center gap-2 font-semibold rounded transition-all transform duration-200 {$variantClass} {$sizeClass}"]) }}
     @if($external) target="_blank" rel="noopener noreferrer" @endif
 >
     @if($iconSvg && $iconPosition === 'left')

@@ -14,7 +14,7 @@
 
 <x-guest.partials.header></x-guest.partials.header>
 
-<main class="pt-20 overflow-visible">
+<main class="pt-16 md:pt-20 overflow-visible">
     {{ $slot }}
 </main>
 

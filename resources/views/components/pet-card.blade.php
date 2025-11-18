@@ -43,7 +43,7 @@
     </div>
 
 
-    <div class="p-6 space-y-4">
+    <div class="p-6 space-y-4 flex flex-col">
         <h3 class="text-2xl font-bold text-grayscale-text-body">
             {{ $name }}
         </h3>
@@ -60,11 +60,10 @@
             <span>{{ $trait }}</span>
         </div>
 
-        <div class="flex justify-end">
+
             <x-cta-button variant="secondary" size="sm" icon="arrow-right">
                 Découvrir {{$name}}
             </x-cta-button>
-        </div>
         <a class="absolute right-0 top-0 bottom-0 left-0"
             href="{{route('pets.show')}}">&nbsp;</a>
 
