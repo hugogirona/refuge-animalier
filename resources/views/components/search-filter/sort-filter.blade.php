@@ -25,7 +25,7 @@
                 </option>
             @endforeach
         </select>
-        <svg class="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-neutral-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg class="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-neutral-400 pointer-events-none fill-none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
         </svg>
     </div>
@@ -34,9 +34,9 @@
     @if($showFilterButton)
         <button
             type="button"
-            class="flex-shrink-0 px-4 py-2 border border-amber-500 text-amber-500 rounded-lg font-medium hover:bg-amber-50 transition-colors flex items-center gap-2"
+            class="flex-shrink-0 px-4 py-2 border border-primary-border-default text-primary-text-link-light rounded-lg font-medium hover:bg-primary-surface-default-subtle transition-colors flex items-center gap-2"
         >
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="w-5 h-5 fill-none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/>
             </svg>
             <span class="hidden sm:inline">{{ $filterButtonText }}</span>

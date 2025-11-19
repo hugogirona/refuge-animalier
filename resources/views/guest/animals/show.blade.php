@@ -1,21 +1,29 @@
+@php $status = 'Disponible' @endphp
+
 <x-guest.layout title="Liste des animaux - Moka">
     <!-- BREADCRUMB -->
-    <x-breadcrumb>
-        <x-breadcrumb-item href="{{ route('home') }}">
+    <x-breadcrumb.breadcrumb>
+        <x-breadcrumb.breadcrumb-item href="{{ route('home') }}">
             Accueil
-        </x-breadcrumb-item>
-        <x-breadcrumb-item href="{{ route('pets.index') }}">
+        </x-breadcrumb.breadcrumb-item>
+        <x-breadcrumb.breadcrumb-item href="{{ route('pets.index') }}">
             Liste des animaux
-        </x-breadcrumb-item>
-        <x-breadcrumb-item current data-last>
+        </x-breadcrumb.breadcrumb-item>
+        <x-breadcrumb.breadcrumb-item current data-last>
             Moka
-        </x-breadcrumb-item>
-    </x-breadcrumb>
+        </x-breadcrumb.breadcrumb-item>
+    </x-breadcrumb.breadcrumb>
 
     <div class="container flex justify-between items-center mx-auto px-4 pb-4 max-w-7xl lg:px-8">
-        <h1 class="text-3xl md:text-4xl font-bold mb-2">Moka</h1>
+        <div class="flex items-center gap-4">
+            <h1 class="text-3xl md:text-4xl font-bold mb-2">Moka</h1>
+            <span
+                class="px-3 py-1 {{$status == 'Disponible' ? 'bg-success-surface-default-subtle' : 'bg-warning-surface-default-subtle'}} text-grayscale-text-subtle text-sm font-medium rounded-full shadow-sm">
+            {{$status}}
+        </span>
+        </div>
         <div class="hidden md:block">
-            <x-cta-button variant="secondary">Je veux rencontrer Moka</x-cta-button>
+            <x-cta-button variant="secondary" href="{{route('adoption.create')}}">Je veux rencontrer Moka</x-cta-button>
         </div>
     </div>
 
@@ -73,12 +81,16 @@
         <div class="grid grid-rows-[1fr_auto_auto_auto] space-y-4 pb-8 lg:pb-0">
             <x-guest.partials.pet-show.pet-personality class="min-h-0"/>
             <x-guest.partials.pet-show.pet-story/>
-            <x-cta-button href="/adoption/moka" class="self-center lg:hidden" size="md">Je veux rencontrer Moka</x-cta-button>
+            <div class="lg:hidden md:flex justify-center">
+                <x-cta-button href="{{route('adoption.create')}}" size="md" class="w-full md:w-auto">
+                    Je veux rencontrer Moka
+                </x-cta-button>
+            </div>
             <x-guest.partials.pet-show.share-section/>
         </div>
 
     </div>
 
-    <x-pet-list :animals="$featuredAnimals"/>
+    <x-pet.pet-list :animals="$featuredAnimals"/>
 
 </x-guest.layout>
