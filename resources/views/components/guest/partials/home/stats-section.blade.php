@@ -11,7 +11,7 @@
 
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 max-w-5xl mx-auto">
             @foreach($stats as $stat)
-                <x-stat-card
+                <x-guest.partials.home.stat-card
                     :number="$stat['number']"
                     :label="$stat['label']"
                     :color="$stat['color']"

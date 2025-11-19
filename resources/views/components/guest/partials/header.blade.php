@@ -1,4 +1,4 @@
-<header class="bg-white shadow-sm w-full fixed top-0 z-50" x-data="{ menuOpen: false }">
+<header class="bg-white shadow-sm w-full fixed top-0 z-40" x-data="{ menuOpen: false }">
     <div class="container mx-auto lg:px-8 max-w-7xl px-5">
         <div class="flex items-center justify-between h-16 md:h-20">
             <!-- Logo -->

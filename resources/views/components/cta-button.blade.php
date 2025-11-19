@@ -4,7 +4,8 @@
     'size' => 'md',
     'icon' => null,
     'iconPosition' => 'right',
-    'external' => false
+    'external' => false,
+    'role' => 'cta'
 ])
 
 @php
@@ -40,20 +41,36 @@
 
 @endphp
 
+@if($role == 'button')
+    <button
+        type="submit"
+        {{ $attributes->merge(['class' => "inline-flex justify-center items-center gap-2 font-semibold rounded transition-all transform duration-200 {$variantClass} {$sizeClass}"]) }}
+    >
+        @if($iconSvg && $iconPosition === 'left')
+            {!! $iconSvg !!}
+        @endif
 
-<a
-    href="{{ $href }}"
-    {{ $attributes->merge(['class' => "inline-flex justify-center items-center gap-2 font-semibold rounded transition-all transform duration-200 {$variantClass} {$sizeClass}"]) }}
-    @if($external) target="_blank" rel="noopener noreferrer" @endif
->
-    @if($iconSvg && $iconPosition === 'left')
-        {!! $iconSvg !!}
-    @endif
+        {{ $slot }}
 
-    {{ $slot }}
+        @if($iconSvg && $iconPosition === 'right')
+            {!! $iconSvg !!}
+        @endif
+    </button>
+@else
+    <a
+        href="{{ $href }}"
+        {{ $attributes->merge(['class' => "inline-flex justify-center items-center gap-2 font-semibold rounded transition-all transform duration-200 {$variantClass} {$sizeClass}"]) }}
+        @if($external) target="_blank" rel="noopener noreferrer" @endif
+    >
+        @if($iconSvg && $iconPosition === 'left')
+            {!! $iconSvg !!}
+        @endif
 
-    @if($iconSvg && $iconPosition === 'right')
-        {!! $iconSvg !!}
-    @endif
-</a>
+        {{ $slot }}
+
+        @if($iconSvg && $iconPosition === 'right')
+            {!! $iconSvg !!}
+        @endif
+    </a>
+@endif
 
