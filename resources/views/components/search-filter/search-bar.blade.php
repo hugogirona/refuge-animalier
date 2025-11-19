@@ -27,8 +27,8 @@
 <div {{ $attributes->merge(['class' => 'relative mb-4']) }}>
     {{-- Search Icon --}}
     <svg
-        class="absolute {{ $iconClass }} top-1/2 transform -translate-y-1/2 text-neutral-400 pointer-events-none"
-        fill="none"
+        class="absolute fill-none {{ $iconClass }} top-1/2 transform -translate-y-1/2 text-neutral-400 pointer-events-none"
+
         stroke="currentColor"
         viewBox="0 0 24 24"
     >

@@ -1,0 +1,37 @@
+@theme {
+    --animate-scale-in: scale-in 1s ease-out;
+    --animate-check: check 1s ease-in-out forwards;
+}
+
+@keyframes scale-in {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes check {
+    0% {
+        stroke-dashoffset: 100;
+    }
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+
+/* Classes utilitaires */
+.animate-scale-in {
+    animation: var(--animate-scale-in);
+}
+
+.animate-check {
+    stroke-dasharray: 100;
+    animation: var(--animate-check);
+}
