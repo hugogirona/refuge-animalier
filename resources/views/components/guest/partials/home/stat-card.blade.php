@@ -2,7 +2,7 @@
     'number',
     'label',
     'color' => 'orange',
-    'iconName' => 'heart'
+    'icon_name' => 'heart'
 ])
 
 @php
@@ -41,7 +41,7 @@
     ];
 
     $colorClass = $colors[$color] ?? $colors['orange'];
-    $iconSvg = $icons[$iconName] ?? $icons['heart'];
+    $iconSvg = $icons[$icon_name] ?? $icons['heart'];
 @endphp
 
 <div class="{{ $colorClass['bg'] }} border-2 {{ $colorClass['border'] }} rounded-2xl p-6 md:p-8 text-center space-y-3 hover:shadow-lg transition-shadow">

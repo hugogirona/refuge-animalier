@@ -1,5 +1,5 @@
 @props([
-    'sortOptions' => [
+    'sort_options' => [
         ['value' => 'recent', 'label' => 'Plus récents'],
         ['value' => 'oldest', 'label' => 'Plus anciens'],
         ['value' => 'name_asc', 'label' => 'Nom (A-Z)'],
@@ -7,9 +7,9 @@
         ['value' => 'age_asc', 'label' => 'Âge ▲'],
         ['value' => 'age_desc', 'label' => 'Âge ▼'],
     ],
-    'selectedSort' => 'recent',
-    'showFilterButton' => true,
-    'filterButtonText' => 'Filtres'
+    'selected_sort' => 'recent',
+    'show_filter_button' => true,
+    'filter_button_text' => 'Filtres'
 ])
 
 <div {{ $attributes->merge(['class' => 'flex items-center gap-2']) }}>
@@ -19,8 +19,8 @@
             name="sort"
             class="w-full px-4 py-2 pr-10 border border-neutral-300 rounded-lg appearance-none bg-white text-sm cursor-pointer transition-colors"
         >
-            @foreach($sortOptions as $option)
-                <option value="{{ $option['value'] }}" {{ $selectedSort === $option['value'] ? 'selected' : '' }}>
+            @foreach($sort_options as $option)
+                <option value="{{ $option['value'] }}" {{ $selected_sort === $option['value'] ? 'selected' : '' }}>
                     Trier par: {{ $option['label'] }}
                 </option>
             @endforeach
@@ -31,7 +31,7 @@
     </div>
 
     <!-- Advanced Filters Button -->
-    @if($showFilterButton)
+    @if($show_filter_button)
         <button
             type="button"
             class="flex-shrink-0 px-4 py-2 border border-primary-border-default text-primary-text-link-light rounded-lg font-medium hover:bg-primary-surface-default-subtle transition-colors flex items-center gap-2"
@@ -39,7 +39,7 @@
             <svg class="w-5 h-5 fill-none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/>
             </svg>
-            <span class="hidden sm:inline">{{ $filterButtonText }}</span>
+            <span class="hidden sm:inline">{{ $filter_button_text }}</span>
         </button>
     @endif
 </div>

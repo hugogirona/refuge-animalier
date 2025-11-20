@@ -1,5 +1,5 @@
 <section class="faq-section py-16 md:py-24 bg-grayscale-negative">
-    <div class="container mx-auto px-4 flex justify-center">
+    <div class="container max-w-6xl mx-auto px-5 md:px-8 flex justify-center">
         <div class="max-w-4xl flex flex-col items-center justify-center">
 
             <div class="mb-6 space-y-2 text-center">

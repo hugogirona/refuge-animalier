@@ -1,10 +1,10 @@
 @props([
-    'formId' => 'adoptionForm',
+    'form_id' => 'adoptionForm',
 ])
 
 <div
     class="bg-white border-b border-neutral-200 sticky top-16 md:top-20 z-30"
-    x-data="formProgressBar('{{ $formId }}')"
+    x-data="formProgressBar('{{ $form_id }}')"
     x-init="init()"
 >
     <div class="container mx-auto px-4 py-4">

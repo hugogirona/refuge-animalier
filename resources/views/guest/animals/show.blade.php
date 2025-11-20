@@ -1,7 +1,7 @@
 @php $status = 'Disponible' @endphp
 
 <x-guest.layout title="Liste des animaux - Moka">
-    <!-- BREADCRUMB -->
+
     <x-breadcrumb.breadcrumb>
         <x-breadcrumb.breadcrumb-item href="{{ route('home') }}">
             Accueil
@@ -14,7 +14,7 @@
         </x-breadcrumb.breadcrumb-item>
     </x-breadcrumb.breadcrumb>
 
-    <div class="container flex justify-between items-center mx-auto px-4 pb-4 max-w-7xl lg:px-8">
+    <div class="container flex justify-between items-center mx-auto px-4 pb-4 max-w-6xl lg:px-8">
         <div class="flex items-center gap-4">
             <h1 class="text-3xl md:text-4xl font-bold mb-2">Moka</h1>
             <span
@@ -27,7 +27,7 @@
         </div>
     </div>
 
-    <div class="px-4 lg:px-8 pb-8 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-[minmax(320px,1fr)_2fr] gap-6">
+    <div class="px-4 lg:px-8 pb-8 max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-[minmax(320px,1fr)_2fr] gap-6">
 
         <!-- Colonne de gauche -->
         <div class="flex flex-col gap-4">
@@ -91,6 +91,6 @@
 
     </div>
 
-    <x-pet.pet-list :animals="$featuredAnimals"/>
+    <x-pet.pet-list :pets="$featured_pets"/>
 
 </x-guest.layout>
