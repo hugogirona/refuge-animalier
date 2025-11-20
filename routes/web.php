@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    $featuredAnimals = [
+    $featured_pets = [
         [
             'name' => 'Moka',
             'breed' => 'Caniche',
@@ -23,16 +23,6 @@ Route::get('/', function () {
             'image' => 'luna',
             'slug' => 'luna',
             'status' =>'Indisponible'
-        ],
-        [
-            'name' => 'Rex',
-            'breed' => 'Berger Allemand',
-            'age' => 4,
-            'sex' => 'Mâle',
-            'trait' => 'Joueur',
-            'image' => 'rex',
-            'slug' => 'rex',
-            'status' =>'Disponible'
         ],
         [
             'name' => 'Rex',
@@ -72,13 +62,13 @@ Route::get('/', function () {
         ],
     ];
 
-    return view('guest.home', compact('featuredAnimals', 'stats'));
+    return view('guest.home', compact('featured_pets', 'stats'));
 })->name('home');
 
 
 Route::get('/pets', function () {
 
-    $featuredAnimals = [
+    $featured_pets = [
         [
             'name' => 'Moka',
             'breed' => 'Caniche',
@@ -167,15 +157,15 @@ Route::get('/pets', function () {
             'trait' => 'Joueur',
             'image' => 'rex',
             'slug' => 'rex',
-            'status' =>'Disponible'
+            'status' =>'Indisponible'
         ],
     ];
-    return view('guest.animals.index', compact('featuredAnimals'));
+    return view('guest.animals.index', compact('featured_pets'));
 })->name('pets.index');
 
 Route::get('/pets/moka', function () {
 
-    $featuredAnimals = [
+    $featured_pets = [
         [
             'name' => 'Moka',
             'breed' => 'Caniche',
@@ -206,19 +196,9 @@ Route::get('/pets/moka', function () {
             'slug' => 'rex',
             'status' =>'Disponible'
         ],
-        [
-            'name' => 'Rex',
-            'breed' => 'Berger Allemand',
-            'age' => 4,
-            'sex' => 'Mâle',
-            'trait' => 'Joueur',
-            'image' => 'rex',
-            'slug' => 'rex',
-            'status' =>'Disponible'
-        ],
     ];
 
-    return view('guest.animals.show', compact('featuredAnimals'));
+    return view('guest.animals.show', compact('featured_pets'));
 })->name('pets.show');
 
 Route::get('/adoption', function () {
@@ -230,7 +210,18 @@ Route::get('/adoption/confirmation', function () {
 })->name('adoption.confirmation');
 
 Route::get('/about', function () {
-    return view('guest.pages.about');
+    $team_members = [
+        ['name' => 'Élise Dubois', 'role' => 'Fondatrice', 'image' => 'elise'],
+        ['name' => 'Thomas Martin', 'role' => 'Étudiant vétérinaire', 'image' => 'thomas'],
+        ['name' => 'Sophie Leroux', 'role' => 'Éducatrice canine', 'image' => 'sophie'],
+        ['name' => 'Marc Durand', 'role' => 'Retraité', 'image' => 'marc'],
+        ['name' => 'Julie Bernard', 'role' => 'Toiletteuse', 'image' => 'julie'],
+        ['name' => 'David Petit', 'role' => 'Photographe', 'image' => 'david'],
+        ['name' => 'Lucas Moreau', 'role' => 'Étudiant', 'image' => 'lucas'],
+        ['name' => 'Emma Rousseau', 'role' => 'Enseignante', 'image' => 'emma'],
+    ];
+
+    return view('guest.pages.about', compact('team_members'));
 })->name('about');
 
 Route::get('/contact', function () {

@@ -1,12 +1,12 @@
 document.addEventListener('alpine:init', () => {
-    Alpine.data('formProgressBar', (formId) => ({
+    Alpine.data('formProgressBar', (form_id) => ({
         progress: 0,
 
         init() {
             this.calculateProgress();
 
             // Écouter les changements dans le formulaire
-            const form = document.getElementById(formId);
+            const form = document.getElementById(form_id);
             if (form) {
                 form.addEventListener('input', () => {
                     this.calculateProgress();
@@ -18,7 +18,7 @@ document.addEventListener('alpine:init', () => {
         },
 
         calculateProgress() {
-            const form = document.getElementById(formId);
+            const form = document.getElementById(form_id);
             if (!form) return;
 
             // Récupérer tous les champs requis

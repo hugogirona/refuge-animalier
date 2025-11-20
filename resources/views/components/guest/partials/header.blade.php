@@ -22,6 +22,7 @@
     <!-- Menu Mobile (slide-right) -->
     <div
         x-show="menuOpen"
+        x-effect="document.body.style.overflow = menuOpen ? 'hidden' : ''"
         @click="menuOpen = false"
         class="fixed top-16 left-0 right-0 bottom-0 z-40 lg:hidden"
         style="display: none;">

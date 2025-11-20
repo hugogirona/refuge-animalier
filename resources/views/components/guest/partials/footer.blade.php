@@ -1,5 +1,5 @@
 <footer class="bg-grayscale-text-body text-white py-8 px-5">
-    <div class="container mx-auto px-4">
+    <div class="container mx-auto px-5 md:px-8 max-w-6xl">
         <div class="mb-8 flex justify-center">
             <svg xmlns="http://www.w3.org/2000/svg" width="60" height="52" viewBox="0 0 38 33">
                 <path

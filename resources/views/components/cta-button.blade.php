@@ -3,7 +3,7 @@
     'variant' => 'primary',
     'size' => 'md',
     'icon' => null,
-    'iconPosition' => 'right',
+    'icon_position' => 'right',
     'external' => false,
     'role' => 'cta'
 ])
@@ -46,13 +46,13 @@
         type="submit"
         {{ $attributes->merge(['class' => "inline-flex justify-center items-center gap-2 font-semibold rounded transition-all transform duration-200 {$variantClass} {$sizeClass}"]) }}
     >
-        @if($iconSvg && $iconPosition === 'left')
+        @if($iconSvg && $icon_position === 'left')
             {!! $iconSvg !!}
         @endif
 
         {{ $slot }}
 
-        @if($iconSvg && $iconPosition === 'right')
+        @if($iconSvg && $icon_position === 'right')
             {!! $iconSvg !!}
         @endif
     </button>
@@ -62,13 +62,13 @@
         {{ $attributes->merge(['class' => "inline-flex justify-center items-center gap-2 font-semibold rounded transition-all transform duration-200 {$variantClass} {$sizeClass}"]) }}
         @if($external) target="_blank" rel="noopener noreferrer" @endif
     >
-        @if($iconSvg && $iconPosition === 'left')
+        @if($iconSvg && $icon_position === 'left')
             {!! $iconSvg !!}
         @endif
 
         {{ $slot }}
 
-        @if($iconSvg && $iconPosition === 'right')
+        @if($iconSvg && $icon_position === 'right')
             {!! $iconSvg !!}
         @endif
     </a>
