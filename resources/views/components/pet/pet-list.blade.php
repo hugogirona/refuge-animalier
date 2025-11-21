@@ -1,9 +1,9 @@
 @props(['pets'])
 
-<section class="pet-list-section max-w-6xl mx-auto py-8 px-5 md:px-8 bg-white">
+<section class="pet-list-section max-w-6xl mx-auto py-16 px-5 md:px-8 bg-white">
     <div class="w-full flex flex-col items-center lg:items-start justify-center">
-        <div class="mb-6 space-y-1 w-full">
-            <h2 class="text-2xl md:text-3xl font-semibold text-center lg:text-left">
+        <div class="mb-12 space-y-1 w-full">
+            <h2 class="text-2xl md:text-3xl mb-4 font-semibold text-center lg:text-left">
                 Ils attendent une famille
             </h2>
             <p class="text-lg text-grayscale-text-subtle text-center lg:text-left">

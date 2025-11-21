@@ -25,7 +25,7 @@
             </x-guest.navigation.nav-link>
         </li>
     </ul>
-    <x-cta-button size="sm">
+    <x-cta-button size="sm" href="{{route('contact')}}">
         Nous contacter
     </x-cta-button>
 </nav>

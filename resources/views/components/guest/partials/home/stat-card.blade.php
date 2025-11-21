@@ -44,7 +44,7 @@
     $iconSvg = $icons[$icon_name] ?? $icons['heart'];
 @endphp
 
-<div class="{{ $colorClass['bg'] }} border-2 {{ $colorClass['border'] }} rounded-2xl p-6 md:p-8 text-center space-y-3 hover:shadow-lg transition-shadow">
+<div class="{{ $colorClass['bg'] }} border-2 {{ $colorClass['border'] }} rounded-2xl p-6 md:p-8 text-center space-y-3 hover:shadow transition-shadow">
     {{-- Icon (directement colorée) --}}
     <div class="{{ $colorClass['icon'] }}">
         {!! $iconSvg !!}

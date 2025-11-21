@@ -16,7 +16,7 @@
     $svgContent = $iconEnum?->svg() ?? '';
 @endphp
 
-<div class="bg-white rounded-xl p-6 border border-neutral-200 hover:shadow-lg transition-shadow">
+<div class="bg-white rounded-xl p-6 border border-neutral-200 hover:shadow transition-shadow">
     {{-- Icon --}}
     <div class="w-14 h-14 {{ $bgClass }} rounded-lg flex items-center justify-center mb-4">
         <div class="{{ $textClass }}">

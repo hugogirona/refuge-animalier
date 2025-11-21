@@ -24,7 +24,7 @@
     $iconClass = $iconSizes[$size] ?? $iconSizes['md'];
 @endphp
 
-<div {{ $attributes->merge(['class' => 'relative mb-4']) }}>
+<div {{ $attributes->merge(['class' => 'relative']) }}>
     {{-- Search Icon --}}
     <svg
         class="absolute fill-none {{ $iconClass }} top-1/2 transform -translate-y-1/2 text-neutral-400 pointer-events-none"
