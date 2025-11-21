@@ -15,7 +15,7 @@
         </x-breadcrumb.breadcrumb-item>
     </x-breadcrumb.breadcrumb>
 
-    <div class="mx-auto px-5 py-4 max-w-6xl md:px-8">
+    <div class="mx-auto px-5 py -4 max-w-6xl md:px-8">
         <h1 class="text-3xl md:text-4xl font-bold mb-2">Demande d'adoption pour Moka</h1>
         <p class="text-grayscale-text-subtle" id="animalCount">Caniche mâle de 5 ans</p>
     </div>
