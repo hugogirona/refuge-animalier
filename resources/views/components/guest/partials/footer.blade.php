@@ -31,11 +31,11 @@
                 © {{ date('Y') }} Les Pattes Heureuses. Tous droits réservés.
             </p>
             <div class="flex items-center justify-center gap-2 text-sm md:text-base text-grayscale-negative">
-                <a href="#" class="hover:underline underline-offset-2 transition-colors">
+                <a href="{{route('legal')}}" class="hover:underline underline-offset-2 transition-colors">
                     Mentions légales
                 </a>
                 <span>•</span>
-                <a href="#" class="hover:underline underline-offset-2 transition-colors">
+                <a href="{{route('legal')}}" class="hover:underline underline-offset-2 transition-colors">
                     Politique de confidentialité
                 </a>
             </div>
