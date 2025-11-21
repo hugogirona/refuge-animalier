@@ -10,7 +10,7 @@
     </x-breadcrumb.breadcrumb>
 
 
-    <div class="container mx-auto px-4 pb-4 max-w-6xl lg:px-8">
+    <div class="container mx-auto px-5 py-4 max-w-6xl lg:px-8">
         <h1 class="text-3xl md:text-4xl font-bold mb-2">Nos animaux</h1>
         <p class="text-grayscale-text-subtle" id="animalCount">23 animaux disponibles</p>
     </div>
@@ -22,9 +22,9 @@
 
                 <x-search-filter.search-bar placeholder="Rechercher un animal..."/>
 
-                <x-search-filter.filter-chip/>
+{{--                <x-search-filter.filter-chip/>--}}
 
-                <x-search-filter.sort-filter/>
+{{--                <x-search-filter.sort-filter/>--}}
 
             </div>
         </div>

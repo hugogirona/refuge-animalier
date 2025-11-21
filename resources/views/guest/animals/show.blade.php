@@ -14,7 +14,7 @@
         </x-breadcrumb.breadcrumb-item>
     </x-breadcrumb.breadcrumb>
 
-    <div class="container flex justify-between items-center mx-auto px-4 pb-4 max-w-6xl lg:px-8">
+    <div class="container flex justify-between items-center mx-auto px-5 py-4 max-w-6xl md:px-8">
         <div class="flex items-center gap-4">
             <h1 class="text-3xl md:text-4xl font-bold mb-2">Moka</h1>
             <span
@@ -27,7 +27,7 @@
         </div>
     </div>
 
-    <div class="px-4 lg:px-8 pb-8 max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-[minmax(320px,1fr)_2fr] gap-6">
+    <div class="px-4 lg:px-8 py-8 max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-[minmax(320px,1fr)_2fr] gap-6">
 
         <!-- Colonne de gauche -->
         <div class="flex flex-col gap-4">

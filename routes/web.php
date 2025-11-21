@@ -225,7 +225,30 @@ Route::get('/about', function () {
 })->name('about');
 
 Route::get('/contact', function () {
-    return view('guest.pages.contact');
+    $faqs = [
+        [
+            'question' => 'Comment adopter un animal ?',
+            'answer' => 'Consultez notre page "Nos animaux", choisissez l\'animal qui vous intéresse et remplissez le formulaire de demande d\'adoption. Nous vous recontacterons rapidement pour organiser une rencontre au refuge.'
+        ],
+        [
+            'question' => 'Puis-je visiter le refuge sans rendez-vous ?',
+            'answer' => 'Non, les visites se font uniquement sur rendez-vous pour garantir le bien-être de nos animaux et vous offrir un accueil personnalisé. Contactez-nous par téléphone ou email pour planifier votre visite.'
+        ],
+        [
+            'question' => 'Quels sont les frais d\'adoption ?',
+            'answer' => 'Les frais d\'adoption varient selon l\'animal (espèce, âge, soins reçus). Ils couvrent les frais vétérinaires (vaccins, stérilisation, identification). Nous vous communiquerons le montant exact lors de votre demande.'
+        ],
+        [
+            'question' => 'Comment devenir bénévole ?',
+            'answer' => 'Contactez-nous via ce formulaire en sélectionnant "Devenir bénévole" comme sujet, ou appelez-nous directement. Nous organisons régulièrement des sessions d\'accueil pour les nouveaux bénévoles.'
+        ],
+        [
+            'question' => 'Acceptez-vous les dons ?',
+            'answer' => 'Oui ! Nous acceptons les dons financiers, de nourriture, de jouets, de couvertures, etc. Contactez-nous pour connaître nos besoins actuels. Chaque don, petit ou grand, fait une différence pour nos pensionnaires.'
+        ],
+    ];
+
+    return view('guest.pages.contact', compact('faqs'));
 })->name('contact');
 
 Route::get('/legal', function () {

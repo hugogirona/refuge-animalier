@@ -1,10 +1,10 @@
 @props(['stats'])
 
 <section class="stats-section py-16 bg-white">
-    <div class="container mx-auto px-5 max-w-6xl md:px-8">
+    <div class="mx-auto px-5 max-w-6xl md:px-8">
 
         <div class="text-center mb-12">
-            <h2 class="text-2xl font-semibold">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4">
                 Notre impact
             </h2>
         </div>
