@@ -21,6 +21,7 @@
 <a
     href="{{ $href }}"
     class="{{ $baseClasses }} {{ $active ? $activeClasses : $inactiveClasses }}"
+    wire:navigate.hover
 >
     {{-- Icon --}}
     <div class="w-8 h-8 flex justify-center items-center">

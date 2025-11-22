@@ -2,47 +2,16 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/login', function () {
-    return view('admin.auth.login');
-})->name('login');
+Route::livewire('/admin/login', 'admin::auth.login')->name('admin.login');
+Route::livewire('/admin/forgot-password', 'admin::auth.forgot-password')->name('admin.password.request');
+Route::livewire('/admin/dashboard', 'pages::admin/dashboard.index')->name('dashboard.index');
+Route::livewire('/admin/pets', 'pages::admin/pets.index')->name('admin-pets.index');
+Route::livewire('/admin/pets/moka', 'pages::admin/pets.show')->name('admin-pets.show');
+Route::livewire('/admin/adoptions', 'pages::admin/adoptions.index')->name('adoptions.index');
+Route::livewire('/admin/adoptions/1', 'pages::admin/adoptions.show')->name('adoptions.show');
+Route::livewire('/admin/users', 'pages::admin/users.index')->name('users.index');
+Route::livewire('/admin/users/thomas-martin', 'pages::admin/users.show')->name('users.show');
+Route::livewire('/admin/messages', 'pages::admin/messages.index')->name('messages.index');
+Route::livewire('/admin/settings', 'pages::admin/messages.index')->name('settings.index');
 
-Route::get('/forgot-password', function () {
-    return view('admin.auth.forgot-password');
-})->name('password.request');
-
-Route::get('/admin/dashboard', function () {
-    return view('admin.dashboard');
-})->name('dashboard');
-
-Route::get('/admin/pets', function () {
-    return view('admin.pets.index');
-})->name('admin-pets.index');
-
-Route::get('/admin/pets/moka', function () {
-    return view('admin.pets.show');
-})->name('admin-pets.show');
-
-Route::get('/admin/adoptions', function () {
-    return view('admin.adoptions.index');
-})->name('adoptions.index');
-
-Route::get('/admin/adoptions/1', function () {
-    return view('admin.adoptions.show');
-})->name('adoptions.show');
-
-Route::get('/admin/users', function () {
-    return view('admin.users.index');
-})->name('users.index');
-
-Route::get('/admin/users/thomas-martin', function () {
-    return view('admin.users.show');
-})->name('users.show');
-
-Route::get('/admin/messages', function () {
-    return view('admin.messages.index');
-})->name('messages.index');
-
-Route::get('/admin/settings', function () {
-    return view('admin.settings.index');
-})->name('settings.index');
 

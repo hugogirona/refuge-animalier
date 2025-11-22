@@ -4,7 +4,7 @@
 ])
 
     <!doctype html>
-<html lang="{{ App::getLocale() }}" class="h-full">
+<html lang="{{ App::getLocale() }}" class="h-full scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

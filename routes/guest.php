@@ -63,7 +63,7 @@ $stats = [
 ],
 ];
 
-return view('guest.home', compact('featured_pets', 'stats'));
+return view('pages.guest.home.index', compact('featured_pets', 'stats'));
 })->name('home');
 
 Route::get('/pets', function () {
@@ -160,7 +160,7 @@ $featured_pets = [
 'status' =>'Indisponible'
 ],
 ];
-return view('guest.pets.index', compact('featured_pets'));
+return view('pages.guest.pets.index', compact('featured_pets'));
 })->name('pets.index');
 
 Route::get('/pets/moka', function () {
@@ -198,15 +198,15 @@ $featured_pets = [
 ],
 ];
 
-return view('guest.pets.show', compact('featured_pets'));
+return view('pages.guest.pets.show', compact('featured_pets'));
 })->name('pets.show');
 
 Route::get('/adoption', function () {
-return view('guest.adoption.create');
+return view('pages.guest.adoption.create');
 })->name('adoption.create');
 
 Route::get('/adoption/confirmation', function () {
-return view('guest.adoption.confirmation');
+return view('pages.guest.adoption.confirmation');
 })->name('adoption.confirmation');
 
 Route::get('/about', function () {
@@ -221,7 +221,7 @@ $team_members = [
 ['name' => 'Emma Rousseau', 'role' => 'Enseignante', 'image' => 'emma'],
 ];
 
-return view('guest.pages.about', compact('team_members'));
+return view('pages.guest.about.index', compact('team_members'));
 })->name('about');
 
 Route::get('/contact', function () {
@@ -248,9 +248,9 @@ $faqs = [
 ],
 ];
 
-return view('guest.pages.contact', compact('faqs'));
+return view('pages.guest.contact.index', compact('faqs'));
 })->name('contact');
 
 Route::get('/legal', function () {
-return view('guest.pages.legal');
+return view('pages.guest.legal.index');
 })->name('legal');

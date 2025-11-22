@@ -9,7 +9,7 @@
         {{-- Nom --}}
         <x-form.form-input
             label="Nom complet"
-            name="nom"
+            name="name"
             required
             placeholder="Votre nom"
             error="Ce champ est obligatoire"
@@ -28,7 +28,7 @@
         {{-- Téléphone --}}
         <x-form.form-input
             label="Téléphone"
-            name="telephone"
+            name="phone"
             type="tel"
             placeholder="+32 2 123 45 67"
         />
@@ -36,17 +36,18 @@
         {{-- Sujet --}}
         <x-form.form-select
             label="Sujet"
-            name="sujet"
+            name="subject"
             required
             placeholder="Sélectionnez un sujet"
             :options="[
                                     'adoption' => 'Question sur une adoption',
-                                    'visite' => 'Organiser une visite',
-                                    'benevolat' => 'Devenir bénévole',
-                                    'don' => 'Faire un don',
-                                    'partenariat' => 'Partenariat',
-                                    'autre' => 'Autre'
+                                    'visit' => 'Organiser une visite',
+                                    'volunteering' => 'Devenir bénévole',
+                                    'giveaway' => 'Faire un don',
+                                    'partnership' => 'Partenariat',
+                                    'other' => 'Autre'
                                 ]"
+            :value="request('subject', '')"
             error="Veuillez sélectionner un sujet"
         />
 
