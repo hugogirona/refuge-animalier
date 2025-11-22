@@ -2,8 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::livewire('/admin/login', 'admin::auth.login')->name('login');
-Route::livewire('/admin/forgot-password', 'admin::auth.forgot-password')->name('password.request');
+Route::livewire('/admin/login', 'pages::admin/auth.login')->name('login');
+Route::livewire('/admin/forgot-password', 'pages::admin/auth.forgot-password')->name('password.request');
 Route::livewire('/admin/dashboard', 'pages::admin/dashboard.index')->name('dashboard.index');
 Route::livewire('/admin/pets', 'pages::admin/pets.index')->name('admin-pets.index');
 Route::livewire('/admin/pets/moka', 'pages::admin/pets.show')->name('admin-pets.show');

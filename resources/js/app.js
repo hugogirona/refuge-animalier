@@ -1,10 +1,16 @@
 import './bootstrap';
-import Alpine from 'alpinejs'
-import collapse from '@alpinejs/collapse'
 import './form-progress';
 
-window.Alpine = Alpine
-Alpine.plugin(collapse)
-Alpine.start()
+if (!window.Alpine) {
+    import('alpinejs').then(module => {
+        const Alpine = module.default
+        import('@alpinejs/collapse').then(collapseModule => {
+            window.Alpine = Alpine
+            Alpine.plugin(collapseModule.default)
+            Alpine.start()
+        })
+    })
+}
+
 
 
