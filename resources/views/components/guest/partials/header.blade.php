@@ -11,7 +11,7 @@
                 <span class="text-md text-neutral-900 ml-2">Les Pattes Heureuses</span>
             </a>
             <!-- Burger Menu Button -->
-            <x-guest.navigation.burger-menu-icon/>
+            <x-burger-menu-icon/>
 
 
             <!-- Navigation Desktop (cachée sur mobile) -->

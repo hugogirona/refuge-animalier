@@ -1,4 +1,4 @@
-<x-guest.layout title="Formulaire d'adoption">
+<x-layout type="guest" title="Formulaire d'adoption">
     <!-- BREADCRUMB -->
     <x-breadcrumb.breadcrumb>
         <x-breadcrumb.breadcrumb-item href="{{ route('home') }}">
@@ -30,5 +30,5 @@
         </div>
         <x-guest.partials.adoption.adoption-form/>
     </div>
-</x-guest.layout>
+</x-layout>
 

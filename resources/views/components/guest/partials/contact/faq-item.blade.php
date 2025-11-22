@@ -1,10 +1,11 @@
+
 @props([
     'question',
     'answer',
     'index',
 ])
 
-<div class="faq-item bg-neutral-50 rounded-xl border border-neutral-200 overflow-hidden">
+<div class="bg-neutral-50 rounded-xl border border-neutral-200 overflow-hidden">
     <button
         @click="openFaq = openFaq === {{ $index }} ? null : {{ $index }}"
         class="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-neutral-100 transition-colors"
@@ -12,7 +13,9 @@
     >
         <span class="font-semibold text-grayscale-text-body pr-4">{{ $question }}</span>
         <svg
-            class="faq-icon w-5 h-5 fill-none text-grayscale-text-subtitle transition-transform duration-300 flex-shrink-0"
+
+
+            class="w-5 h-5 text-grayscale-text-subtitle transition-transform duration-300 flex-shrink-0 fill-none"
             :class="{ 'rotate-180': openFaq === {{ $index }} }"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -22,12 +25,14 @@
     </button>
 
     <div
-        class="faq-content px-6 py-4"
         x-show="openFaq === {{ $index }}"
         x-collapse
+        class="px-6"
     >
-        <p class="text-grayscale-text-subtitle leading-relaxed">
-            {{ $answer }}
-        </p>
+        <div class="py-4">
+            <p class="text-grayscale-text-subtitle leading-relaxed">
+                {{ $answer }}
+            </p>
+        </div>
     </div>
 </div>

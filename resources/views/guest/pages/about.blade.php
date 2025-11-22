@@ -1,4 +1,4 @@
-<x-guest.layout title="À Propos">
+<x-layout type="guest" title="À Propos">
 
     <x-breadcrumb.breadcrumb class="!mb-0">
         <x-breadcrumb.breadcrumb-item href="{{ route('home') }}">
@@ -44,5 +44,5 @@
 
     <x-guest.partials.about.about-team :team_members="$team_members"/>
 
-</x-guest.layout>
+</x-layout>
 

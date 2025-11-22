@@ -1,4 +1,4 @@
-<x-guest.layout title="Liste des animaux">
+<x-layout type="guest" title="Liste des animaux">
 
     <x-breadcrumb.breadcrumb>
         <x-breadcrumb.breadcrumb-item href="{{ route('home') }}">
@@ -33,6 +33,6 @@
     <x-pet.pet-list :pets="$featured_pets"/>
 
 
-</x-guest.layout>
+</x-layout>
 
 
