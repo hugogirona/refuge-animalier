@@ -1,4 +1,4 @@
-<x-guest.layout title="Demande d'adoption - Confirmation">
+<x-layout type="guest" title="Demande d'adoption - Confirmation">
 
     <div class="container mx-auto px-5 md:px-8 py-12 md:py-16">
         <div class="max-w-2xl mx-auto">
@@ -122,6 +122,6 @@
         </div>
     </div>
 
-</x-guest.layout>
+</x-layout>
 
 

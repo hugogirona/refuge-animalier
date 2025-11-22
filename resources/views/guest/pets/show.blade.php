@@ -1,6 +1,6 @@
 @php $status = 'Disponible' @endphp
 
-<x-guest.layout title="Liste des animaux - Moka">
+<x-layout type="guest" :title="'Moka'">
 
     <x-breadcrumb.breadcrumb>
         <x-breadcrumb.breadcrumb-item href="{{ route('home') }}">
@@ -93,4 +93,4 @@
 
     <x-pet.pet-list :pets="$featured_pets"/>
 
-</x-guest.layout>
+</x-layout>

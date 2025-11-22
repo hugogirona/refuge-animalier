@@ -1,4 +1,4 @@
-<x-guest.layout>
+<x-layout type="guest" title="Accueil">
     <h1 class="sr-only">Accueil</h1>
 
     <x-guest.partials.home.hero-section/>
@@ -6,4 +6,4 @@
     <x-pet.pet-list :pets="$featured_pets"/>
     <x-guest.partials.home.stats-section :stats="$stats"/>
     <x-guest.partials.home.faq-section/>
-</x-guest.layout>
+</x-layout>

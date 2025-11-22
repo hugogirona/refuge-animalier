@@ -1,4 +1,4 @@
-<x-guest.layout title="Contactez-nous">
+<x-layout type="guest" title="Contactez-nous">
     <x-breadcrumb.breadcrumb>
         <x-breadcrumb.breadcrumb-item href="{{ route('home') }}">
             Accueil
@@ -37,5 +37,5 @@
     <x-guest.partials.contact.faq-section :faqs="$faqs" />
 
 
-</x-guest.layout>
+</x-layout>
 
