@@ -14,10 +14,10 @@
 
             {{-- Dashboard --}}
             <x-admin.navigation.nav-link
-                href="{{ route('dashboard') }}"
+                href="{{ route('dashboard.index') }}"
                 icon="dashboard"
                 label="Dashboard"
-                :active="request()->routeIs('dashboard')"
+                :active="request()->routeIs('dashboard.index')"
             />
 
             {{-- Animaux --}}

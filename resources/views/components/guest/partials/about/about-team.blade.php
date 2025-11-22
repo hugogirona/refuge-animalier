@@ -48,7 +48,7 @@
                     Adopter un animal
                 </x-cta-button>
 
-                <x-cta-button href="#" variant="secondary">
+                <x-cta-button href="{{route('contact', ['subject' => 'volunteering'])}}" variant="secondary">
                     Devenir bénévole
                 </x-cta-button>
             </div>

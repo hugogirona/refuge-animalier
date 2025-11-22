@@ -13,7 +13,7 @@
             </div>
 
             <x-cta-button
-                href="{{ route('contact') }}"
+                href="{{ route('contact') }}#faq-section"
             >
                 Voir notre F.A.Q
             </x-cta-button>

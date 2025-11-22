@@ -4,6 +4,7 @@
     'required' => false,
     'options' => [],
     'placeholder' => 'Sélectionnez une option',
+    'value' => '',
     'error' => '',
 ])
 
@@ -20,8 +21,10 @@
             {{ $attributes }}
         >
             <option value="">{{ $placeholder }}</option>
-            @foreach($options as $value => $label)
-                <option value="{{ $value }}">{{ $label }}</option>
+            @foreach($options as $optionValue => $label)
+                <option value="{{$optionValue}}"
+                    {{ $value === $optionValue ? 'selected' : '' }}
+                >{{ $label }}</option>
             @endforeach
         </select>
         <svg class="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-grayscale-text-caption pointer-events-none fill-none" stroke="currentColor" viewBox="0 0 24 24">

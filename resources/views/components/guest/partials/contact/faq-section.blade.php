@@ -4,7 +4,7 @@
     'faqs' => [],
 ])
 
-<section class="py-16 md:py-20 bg-white">
+<section class="py-16 md:py-20 bg-white" id="faq-section">
     <div class="container mx-auto px-4">
         <div class="max-w-3xl mx-auto">
 
