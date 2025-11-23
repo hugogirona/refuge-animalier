@@ -29,6 +29,7 @@ enum IconType: string
     case LOCK = 'lock';
     case EYE_OPEN = 'eye-open';
     case EYE_CLOSE = 'eye-close';
+    case SHEET = 'sheet';
 
     public function config(): array
     {
@@ -143,6 +144,13 @@ enum IconType: string
                 'text' => 'text-grayscale-text-title',
                 'svg' => '<svg x-show="showPassword" class="w-5 h-5 fill-none" stroke="currentColor" viewBox="0 0 24 24" style="display: none;" ><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029 m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"/></svg>'
             ],
+            self::SHEET => [
+                'bg' => 'bg-success-surface-default-subtle',
+                'text' => 'text-success-text-link-light',
+                'svg' => '<svg class="w-6 h-6 fill-current" viewBox="0 0 16 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 0H2C0.9 0 0.0100002 0.9 0.0100002 2L0 18C0 19.1 0.89 20 1.99 20H14C15.1 20 16 19.1 16 18V6L10 0ZM12 16H4V14H12V16ZM12 12H4V10H12V12ZM9 7V1.5L14.5 7H9Z"/></svg>'
+            ],
+
+
 
 
             // Ajouter new ici

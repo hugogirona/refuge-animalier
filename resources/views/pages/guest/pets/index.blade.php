@@ -12,7 +12,7 @@
 
     <div class="container mx-auto px-5 py-4 max-w-6xl lg:px-8">
         <h1 class="text-3xl md:text-4xl font-bold mb-2">Nos animaux</h1>
-        <p class="text-grayscale-text-subtle" id="animalCount">23 animaux disponibles</p>
+        <p class="text-grayscale-text-subtitle" id="animalCount">23 animaux disponibles</p>
     </div>
 
     <!-- SEARCH & FILTERS BAR (Sticky) -->
