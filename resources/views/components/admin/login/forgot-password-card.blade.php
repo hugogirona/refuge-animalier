@@ -1,0 +1,80 @@
+@props([
+    'title' => 'Espace administration',
+    'subtitle' => 'Les Pattes Heureuses',
+])
+
+
+{{-- Logo & Title --}}
+<div class="text-center mb-8">
+    <div class="flex items-center justify-center mb-4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 38 33">
+            <path
+                d="M18.7451 15.2979C24.1668 15.373 27.5135 18.396 28.7344 20.96C28.7917 21.0812 28.8988 21.2225 29.0107 21.3721C29.1413 21.5446 29.2718 21.7208 29.3809 21.9092C31.5542 25.6627 31.0134 30.0042 28.1748 31.5869C27.6602 31.8737 27.1144 32.0195 26.5518 32.0195C25.2406 32.0195 24.0318 31.2388 22.752 30.4111C21.917 29.8721 21.0533 29.3134 20.0703 28.8877C19.9319 28.841 19.2864 28.7627 18.3877 28.7627C17.6314 28.7627 17.1685 28.818 17.0557 28.8545C16.0488 29.2643 15.1422 29.8121 14.2646 30.3428C12.8845 31.1754 11.6934 31.8944 10.3926 31.8945C9.76162 31.8945 9.15987 31.7174 8.60254 31.3662C7.22315 30.4958 6.41273 28.9698 6.32422 27.0703C6.23984 25.2813 6.81201 23.3521 7.93457 21.6387C8.04163 21.4748 8.16737 21.3242 8.29395 21.1768C8.40091 21.051 8.50196 20.9315 8.54785 20.8398C9.87688 18.1598 13.1981 15.297 18.5361 15.2969L18.7451 15.2979ZM20.2158 19.2031C19.4649 19.2031 18.7931 19.5688 18.374 20.1289C17.955 19.5688 17.2822 19.2031 16.5312 19.2031C15.2577 19.2032 14.2246 20.2406 14.2246 21.5225C14.2246 22.0161 14.3036 22.4724 14.4404 22.8955C15.0959 24.9698 17.1163 26.2105 18.1162 26.5508C18.2573 26.6006 18.4898 26.6006 18.6309 26.5508C19.6308 26.2105 21.6511 24.9699 22.3066 22.8955C22.4435 22.4724 22.5225 22.0161 22.5225 21.5225C22.5224 20.2405 21.4894 19.2032 20.2158 19.2031ZM4.30273 10.6875C6.71458 10.6878 8.60441 13.143 8.60449 16.2773C8.60449 19.4104 6.71473 21.8659 4.30273 21.8662C1.89052 21.8662 0 19.4106 0 16.2773C8.4695e-05 13.1429 1.89057 10.6875 4.30273 10.6875ZM33.3926 10.6875C35.8055 10.6875 37.6952 13.1429 37.6953 16.2773C37.6953 19.4106 35.8044 21.8662 33.3926 21.8662C30.9806 21.8661 29.0908 19.4105 29.0908 16.2773C29.0909 13.1428 30.9795 10.6876 33.3926 10.6875ZM12.8164 0C15.8271 0.000194731 18.2762 3.22549 18.2764 7.18945C18.2764 11.1539 15.8273 14.3787 12.8164 14.3789C9.80628 14.3789 7.35645 11.154 7.35645 7.18945C7.35663 3.22527 9.80639 0 12.8164 0ZM24.4258 0C27.4352 0 29.8856 3.22537 29.8857 7.18945C29.8857 11.154 27.4353 14.3789 24.4258 14.3789C21.4147 14.3786 18.9658 11.1539 18.9658 7.18945C18.966 3.22544 21.4148 0.000267397 24.4258 0Z"
+                fill="#F97316"/>
+        </svg>
+
+    </div>
+    <h1 class="text-3xl font-bold text-grayscale-text-title mb-2">{{ $title }}</h1>
+    <p class="text-grayscale-text-subtitle">{{ $subtitle }}</p>
+</div>
+
+{{-- Card Content --}}
+<div class="bg-white rounded-xl shadow-xl border border-neutral-200 p-8 flex flex-col gap-6">
+    <form method="POST" action="{{ route('login') }}" class="space-y-5" x-data="{ showPassword: false }">
+        @csrf
+        <fieldset class="space-y-6 mb-12">
+            <legend class="font-bold text-2xl text-center text-grayscale-text-subtitle">Mot de passe oublié ?</legend>
+            {{-- Email --}}
+            <x-form.form-input
+                label="Adresse email"
+                name="email"
+                type="email"
+                icon="email"
+                required
+                autocomplete="email"
+                placeholder="votre.email@exemple.com"
+                :value="old('email')"
+            />
+
+        <div class="mt-6 bg-secondary-surface-default-subtle border border-secondary-border-default-subtle rounded-xl p-4">
+            <div class="flex items-start gap-3">
+                <svg class="w-5 h-5 text-secondary-surface-default flex-shrink-0 mt-0.5 fill-current"  viewBox="0 0 24 24">
+                    <path
+                        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                </svg>
+                <p class="text-grayscale-text-body">
+                    Nous vous enverrons un lien de réinitialisation à cette adresse si l’email fourni se trouve dans notre base de donnée.
+                </p>
+            </div>
+        </div>
+
+        </fieldset>
+        {{-- Submit Button --}}
+        <x-cta-button type="submit" class="w-full">Envoyer l'email</x-cta-button>
+
+    </form>
+
+
+    <div class="relative">
+        <div class="absolute inset-0 flex items-center">
+            <div class="w-full border-t border-neutral-200"></div>
+        </div>
+        <div class="relative flex justify-center text-sm">
+            <span class="px-2 bg-white text-grayscale-text-subtitle">ou</span>
+        </div>
+    </div>
+
+    <div class="text-center">
+        <a href="{{ route('home') }}"
+           class="inline-flex items-center gap-2 text-primary-500 hover:text-primary-600 transition-colors text-sm font-medium">
+            <svg class="w-4 h-4 fill-none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+            </svg>
+            Retour au site public
+        </a>
+    </div>
+</div>
+
+
+<?php
