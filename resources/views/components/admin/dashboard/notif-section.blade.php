@@ -42,7 +42,7 @@
 <section class="my-8 px-5 md:px-6">
     <h2 class="text-2xl font-bold mb-6">{{ $title }}</h2>
 
-    <div class="grid lg:grid-cols-2 gap-6">
+    <div class="grid lg:grid-cols-2 gap-4">
         @foreach($notifications as $notification)
             <x-admin.dashboard.notif-card
                 :title="$notification['title']"
