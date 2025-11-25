@@ -13,7 +13,7 @@
     $variants = [
         'primary' => 'text-white bg-primary-surface-default-light hover:bg-primary-surface-default shadow hover:scale-101',
         'secondary' => 'text-primary-text-link-light bg-white hover:bg-primary-surface-default-subtle shadow border-1 border-primary-border-default',
-        'outline' => 'text-primary-500 bg-transparent border-2 border-primary-500 hover:bg-primary-50',
+        'outline' => 'text-secondary-text-link-light bg-transparent border-2 border-secondary-border-default hover:bg-secondary-surface-default-subtle',
         'ghost' => 'text-primary-500 bg-transparent hover:bg-primary-50',
     ];
 

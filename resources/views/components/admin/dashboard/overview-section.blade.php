@@ -46,7 +46,7 @@
             />
         @endforeach
     </div>
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 mt-6">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
         <x-admin.dashboard.chart-card title="Évolution des adoptions" chartId="adoptGraph" showPeriodSelector/>
         <x-admin.dashboard.chart-card title="Répartition par espèce" chartId="speciesGraph"/>
     </div>
