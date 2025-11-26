@@ -8,7 +8,7 @@
     'name' => 'filters'
 ])
 
-<div {{ $attributes->merge(['class' => 'flex justify-start gap-2 overflow-x-auto mb-4 hide-scrollbar pb-2']) }}>
+<div {{ $attributes->merge(['class' => 'flex justify-start gap-2 overflow-x-auto hide-scrollbar']) }}>
     @foreach($filters as $filter)
         <label
             @class([

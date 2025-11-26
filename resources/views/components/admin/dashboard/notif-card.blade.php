@@ -53,7 +53,7 @@
 
 
     <article class="{{ $count ? 'pr-14' : '' }}">
-        <h3 class="text-lg font-bold text-grayscale-text-title mb-2">
+        <h3 class="text-lg font-semibold text-grayscale-text-title mb-2">
             {{ $title }}
         </h3>
 
