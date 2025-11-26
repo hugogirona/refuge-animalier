@@ -1,9 +1,33 @@
-@props(['title', 'subtitle' => null])
+@props([
+    'title',
+    'subtitle' => null,
+    'buttonLabel' => null,
+    'buttonHref' => null,
+    'buttonVariant' => 'primary',
+    'buttonIcon' => null,
+])
 
-<div {{ $attributes->merge(['class' => 'container px-5 py-4 md:px-6']) }}>
-    <h1 class="text-3xl md:text-4xl font-semibold mb-2">{{ $title }}</h1>
+<div {{ $attributes->merge(['class' => 'px-5 py-4 md:px-6 flex items-center gap-4 justify-between flex-wrap']) }}>
 
-    @if($subtitle)
-        <p class="text-grayscale-text-subtitle">{{ $subtitle }}</p>
+    {{-- Title + Subtitle --}}
+    <div class="flex flex-col gap-2 grow">
+        <h1 class="text-3xl md:text-4xl font-semibold">{{ $title }}</h1>
+
+        @if($subtitle)
+            <p class="text-grayscale-text-subtitle">{{ $subtitle }}</p>
+        @endif
+    </div>
+
+    @if($buttonLabel && $buttonHref)
+        <div>
+            <x-cta-button
+                :href="$buttonHref"
+                :variant="$buttonVariant"
+                :icon="$buttonIcon"
+            >
+                {{ $buttonLabel }}
+            </x-cta-button>
+        </div>
     @endif
+
 </div>

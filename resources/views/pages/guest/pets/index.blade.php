@@ -16,9 +16,9 @@
     </div>
 
     <!-- SEARCH & FILTERS BAR (Sticky) -->
-    <div class=" sticky top-16 md:top-20 z-30  bg-white border-b border-neutral-200">
+    <div class=" sticky top-16 md:top-20 z-30 bg-white border-b border-neutral-200">
         <div class="max-w-6xl mx-auto">
-            <div class="mx-auto px-4 md:px-8 py-4">
+            <div class="mx-auto px-4 md:px-8 py-6">
 
                 <x-search-filter.search-bar placeholder="Rechercher un animal..."/>
 

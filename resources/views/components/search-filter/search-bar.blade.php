@@ -44,7 +44,7 @@
         value="{{ $value }}"
         @if($wire) wire:model{{ $wire }} @endif
         {{ $attributes->except('class')->merge([
-            'class' => "w-full {$sizeClass} border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-surface-default focus:border-transparent transition-colors"
+            'class' => "w-full {$sizeClass} bg-white border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-surface-default focus:border-transparent transition-colors"
         ]) }}
     >
 </div>
