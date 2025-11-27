@@ -7,7 +7,7 @@
             Accueil
         </x-breadcrumb.breadcrumb-item>
         <x-breadcrumb.breadcrumb-item href="{{ route('pets.index') }}">
-            Liste des animaux
+            Nos animaux
         </x-breadcrumb.breadcrumb-item>
         <x-breadcrumb.breadcrumb-item current data-last>
             Moka
