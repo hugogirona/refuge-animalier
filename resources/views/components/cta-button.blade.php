@@ -15,6 +15,8 @@
         'secondary' => 'text-primary-text-link-light bg-white hover:bg-primary-surface-default-subtle shadow border-1 border-primary-border-default',
         'outline' => 'text-secondary-text-link-light bg-transparent border-2 border-secondary-border-default hover:bg-secondary-surface-default-subtle',
         'ghost' => 'text-primary-500 bg-transparent hover:bg-primary-50',
+        'success' => 'text-white bg-success-surface-default-light hover:bg-success-surface-default shadow',
+        'error' => 'text-white bg-error-surface-default-light hover:bg-error-surface-default shadow',
     ];
 
     // Sizes

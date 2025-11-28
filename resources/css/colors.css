@@ -390,7 +390,7 @@
     --color-grayscale-border-default-subtle: var(--colors-zinc-300);
 
     --color-grayscale-text-disabled: var(--colors-neutral-300);
-    --color-grayscale-text-caption: var(--colors-zinc-400);
+    --color-grayscale-text-caption: var(--colors-zinc-500);
     --color-grayscale-text-title: var(--colors-zinc-900);
     --color-grayscale-text-subtitle: var(--colors-zinc-600);
     --color-grayscale-negative: var(--colors-neutral-50);

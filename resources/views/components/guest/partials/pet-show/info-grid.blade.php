@@ -1,6 +1,6 @@
 @props(['items' => []])
 
-<div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+<div class="grid grid-cols-1 gap-4">
     @foreach($items as $item)
         <x-guest.partials.pet-show.info-item
             :icon="$item['icon'] ?? 'paw'"
