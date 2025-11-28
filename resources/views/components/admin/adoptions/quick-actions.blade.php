@@ -3,10 +3,10 @@
     'actions' => []
 ])
 
-<section>
+<section class="flex-1">
     <div>
-        <h2 class="text-2xl font-bold mb-6">{{ $title }}</h2>
         <div class="flex flex-col gap-4 bg-white rounded-xl border border-neutral-200 p-6">
+        <h2 class="text-xl font-bold mb-6">{{ $title }}</h2>
             @foreach($actions as $action)
                 <x-cta-button
                     class="grow"
