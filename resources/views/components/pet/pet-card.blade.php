@@ -61,7 +61,7 @@
         </div>
 
 
-            <x-cta-button variant="secondary" size="sm">
+            <x-cta-button variant="secondary" size="sm" class="z-1">
                 Découvrir {{$name}}
             </x-cta-button>
         <a class="absolute right-0 top-0 bottom-0 left-0"

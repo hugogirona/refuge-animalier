@@ -13,7 +13,7 @@
     $iconEnum = IconType::tryFrom($icon);
     $svgContent = $iconEnum?->svg() ?? '';
 
-    $baseClasses = 'sidebar-link flex items-center gap-3 px-4 py-2 rounded-lg transition-colors';
+    $baseClasses = 'md:text-sm sidebar-link flex items-center gap-3 px-4 py-2 rounded-lg transition-colors';
     $activeClasses = 'bg-primary-surface-default-subtle text-primary-text-link-light font-semibold';
     $inactiveClasses = 'text-grayscale-text-title hover:bg-neutral-50';
 @endphp

@@ -11,7 +11,7 @@
 
     {{-- Title + Subtitle --}}
     <div class="flex flex-col gap-2 grow">
-        <h1 class="text-3xl md:text-4xl font-semibold">{{ $title }}</h1>
+        <h1 class="text-2xl md:text-3xl font-semibold">{{ $title }}</h1>
 
         @if($subtitle)
             <p class="text-grayscale-text-subtitle">{{ $subtitle }}</p>
