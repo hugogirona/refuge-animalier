@@ -41,7 +41,7 @@
             <p class="text-base">{{ $sex }}</p>
         </div>
 
-        <x-cta-button variant="secondary" size="sm" class="z-1">
+        <x-cta-button variant="primary" size="sm" class="z-1">
             Voir la fiche complète
         </x-cta-button>
 
