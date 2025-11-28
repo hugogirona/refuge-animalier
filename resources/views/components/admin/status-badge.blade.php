@@ -5,6 +5,8 @@
 
 @php
     $colors = [
+        'primary' => 'bg-primary-surface-default-subtle',
+        'secondary' => 'bg-secondary-surface-default-subtle',
         'success' => 'bg-success-surface-default-subtle',
         'warning' => 'bg-warning-surface-default-subtle',
         'error' => 'bg-error-surface-default-subtle',
@@ -12,6 +14,8 @@
     ];
 
     $dotColors = [
+        'primary' => 'bg-primary-surface-default',
+        'secondary' => 'bg-secondary-surface-default',
         'success' => 'bg-success-surface-default',
         'warning' => 'bg-warning-surface-default',
         'error' => 'bg-error-surface-default',
