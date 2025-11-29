@@ -27,7 +27,7 @@
         x-transition:leave="transition ease-in duration-75"
         x-transition:leave-start="transform opacity-100 scale-100"
         x-transition:leave-end="transform opacity-0 scale-95"
-        class="absolute overflow-hidden right-16 bottom-0 w-48 bg-white rounded-lg shadow-md border border-neutral-200 z-50"
+        class="absolute overflow-hidden right-0 mt-2 w-48 bg-white rounded-lg shadow-md border border-neutral-200 z-50"
         @click.away="open = false"
         style="display: none;"
     >

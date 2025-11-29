@@ -24,12 +24,12 @@ new class extends Component
 
     @foreach($pets as $pet)
         <article class="bg-white rounded-xl border border-neutral-200 p-4 hover:shadow-md transition-shadow cursor-pointer"
-                 x-data="{ checked: false }"
-                 @click="checked = !checked">
+                 x-data="{ checked: false }">
             <div class="flex items-center gap-4">
 
                 {{-- Checkbox --}}
-                    <div class="flex-shrink-0 pt-1">
+
+                    <div class="flex-shrink-0 pt-1" @click="checked = !checked">
                         <input
                             type="checkbox"
                             value="{{ $pet['id'] }}"
@@ -61,11 +61,12 @@ new class extends Component
                         </div>
 
                         {{-- Actions Menu --}}
-                        <button class="flex-shrink-0 text-neutral-400 hover:text-grayscale-text-subtitle p-3 pr-0" @click.stop>
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                                <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"/>
-                            </svg>
-                        </button>
+                        <x-admin.table.action-menu
+                            :viewHref="route('admin-pets.show')"
+                            :editHref="'#'"
+                            deleteAction="alert('Supprimer')"
+                            deleteMessage="Êtes-vous sûr de vouloir supprimer {{ $pet['nom'] }} ?"
+                        />
                     </div>
 
                     {{-- Badges --}}
@@ -84,7 +85,7 @@ new class extends Component
                     </div>
 
                     {{-- Footer --}}
-                    <p class="text-xs text-neutral-500">
+                    <p class="text-xs text-grayscale-text-caption">
                         Arrivé le {{ $pet['date_arrivee'] }} · Par {{ $pet['createur'] }}
                     </p>
                 </div>

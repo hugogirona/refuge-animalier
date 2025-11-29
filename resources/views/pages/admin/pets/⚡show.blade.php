@@ -84,11 +84,6 @@ new class extends Component
         <div class="grid grid-rows-[1fr_auto_auto_auto] space-y-4 pb-8 lg:pb-0">
             <x-guest.partials.pet-show.pet-personality class="min-h-0"/>
             <x-guest.partials.pet-show.pet-story/>
-            <div class="lg:hidden md:flex justify-center">
-                <x-cta-button href="{{route('adoption.create')}}" size="md" class="w-full md:w-auto">
-                    Je veux rencontrer Moka
-                </x-cta-button>
-            </div>
             <x-admin.pets.internal-notes-section/>
         </div>
 

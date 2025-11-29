@@ -105,7 +105,7 @@ new class extends Component {
     >
         {{-- Mobile/Tablet: Cards --}}
         <template x-if="!isDesktop">
-{{--            @livewire('admin.users.users-list', ['users' => $users])--}}
+            @livewire('admin.users.users-list', ['users' => $users])
         </template>
 
         {{-- Desktop: Table --}}
