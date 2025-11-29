@@ -1,4 +1,3 @@
-{{-- components/admin/table/tr.blade.php --}}
 @props([
     'hoverable' => true,
 ])
