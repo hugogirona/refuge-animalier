@@ -14,7 +14,6 @@ new class extends Component
 ?>
 
 <div class="flex flex-col gap-4 mb-12">
-    {{-- Search Bar (non fonctionnelle pour l'instant) --}}
 
     <div class="bg-transparent">
         <div class="lg:max-w-xl mr-auto py-4 flex flex-col gap-3">
