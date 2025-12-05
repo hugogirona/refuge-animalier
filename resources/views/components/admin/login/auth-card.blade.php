@@ -20,7 +20,7 @@
 
 {{-- Card Content --}}
 <div class="bg-white rounded-xl shadow-xl border border-neutral-200 p-8 flex flex-col gap-6">
-    <form method="POST" action="{{ route('login') }}" class="space-y-5" x-data="{ showPassword: false }">
+    <form method="POST" action="{{ route('login.store')}}" class="space-y-5" x-data="{ showPassword: false }">
         @csrf
         <fieldset class="space-y-6 mb-12">
             <legend class="font-bold text-2xl text-center text-grayscale-text-subtitle">Se connecter</legend>
@@ -68,7 +68,7 @@
         </fieldset>
 
         {{-- Submit Button --}}
-        <x-cta-button type="submit" class="w-full">Se connecter</x-cta-button>
+        <x-cta-button role="button" class="w-full">Se connecter</x-cta-button>
 
     </form>
 

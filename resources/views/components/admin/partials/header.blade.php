@@ -29,7 +29,7 @@
 
                 <x-admin.user-menu
                     :userName="auth()->user()->name ?? 'Élise Dubois'"
-                    :userRole="'Administrateur'" {{-- auth()->user()->role === 'admin' ? 'Administrateur' : 'Bénévole' --}}
+                    :userRole=" auth()->user()->role === 'admin' ? 'Administrateur' : 'Bénévole'"
                     :userAvatar="asset('storage/images/team/elise_1x.webp')" {{-- auth()->user()->avatar ?? null --}}
                 />
             </div>
