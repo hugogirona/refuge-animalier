@@ -1,6 +1,6 @@
 @props([
-    'title' => 'Questions fréquentes',
-    'subtitle' => 'Peut-être trouverez-vous votre réponse ici',
+    'title' => null,
+    'subtitle' => null,
     'faqs' => [],
 ])
 
@@ -11,10 +11,10 @@
             {{-- Section Header --}}
             <div class="text-center mb-12">
                 <h2 class="text-3xl md:text-4xl font-bold text-grayscale-text-body mb-4">
-                    {{ $title }}
+                    {{ $title ?? __('guest/contact.faq.title') }}
                 </h2>
                 <p class="text-lg text-grayscale-text-subtitle">
-                    {{ $subtitle }}
+                    {{ $subtitle ?? __('guest/contact.faq.subtitle') }}
                 </p>
             </div>
 

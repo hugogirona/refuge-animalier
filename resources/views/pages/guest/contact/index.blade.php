@@ -1,15 +1,15 @@
-<x-layout type="guest" title="Contactez-nous">
+<x-layout type="guest" :title="__('guest/contact.page_title')">
     <x-breadcrumb.breadcrumb>
         <x-breadcrumb.breadcrumb-item href="{{ route('home') }}">
-            Accueil
+            {{ __('guest/contact.breadcrumb.home') }}
         </x-breadcrumb.breadcrumb-item>
         <x-breadcrumb.breadcrumb-item current data-last>
-            Contact
+            {{ __('guest/contact.breadcrumb.contact') }}
         </x-breadcrumb.breadcrumb-item>
     </x-breadcrumb.breadcrumb>
 
     <div class="container mx-auto px-5 py-4 max-w-6xl md:px-8">
-        <h1 class="text-3xl md:text-4xl font-bold mb-2">Nous contacter</h1>
+        <h1 class="text-3xl md:text-4xl font-bold mb-2">{{ __('guest/contact.heading.title') }}</h1>
     </div>
 
     <div class="bg-white">
@@ -34,8 +34,6 @@
         </div>
     </div>
 
-    <x-guest.partials.contact.faq-section :faqs="$faqs" />
-
+    <x-guest.partials.contact.faq-section :faqs="__('guest/contact.faq.items')" />
 
 </x-layout>
-
