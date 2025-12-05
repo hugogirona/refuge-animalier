@@ -5,10 +5,10 @@
 ])
 
 @php
-    use App\Enums\IconType;
+    use App\Enums\IconTypes;
 
 
-    $iconEnum = IconType::tryFrom($icon) ?? IconType::PAW;
+    $iconEnum = IconTypes::tryFrom($icon) ?? IconTypes::PAW;
     $config = $iconEnum->config();
 @endphp
 

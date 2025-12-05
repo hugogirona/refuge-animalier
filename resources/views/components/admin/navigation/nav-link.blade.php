@@ -8,9 +8,9 @@
 ])
 
 @php
-    use App\Enums\IconType;
+    use App\Enums\IconTypes;
 
-    $iconEnum = IconType::tryFrom($icon);
+    $iconEnum = IconTypes::tryFrom($icon);
     $svgContent = $iconEnum?->svg() ?? '';
 
     $baseClasses = 'md:text-sm sidebar-link flex items-center gap-3 px-4 py-2 rounded-lg transition-colors';

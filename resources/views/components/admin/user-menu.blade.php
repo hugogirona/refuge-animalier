@@ -60,7 +60,7 @@
 
         <div class="border-t border-neutral-200 "></div>
 
-        <form method="POST" action="{{ route('login') }}">
+        <form method="POST" action="{{ route('logout') }}">
             @csrf
             <button type="submit" class="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-error-text-link-light hover:bg-error-surface-default-subtle transition-colors">
                 <svg class="w-5 h-5 fill-none" stroke="currentColor" viewBox="0 0 24 24">

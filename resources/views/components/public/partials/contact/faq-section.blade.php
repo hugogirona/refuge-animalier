@@ -11,16 +11,16 @@
             {{-- Section Header --}}
             <div class="text-center mb-12">
                 <h2 class="text-3xl md:text-4xl font-bold text-grayscale-text-body mb-4">
-                    {{ $title ?? __('guest/contact.faq.title') }}
+                    {{ $title ?? __('public/contact.faq.title') }}
                 </h2>
                 <p class="text-lg text-grayscale-text-subtitle">
-                    {{ $subtitle ?? __('guest/contact.faq.subtitle') }}
+                    {{ $subtitle ?? __('public/contact.faq.subtitle') }}
                 </p>
             </div>
 
             <div class="space-y-4" x-data="{ openFaq: null }">
                 @foreach($faqs as $index => $faq)
-                    <x-guest.partials.contact.faq-item
+                    <x-public.partials.contact.faq-item
                         :index="$index + 1"
                         :question="$faq['question']"
                         :answer="$faq['answer']"

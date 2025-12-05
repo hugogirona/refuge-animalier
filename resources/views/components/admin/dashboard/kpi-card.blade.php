@@ -7,9 +7,9 @@
 ])
 
 @php
-    use App\Enums\IconType;
+    use App\Enums\IconTypes;
 
-    $iconEnum = IconType::tryFrom($icon);
+    $iconEnum = IconTypes::tryFrom($icon);
     $bgClass = $iconEnum?->bg() ?? 'bg-gray-50';
     $textClass = $iconEnum?->text() ?? 'text-gray-500';
     $svgContent = $iconEnum?->svg() ?? '';

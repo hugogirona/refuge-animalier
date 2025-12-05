@@ -17,7 +17,7 @@
                 ];
             @endphp
 
-            <x-guest.partials.pet-show.info-grid :items="$adopterInfo"/>
+            <x-public.partials.pet-show.info-grid :items="$adopterInfo"/>
         </article>
 
         {{-- Situation --}}

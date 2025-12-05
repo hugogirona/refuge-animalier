@@ -57,11 +57,9 @@ class extends Component {
 
         {{-- Sidebar (right) --}}
         <div
-            class="my-8 px-5 md:px-6 gap-4 grid min-[1650px]:gap-6 min-[1150px]:grid-cols-2 min-[1650px]:grid-cols-1">
-
-            <x-admin.dashboard.quick-actions :actions="$actions" />
-
-            <x-admin.dashboard.recent-activity-section />
+            class="my-8 px-5 md:px-6 gap-4 grid min-[1650px]:gap-6 min-[1150px]:grid-cols-2 min-[1650px]:grid-cols-1 min-[1650px]:grid-rows-[repeat(auto-fit,minmax(0,max-content))]">
+            <x-admin.dashboard.quick-actions :actions="$actions"/>
+            <x-admin.dashboard.recent-activity-section/>
         </div>
 
     </div>

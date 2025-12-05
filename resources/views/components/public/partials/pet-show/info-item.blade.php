@@ -5,16 +5,17 @@
 ])
 
 @php
-    use App\Enums\IconType;
+    use App\Enums\IconTypes;
 
 
-    $iconEnum = IconType::tryFrom($icon) ?? IconType::PAW;
+    $iconEnum = IconTypes::tryFrom($icon) ?? IconTypes::PAW;
     $config = $iconEnum->config();
 @endphp
 
 <div class="flex items-center gap-3">
 
-    <div class="w-12 h-12 {{ $config['bg'] }} {{ $config['text'] }} rounded-lg flex items-center justify-center flex-shrink-0">
+    <div
+        class="w-12 h-12 {{ $config['bg'] }} {{ $config['text'] }} rounded-lg flex items-center justify-center flex-shrink-0">
         {!! $config['svg'] !!}
     </div>
 

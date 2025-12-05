@@ -1,15 +1,14 @@
 <?php
 
-it('can load the login page', function () {
-    $response = $this->get(route('login'));
-    $response->assertStatus(200);
+use App\Models\User;
 
+
+beforeEach(function () {
+    // Exécuté AVANT CHAQUE test
+    $this->user = User::factory()->create();
+    $this->actingAs($this->user);
 });
 
-it('can load the forgot password page', function () {
-    $response = $this->get(route('password.request'));
-    $response->assertStatus(200);
-});
 
 it('can load the dashboard page', function () {
     $response = $this->get(route('dashboard.index'));

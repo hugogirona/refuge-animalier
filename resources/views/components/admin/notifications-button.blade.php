@@ -3,13 +3,12 @@
 ])
 
 @php
-    use App\Enums\IconType;
+    use App\Enums\IconTypes;
 
-    $iconEnum = IconType::tryFrom('bell');
+    $iconEnum = IconTypes::tryFrom('bell');
     $svgContent = $iconEnum?->svg() ?? '';
 
 @endphp
-
 
 
 <button class="relative p-2 rounded-lg hover:bg-neutral-100 transition-colors">
