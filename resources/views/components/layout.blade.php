@@ -15,14 +15,21 @@
     @endif
     {{ $head ?? '' }}
 </head>
-<body class="bg-white overflow-visible" x-data="{ menuOpen: false }" x-effect="document.body.style.overflow = menuOpen ? 'hidden' : ''">
+<body class="bg-white overflow-visible" x-data="{ menuOpen: false }"
+      x-effect="document.body.style.overflow = menuOpen ? 'hidden' : ''">
 
-    <x-guest.partials.header></x-guest.partials.header>
+@if(request()->routeIs('login') || request()->routeIs('password.request') )
+    <main>
+        {{ $slot }}
+    </main>
+@else
+    <x-public.partials.header/>
 
     <main class="pt-16 md:pt-20 overflow-visible">
         {{ $slot }}
     </main>
 
-    <x-guest.partials.footer></x-guest.partials.footer>
+    <x-public.partials.footer/>
+@endif
 </body>
 </html>
