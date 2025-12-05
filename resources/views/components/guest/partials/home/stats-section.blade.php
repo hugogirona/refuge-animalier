@@ -5,7 +5,7 @@
 
         <div class="text-center mb-12">
             <h2 class="text-3xl md:text-4xl font-bold mb-4">
-                Notre impact
+                {{ __('guest/home.stats.title') }}
             </h2>
         </div>
 
@@ -13,7 +13,7 @@
             @foreach($stats as $stat)
                 <x-guest.partials.home.stat-card
                     :number="$stat['number']"
-                    :label="$stat['label']"
+                    :label="__($stat['label'])"
                     :color="$stat['color']"
                     :icon_name="$stat['icon']"
                 />

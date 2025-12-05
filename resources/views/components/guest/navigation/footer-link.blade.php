@@ -1,5 +1,6 @@
 @props([
     'href' => '#',
+    'title' => '',
     'active' => false,
 ])
 
@@ -12,6 +13,7 @@
 
 <a
     href="{{ $href }}"
+    title="{{ $title }}"
     {{ $attributes->merge(['class' => $classes]) }}
 >
     {{ $slot }}

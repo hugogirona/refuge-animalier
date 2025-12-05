@@ -1,5 +1,5 @@
 <section class="text-center lg:text-left">
-    <h2 class="text-xl md:text-2xl font-bold mb-6 !text-grayscale-text-disabled">Nos derniers arrivants</h2>
+    <h2 class="text-xl md:text-2xl font-bold mb-6 !text-grayscale-text-disabled">{{ __('guest/footer.latest_arrivals.title') }}</h2>
     <ul class="space-y-4 text-neutral-300 flex flex-col items-center lg:items-start">
 
         <x-guest.navigation.footer-info  href="{{route('pets.show')}}"  title="Vers la page de Moka">

@@ -1,5 +1,5 @@
-<x-layout type="guest" title="Accueil">
-    <h1 class="sr-only">Accueil</h1>
+<x-layout :title="__('guest/home.page_title')">
+    <h1 class="sr-only">{{ __('guest/home.page_title') }}</h1>
 
     <x-guest.partials.home.hero-section/>
     <x-guest.partials.home.about-section/>

@@ -1,25 +1,23 @@
 <section class="hero-section bg-no-repeat bg-[position:center_100%] bg-[length:auto_110%] overflow-auto bg-hero pt-12 pb-20 px-5 md:pt-16 md:pb-24 lg:pt-20 lg:pb-32 mx-auto">
 
-
-
     <div class="container mx-auto max-w-7xl lg:px-8 flex flex-col-reverse md:flex-row md:items-center md:justify-between gap-10 md:gap-12 lg:gap-16">
         <!-- Contenu texte -->
         <div class="flex flex-col space-y-6 items-start md:w-1/2 lg:w-3/5">
             <h1 class="text-grayscale-text-title text-4xl md:text-5xl lg:text-6xl flex flex-col leading-tight">
-                <span class="not-italic">Trouvez votre</span>
-                <span class="text-primary-text-link-light not-italic font-bold">compagnon idéal</span>
+                <span class="not-italic">{{ __('guest/home.hero.title_line1') }}</span>
+                <span class="text-primary-text-link-light not-italic font-bold">{{ __('guest/home.hero.title_line2') }}</span>
             </h1>
             <x-cta-button
                 href="{{ route('pets.index') }}"
                 icon="arrow-right"
             >
-                Voir tous nos animaux
+                {{ __('guest/home.hero.button_text') }}
             </x-cta-button>
         </div>
 
         <!-- Image du chien avec svg blurry -->
         <div class="md:w-1/2 lg:w-3/5 relative overflow-visible">
-            <svg class="absolute top-0 left-0 fill-none" xmlns="http://www.w3.org/2000/svg" lenght="auto" viewBox="0 0 803 982">
+            <svg class="absolute top-0 left-0 fill-none" xmlns="http://www.w3.org/2000/svg" lenght="auto" viewBox="0 0 803 982" aria-hidden="true">
                 <g filter="url(#filter0_f_768_14819)">
                     <path d="M568.566 458.023C696.42 632.009 641.645 764.92 425.146 767.939C334.634 774.141 252.095 645.444 240.791 480.485C229.486 315.526 293.697 176.772 384.21 170.569C474.723 164.367 557.262 293.064 568.566 458.023Z" fill="url(#paint0_radial_768_14819)" fill-opacity="0.85"/>
                 </g>
@@ -36,7 +34,7 @@
                 </defs>
             </svg>
 
-            <picture class="flex  justify-center lg:justify-end">
+            <picture class="flex justify-center lg:justify-end">
                 <source
                     srcset="{{ asset('storage/images/home/hero-dog_1x.webp') }} 1x,
                             {{ asset('storage/images/home/hero-dog_2x.webp') }} 2x,
@@ -45,11 +43,10 @@
                 >
                 <img
                     src="{{ asset('storage/images/home/hero-dog_2x.webp') }}"
-                    alt="Photo d'un chien joyeux attendant une famille au refuge"
+                    alt="{{ __('guest/home.hero.image_alt') }}"
                     class="w-full h-auto max-w-lg md:max-w-xl z-1"
                     loading="eager"
                 >
-
             </picture>
         </div>
     </div>

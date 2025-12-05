@@ -4,10 +4,10 @@
     <div class="w-full flex flex-col items-center lg:items-start justify-center">
         <div class="mb-12 space-y-1 w-full">
             <h2 class="text-2xl md:text-3xl mb-4 font-semibold text-center lg:text-left">
-                Ils attendent une famille
+                {{ __('guest/home.pets.title') }}
             </h2>
             <p class="text-lg text-grayscale-text-subtle text-center lg:text-left">
-                Découvrez quelques-uns de nos pensionnaires
+                {{ __('guest/home.pets.subtitle') }}
             </p>
         </div>
 
@@ -32,7 +32,7 @@
                     href="{{ route('pets.index') }}"
                     icon="arrow-right"
                 >
-                    Voir tous nos animaux
+                    {{ __('guest/home.pets.button_text') }}
                 </x-cta-button>
             </div>
         @endif

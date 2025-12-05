@@ -1,9 +1,9 @@
 @props([
-    'section_title' => 'Notre équipe',
-    'section_subtitle' => 'Des personnes passionnées et dévouées au service des animaux',
+    'section_title' => null,
+    'section_subtitle' => null,
     'team_members' => [],
-    'cta_title' => 'Envie de nous aider ?',
-    'cta_text' => 'Adoptez, devenez bénévole ou soutenez-nous en parlant de nous autour de vous',
+    'cta_title' => null,
+    'cta_text' => null,
 ])
 
 <section class="py-16 md:py-20 bg-grayscale-negative">
@@ -13,10 +13,10 @@
         {{-- Section Header --}}
         <div class="text-center mb-12">
             <h2 class="text-3xl md:text-4xl font-bold mb-4">
-                {{ $section_title }}
+                {{ $section_title ?? __('guest/about.team.section_title') }}
             </h2>
             <p class="text-lg md:text-xl text-grayscale-text-subtitle max-w-3xl mx-auto">
-                {{ $section_subtitle }}
+                {{ $section_subtitle ?? __('guest/about.team.section_subtitle') }}
             </p>
         </div>
 
@@ -34,26 +34,24 @@
         @endif
 
         {{-- CTA Section --}}
-        <article
-            class="bg-secondary-surface-default-subtle border border-secondary-border-default-subtle rounded-xl p-8 md:p-12 text-center">
+        <article class="bg-secondary-surface-default-subtle border border-secondary-border-default-subtle rounded-xl p-8 md:p-12 text-center">
             <h3 class="text-xl md:text-2xl font-bold mb-4">
-                {{ $cta_title }}
+                {{ $cta_title ?? __('guest/about.team.cta.title') }}
             </h3>
             <p class="text-lg text-grayscale-text-subtitle mb-8 max-w-2xl mx-auto">
-                {{ $cta_text }}
+                {{ $cta_text ?? __('guest/about.team.cta.text') }}
             </p>
 
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
                 <x-cta-button href="{{ route('pets.index') }}">
-                    Adopter un animal
+                    {{ __('guest/about.team.cta.adopt_button') }}
                 </x-cta-button>
 
-                <x-cta-button href="{{route('contact', ['subject' => 'volunteering'])}}" variant="secondary">
-                    Devenir bénévole
+                <x-cta-button href="{{ route('contact', ['subject' => 'volunteering']) }}" variant="secondary">
+                    {{ __('guest/about.team.cta.volunteer_button') }}
                 </x-cta-button>
             </div>
         </article>
 
     </div>
 </section>
-

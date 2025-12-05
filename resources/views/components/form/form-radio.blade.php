@@ -1,4 +1,3 @@
-{{-- components/form-radio.blade.php --}}
 @props([
     'label',
     'name',

@@ -4,21 +4,20 @@
 
             <div class="mb-6 space-y-2 text-center">
                 <h2 class="text-2xl font-semibold">
-                    Vous avez une question ?
+                    {{ __('guest/home.faq.title') }}
                 </h2>
 
                 <p class="text-lg text-grayscale-text-subtle font-light">
-                    La plus part des réponse à vos questions se trouvent dans notre section F.A.Q
+                    {{ __('guest/home.faq.subtitle') }}
                 </p>
             </div>
 
             <x-cta-button
                 href="{{ route('contact') }}#faq-section"
             >
-                Voir notre F.A.Q
+                {{ __('guest/home.faq.button_text') }}
             </x-cta-button>
 
         </div>
     </div>
 </section>
-

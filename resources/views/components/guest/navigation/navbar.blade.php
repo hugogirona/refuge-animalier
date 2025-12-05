@@ -1,40 +1,43 @@
-<nav class="mt-12 space-y-2" aria-label="Menu de navigation">
-
+<nav class="mt-12 space-y-2" aria-label="{{ __('guest/navigation.aria_labels.mobile_menu') }}">
     <ul>
         <li>
             <x-guest.navigation.nav-link
-                href="/"
+                href="{{ route('home') }}"
                 :active="request()->routeIs('home')"
+                :title="__('guest/navigation.titles.home')"
                 mobile
             >
-                Accueil
+                {{ __('guest/navigation.menu.home') }}
             </x-guest.navigation.nav-link>
         </li>
         <li>
             <x-guest.navigation.nav-link
-                href="/pets"
+                href="{{ route('pets.index') }}"
                 :active="request()->routeIs('pets.index')"
+                :title="__('guest/navigation.titles.pets')"
                 mobile
             >
-                Nos animaux
+                {{ __('guest/navigation.menu.pets') }}
             </x-guest.navigation.nav-link>
         </li>
         <li>
             <x-guest.navigation.nav-link
-                href="/about"
+                href="{{ route('about') }}"
                 :active="request()->routeIs('about')"
+                :title="__('guest/navigation.titles.about')"
                 mobile
             >
-                À propos
+                {{ __('guest/navigation.menu.about') }}
             </x-guest.navigation.nav-link>
         </li>
         <li>
             <x-guest.navigation.nav-link
-                href="/contact"
+                href="{{ route('contact') }}"
                 :active="request()->routeIs('contact')"
+                :title="__('guest/navigation.titles.contact')"
                 mobile
             >
-                Contact
+                {{ __('guest/navigation.menu.contact') }}
             </x-guest.navigation.nav-link>
         </li>
     </ul>
