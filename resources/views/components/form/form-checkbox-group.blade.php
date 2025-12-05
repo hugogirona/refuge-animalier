@@ -5,7 +5,7 @@
     'options' => [],
     'required' => false,
     'helper' => '',
-    'columns' => 2,
+    'columns' => 1,
 ])
 
 <fieldset>
@@ -20,7 +20,7 @@
     @endif
 
     {{-- Grid de checkboxes --}}
-    <div class="grid grid-cols-{{ $columns }} md:grid-cols-{{ $columns * 2 }} gap-4">
+    <div class="grid grid-cols-{{ $columns }} gap-4">
         @foreach($options as $value => $optionLabel)
             @php
                 // Générer un ID unique pour chaque checkbox

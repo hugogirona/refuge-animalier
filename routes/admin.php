@@ -12,6 +12,6 @@ Route::livewire('/admin/adoptions/1', 'pages::admin/adoptions.show')->name('adop
 Route::livewire('/admin/users', 'pages::admin/users.index')->name('users.index');
 Route::livewire('/admin/users/thomas-martin', 'pages::admin/users.show')->name('users.show');
 Route::livewire('/admin/messages', 'pages::admin/messages.index')->name('messages.index');
-Route::livewire('/admin/settings', 'pages::admin/messages.index')->name('settings.index');
+Route::livewire('/admin/settings', 'pages::admin/settings.index')->name('settings.index');
 
 
