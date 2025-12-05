@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-enum IconType: string
+enum IconTypes: string
 {
     case CALENDAR = 'calendar';
     case MALE = 'male';

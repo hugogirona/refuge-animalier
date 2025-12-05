@@ -5,10 +5,10 @@
 ])
 
 @php
-    use App\Enums\IconType;
+    use App\Enums\IconTypes;
 
     // Convertir le string en enum
-    $iconEnum = IconType::tryFrom($icon);
+    $iconEnum = IconTypes::tryFrom($icon);
 
     // Récupérer la config
     $bgClass = $iconEnum?->bg() ?? 'bg-gray-50';

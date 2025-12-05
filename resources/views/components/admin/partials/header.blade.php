@@ -28,9 +28,9 @@
                 <x-admin.notifications-button :count="3" />
 
                 <x-admin.user-menu
-                    :userName="auth()->user()->name ?? 'Élise Dubois'"
-                    :userRole=" auth()->user()->role === 'admin' ? 'Administrateur' : 'Bénévole'"
-                    :userAvatar="asset('storage/images/team/elise_1x.webp')" {{-- auth()->user()->avatar ?? null --}}
+                    :userName="auth()->user()->first_name . ' ' . auth()->user()->last_name"
+                    :userRole=" auth()->user()->role === App\Enums\UserRoles::ADMIN->value ? 'Administrateur' : 'Bénévole'"
+                    :userAvatar="auth()->user()->avatar ?? null"
                 />
             </div>
 

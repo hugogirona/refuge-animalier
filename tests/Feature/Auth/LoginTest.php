@@ -54,7 +54,7 @@ it('allows authenticated users to logout', function () {
     $response = $this->actingAs($user)->post('/logout');
 
     $this->assertGuest();
-    $response->assertRedirect('/');
+    $response->assertRedirect('/login');
 });
 
 it('validates required fields on login form', function () {
