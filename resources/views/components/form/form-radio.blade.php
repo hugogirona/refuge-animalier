@@ -20,7 +20,7 @@
     @endif
 
     {{-- Radio buttons --}}
-    <div class="{{ $layout === 'horizontal' ? 'flex gap-4' : 'space-y-2' }}">
+    <div class="{{ $layout === 'horizontal' ? 'flex gap-4' : 'space-y-4' }}">
         @foreach($options as $value => $optionLabel)
             @php
                 // Générer un ID unique pour chaque radio

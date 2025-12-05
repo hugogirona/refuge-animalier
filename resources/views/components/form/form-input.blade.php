@@ -10,6 +10,7 @@
     'icon' => NULL,
     'autocomplete' => null,
     'showPasswordToggle' => false,
+    'wireModel' => null,
 ])
 @php
     use App\Enums\IconType;
@@ -43,6 +44,7 @@ if($icon != NULL || $showPasswordToggle)
             name="{{ $name }}"
             value="{{ $value }}"
             placeholder="{{ $placeholder }}"
+            @if($wireModel) wire:model="{{$wireModel}}" @endif
             @if($required) required @endif
             @if($autocomplete) autocomplete="{{ $autocomplete }}" @endif
             class="w-full {{$icon ? 'pr-4 pl-10' :'px-4'}} py-3 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-border-default focus:border-transparent"

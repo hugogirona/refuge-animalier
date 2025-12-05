@@ -56,17 +56,18 @@
                 />
             </li>
 
+            <li class="border-t border-neutral-200 my-4 py-4">
+                {{-- Paramètres --}}
+                <x-admin.navigation.nav-link
+                    href="{{ route('settings.index') }}"
+                    icon="settings"
+                    label="Paramètres"
+                    :active="request()->routeIs('settings.*')"
+                />
+            </li>
+
         </ul>
-        {{-- Divider --}}
-        <div class="border-t border-neutral-200 mt-4 pt-4">
-            {{-- Paramètres --}}
-            <x-admin.navigation.nav-link
-                href="{{ route('settings.index') }}"
-                icon="settings"
-                label="Paramètres"
-                :active="request()->routeIs('settings.*')"
-            />
-        </div>
+
     </nav>
 </aside>
 
