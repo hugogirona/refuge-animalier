@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\AdoptionRequestStatus;
 use App\Enums\PetSex;
 use App\Enums\PetSpecies;
 use App\Enums\PetStatus;
@@ -10,6 +11,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -85,6 +87,12 @@ class Pet extends Model
     public function adoptionRequests(): HasMany
     {
         return $this->hasMany(AdoptionRequest::class);
+    }
+
+    public function acceptedRequest(): HasOne
+    {
+        return $this->hasOne(AdoptionRequest::class)
+            ->where('status', AdoptionRequestStatus::ACCEPTED);
     }
 
 

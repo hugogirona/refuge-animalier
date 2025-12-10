@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\AdoptionRequestStatus;
 use App\Enums\PetBreeds;
 use App\Enums\PetSex;
 use App\Enums\PetSpecies;
@@ -123,21 +124,28 @@ describe('Pet Model - Relationships', function () {
         expect($pet->adoptionRequests)->toHaveCount(3);
     });
 
-    it('has one adoption when completed', function () {
+    it('has one accepted adoption', function () {
         $pet = Pet::factory()->create();
 
+        // 1. La demande acceptée
         AdoptionRequest::factory()->create([
             'pet_id' => $pet->id,
-            'status' => 'completed',
+            'status' => AdoptionRequestStatus::ACCEPTED,
         ]);
 
+        // 2. Une autre demande en attente (pour prouver que le filtre marche)
         AdoptionRequest::factory()->create([
             'pet_id' => $pet->id,
-            'status' => 'pending',
+            'status' => AdoptionRequestStatus::PENDING,
         ]);
 
-        expect($pet->adoption)->toBeInstanceOf(AdoptionRequest::class)
-            ->and($pet->adoption->status->value)->toBe('completed');
+        // On recharge pour être sûr d'avoir les relations à jour
+        $pet->refresh();
+
+        // Vérifications
+        expect($pet->acceptedRequest)->not->toBeNull()
+            ->toBeInstanceOf(AdoptionRequest::class)
+            ->and($pet->acceptedRequest->status)->toBe(AdoptionRequestStatus::ACCEPTED->value);
     });
 });
 

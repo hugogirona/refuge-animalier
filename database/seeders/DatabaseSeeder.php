@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 use App\Enums\UserRoles;
+use App\Models\AdoptionRequest;
+use App\Models\Pet;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -18,13 +20,18 @@ class DatabaseSeeder extends Seeder
     {
          User::factory(10)->create();
 
-        User::factory()->create([
-            'first_name' => 'Hugo',
-            'last_name' => 'Girona',
-            'role' => UserRoles::VOLUNTEER->value,
-            'phone' => '+33612345678',
-            'email' => 'gironahugo@gmail.com',
-            'password' => bcrypt('change_this'),
-        ]);
+        User::factory()
+            ->has(Pet::factory()
+                ->count(10)
+                ->has(AdoptionRequest::factory()->count(2), 'adoptionRequests'))
+            ->create([
+                'first_name' => 'Hugo',
+                'last_name' => 'Girona',
+                'role' => UserRoles::VOLUNTEER->value,
+                'phone' => '+33612345678',
+                'email' => 'gironahugo@gmail.com',
+                'password' => bcrypt('change_this'),
+            ]);
     }
+
 }
