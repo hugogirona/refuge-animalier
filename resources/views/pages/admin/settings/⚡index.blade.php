@@ -55,25 +55,25 @@ new class extends Component {
         <div class="flex flex-col xl:flex-row-reverse gap-6">
             {{-- Navigation secondaire (sidebar) --}}
             <aside class="w-full xl:w-80 flex-shrink-0">
-                <x-admin.settings.settings-nav currentSection="shelter-info" />
+                <x-admin.partials.settings.settings-nav currentSection="shelter-info" />
             </aside>
 
             {{-- Contenu principal --}}
             <div class="flex-1 space-y-6">
                 <div id="shelter-info" class="scroll-mt-6">
-                    <livewire:admin.settings.shelter-info :shelter="$shelter"/>
+                    <livewire:admin.partials.settings.shelter-info :shelter="$shelter"/>
                 </div>
 
                 <div id="my-profile" class="scroll-mt-6">
-                    <livewire:admin.settings.my-profile-section :user="$user"/>
+                    <livewire:admin.partials.settings.my-profile-section :user="$user"/>
                 </div>
 
                 <div id="notifications" class="scroll-mt-6">
-                    <livewire:admin.settings.notifications-section :notifications="$notifications"/>
+                    <livewire:admin.partials.settings.notifications-section :notifications="$notifications"/>
                 </div>
 
                 <div id="security" class="scroll-mt-6">
-                    <livewire:admin.settings.change-password-section/>
+                    <livewire:admin.partials.settings.change-password-section/>
                 </div>
             </div>
         </div>

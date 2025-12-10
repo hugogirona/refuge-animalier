@@ -93,12 +93,12 @@ new class extends Component {
     >
         {{-- Mobile/Tablet: Cards --}}
         <template x-if="!isDesktop">
-            @livewire('admin.messages.messages-list', ['messages' => $messages])
+            <livewire:admin.partials.messages.messages-list :messages="$messages" />
         </template>
 
         {{-- Desktop: Table --}}
         <template x-if="isDesktop">
-            @livewire('admin.messages.messages-table', ['messages' => $messages])
+            <livewire:admin.partials.messages.messages-table :messages="$messages" />
         </template>
     </div>
 </main>

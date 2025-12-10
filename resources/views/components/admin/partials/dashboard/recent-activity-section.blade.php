@@ -44,7 +44,7 @@
     {{-- Activities List --}}
     <div class="divide-y divide-neutral-100 bg-white rounded-xl border border-neutral-200 p-6">
         @forelse($activities as $activity)
-            <x-admin.dashboard.activity-item
+            <x-admin.partials.dashboard.activity-item
                 :user="$activity['user']"
                 :action="$activity['action']"
                 :target="$activity['target']"

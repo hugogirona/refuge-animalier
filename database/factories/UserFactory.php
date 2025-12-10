@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\EmailFrequency;
 use App\Enums\UserRoles;
 use App\Enums\UserStatus;
 use App\Models\User;
@@ -33,6 +34,8 @@ class UserFactory extends Factory
             'phone' => fake()->phoneNumber(),
             'status' => UserStatus::ACTIVE->value,
             'email' => fake()->unique()->safeEmail(),
+            'email_notifications' => true,
+            'email_frequency' => EmailFrequency::IMMEDIATE->value,
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
@@ -46,6 +49,26 @@ class UserFactory extends Factory
     {
         return $this->state(fn (array $attributes) => [
             'email_verified_at' => null,
+        ]);
+    }
+
+    /**
+     * Indicate that the user is an admin.
+     */
+    public function admin(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'role' => UserRoles::ADMIN->value,
+        ]);
+    }
+
+    /**
+     * Indicate that the user is a volunteer.
+     */
+    public function volunteer(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'role' => UserRoles::VOLUNTEER->value,
         ]);
     }
 }

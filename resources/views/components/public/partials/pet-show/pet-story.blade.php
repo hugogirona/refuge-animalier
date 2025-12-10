@@ -1,5 +1,5 @@
 @props([
-    'story' => 'Moka est arrivé au refuge en juin 2024...',
+    'story' => '',
     'arrivalDate' => '15 juin 2024'
 ])
 

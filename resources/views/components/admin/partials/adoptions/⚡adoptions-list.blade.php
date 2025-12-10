@@ -23,7 +23,7 @@ new class extends Component {
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
     @foreach($adoptions as $adoption)
-        <x-admin.adoptions.adoption-card
+        <x-admin.partials.adoptions.adoption-card
             :petPhoto="$adoption['photo_url']"
             :petName="$adoption['pet_name']"
             :petBreed="$adoption['pet_breed']"

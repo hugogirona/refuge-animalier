@@ -5,12 +5,12 @@
 
     <div class="space-y-4 mb-6">
 
-        <x-admin.pets.internal-notes-item
+        <x-admin.partials.pets.internal-notes-item
             author="Marc Leroy"
             time="Il y a 3 heures"
         >
             Visite du refuge effectuée. Très bon feeling avec Moka.
-        </x-admin.pets.internal-notes-item>
+        </x-admin.partials.pets.internal-notes-item>
     </div>
 
     {{-- Formulaire d'ajout --}}
@@ -18,7 +18,7 @@
         <img
             src="{{asset('storage/images/team/elise_1x.webp')}}"
             alt="avatar de Elise Dubois"
-            class="w-12 h-12 rounded-full flex-shrink-0"
+            class="w-12 h-12 rounded-full shrink-0"
         >
         <div class="flex-1">
             <x-form.form-textarea

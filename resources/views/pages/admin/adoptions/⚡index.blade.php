@@ -103,12 +103,12 @@ new class extends Component {
     >
         {{-- Mobile/Tablet: Cards --}}
         <template x-if="!isDesktop">
-            @livewire('admin.adoptions.adoptions-list', ['adoptions' => $adoptions])
+            <livewire:admin.partials.adoptions.adoptions-list :adoptions="$adoptions" />
         </template>
 
         {{-- Desktop: Table --}}
         <template x-if="isDesktop">
-            @livewire('admin.adoptions.adoptions-table', ['adoptions' => $adoptions])
+            <livewire:admin.partials.adoptions.adoptions-table :adoptions="$adoptions" />
         </template>
     </div>
 </main>

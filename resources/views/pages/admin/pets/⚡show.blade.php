@@ -4,7 +4,14 @@ use Livewire\Component;
 
 new class extends Component
 {
-    //
+    public string $description;
+    public string $story;
+
+    public function mount(): void
+    {
+        $this->description = 'Une belle description';
+        $this->story = 'Moka est arrivé au refuge en juin 2024...';
+    }
 };
 ?>
 
@@ -45,7 +52,7 @@ new class extends Component
                     <img
                         src="{{ asset('storage/images/animals/moka_2x.webp') }}"
                         alt="Moka, caniche de 5 ans"
-                        class="w-full aspect-video lg:aspect-[4/3] object-cover rounded-xl"
+                        class="w-full aspect-video lg:aspect-4/3 object-cover rounded-xl"
                         loading="lazy"
                     >
                 </picture>
@@ -63,7 +70,7 @@ new class extends Component
                     ];
                 @endphp
 
-                <x-guest.partials.pet-show.info-grid :items="$animalInfo"/>
+                <x-public.partials.pet-show.info-grid :items="$animalInfo"/>
             </section>
             <section class="bg-white rounded-xl border border-neutral-200 p-6">
                 <h2 class="text-2xl md:text-3xl font-semibold mb-4">Santé</h2>
@@ -76,15 +83,15 @@ new class extends Component
                     ];
                 @endphp
 
-                <x-guest.partials.pet-show.health-grid :items="$animalHealth"/>
+                <x-public.partials.pet-show.health-grid :items="$animalHealth"/>
             </section>
         </div>
 
         <!-- Colonne de droite -->
         <div class="grid grid-rows-[1fr_auto_auto_auto] space-y-4 pb-8 lg:pb-0">
-            <x-guest.partials.pet-show.pet-personality class="min-h-0"/>
-            <x-guest.partials.pet-show.pet-story/>
-            <x-admin.pets.internal-notes-section/>
+            <x-public.partials.pet-show.pet-personality :description="$description" class="min-h-0"/>
+            <x-public.partials.pet-show.pet-story :story="$story"/>
+            <x-admin.partials.pets.internal-notes-section/>
         </div>
 
     </div>
