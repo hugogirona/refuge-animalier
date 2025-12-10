@@ -7,6 +7,8 @@ new class extends Component {
 
     public function mount(): void
     {
+        abort_unless(auth()->user()->isAdmin(), 403, 'Accès réservé aux administrateurs');
+
         $this->users = [
             [
                 'id' => 1,
