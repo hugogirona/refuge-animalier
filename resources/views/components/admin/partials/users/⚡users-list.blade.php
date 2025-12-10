@@ -27,7 +27,7 @@ new class extends Component
             <div class="flex items-center gap-4">
 
                 {{-- Checkbox --}}
-                <div class="flex-shrink-0 pt-1" @click="checked = !checked">
+                <div class="shrink-0 pt-1" @click="checked = !checked">
                     <input
                         type="checkbox"
                         value="{{ $user['id'] }}"
@@ -37,7 +37,7 @@ new class extends Component
                 </div>
 
                 {{-- Photo --}}
-                <div class="flex-shrink-0">
+                <div class="shrink-0">
                     <img
                         src="{{ $user['photo_url'] }}"
                         alt="{{ $user['first_name'] . ' ' . $user['last_name'] }}"

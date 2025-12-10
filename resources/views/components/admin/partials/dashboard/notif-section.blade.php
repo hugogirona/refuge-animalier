@@ -44,7 +44,7 @@
 
     <div class="grid lg:grid-cols-2 gap-4">
         @foreach($notifications as $notification)
-            <x-admin.dashboard.notif-card
+            <x-admin.partials.dashboard.notif-card
                 :title="$notification['title']"
                 :description="$notification['description']"
                 :linkText="$notification['linkText']"

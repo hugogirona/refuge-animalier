@@ -1,9 +1,9 @@
 <x-layout :title="'Connexion'">
 <div
-    class="min-h-screen flex items-center justify-center px-4 py-12 bg-gradient-to-br from-primary-surface-default-subtle to-white">
+    class="min-h-screen flex items-center justify-center px-4 py-12 bg-linear-to-br from-primary-surface-default-subtle to-white">
     <div class="w-full max-w-md">
-        <x-admin.login.auth-card/>
-        <x-admin.login.login-info/>
+        <x-admin.partials.login.auth-card/>
+        <x-admin.partials.login.login-info/>
     </div>
 </div>
 </x-layout>

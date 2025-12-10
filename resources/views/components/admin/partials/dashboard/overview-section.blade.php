@@ -37,7 +37,7 @@
 
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
         @foreach($kpis as $kpi)
-            <x-admin.dashboard.kpi-card
+            <x-admin.partials.dashboard.kpi-card
                 :icon="$kpi['icon']"
                 :value="$kpi['value']"
                 :label="$kpi['label']"
@@ -47,7 +47,7 @@
         @endforeach
     </div>
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
-        <x-admin.dashboard.chart-card title="Évolution des adoptions" chartId="adoptGraph" showPeriodSelector/>
-        <x-admin.dashboard.chart-card title="Répartition par espèce" chartId="speciesGraph"/>
+        <x-admin.partials.dashboard.chart-card title="Évolution des adoptions" chartId="adoptGraph" showPeriodSelector/>
+        <x-admin.partials.dashboard.chart-card title="Répartition par espèce" chartId="speciesGraph"/>
     </div>
 </section>

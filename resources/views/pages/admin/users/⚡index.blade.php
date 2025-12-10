@@ -105,12 +105,13 @@ new class extends Component {
     >
         {{-- Mobile/Tablet: Cards --}}
         <template x-if="!isDesktop">
-            @livewire('admin.users.users-list', ['users' => $users])
+            <livewire:admin.partials.users.users-list :users="$users" />
+
         </template>
 
         {{-- Desktop: Table --}}
         <template x-if="isDesktop">
-            @livewire('admin.users.users-table', ['users' => $users])
+            <livewire:admin.partials.users.users-table :users="$users" />
         </template>
     </div>
 </main>

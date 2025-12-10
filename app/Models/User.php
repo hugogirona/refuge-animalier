@@ -60,7 +60,7 @@ class User extends Authenticatable
     /**
      * Indicate that the user is an admin.
      */
-    public function is_admin(): bool
+    public function isAdmin(): bool
     {
         return $this->role === UserRoles::ADMIN->value;
     }
@@ -68,7 +68,7 @@ class User extends Authenticatable
     /**
      * Indicate that the user is a volunteer.
      */
-    public function is_volunteer(): bool
+    public function isVolunteer(): bool
     {
         return $this->role === UserRoles::VOLUNTEER->value;
     }

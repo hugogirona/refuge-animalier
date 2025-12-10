@@ -51,15 +51,15 @@ class extends Component {
 
         {{-- Main Content (left) --}}
         <div class="space-y-6">
-            <x-admin.dashboard.notif-section/>
-            <x-admin.dashboard.overview-section/>
+            <x-admin.partials.dashboard.notif-section/>
+            <x-admin.partials.dashboard.overview-section/>
         </div>
 
         {{-- Sidebar (right) --}}
         <div
             class="my-8 px-5 md:px-6 gap-4 grid min-[1650px]:gap-6 min-[1150px]:grid-cols-2 min-[1650px]:grid-cols-1 min-[1650px]:grid-rows-[repeat(auto-fit,minmax(0,max-content))]">
-            <x-admin.dashboard.quick-actions :actions="$actions"/>
-            <x-admin.dashboard.recent-activity-section/>
+            <x-admin.partials.dashboard.quick-actions :actions="$actions"/>
+            <x-admin.partials.dashboard.recent-activity-section/>
         </div>
 
     </div>

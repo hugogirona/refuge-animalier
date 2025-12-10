@@ -4,7 +4,7 @@
 ])
 
 <section {{ $attributes->merge(['class' => 'bg-neutral-50 rounded-xl border border-neutral-200 p-6 flex flex-col']) }}>
-    <h2 class="text-2xl font-semibold mb-4">{{ __('guest/pets.show.personality.title') }}</h2>
+    <h2 class="text-2xl font-semibold mb-4">{{ __('public/pets.show.personality.title') }}</h2>
 
     <!-- Character Tags -->
     @if(!empty($traits))
