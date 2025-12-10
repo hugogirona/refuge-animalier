@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\UserRoles;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -54,6 +55,11 @@ class User extends Authenticatable
             'availability' => 'array',
             'email_notifications' => 'boolean',
         ];
+    }
+
+    public function pets(): HasMany
+    {
+        return $this->hasMany(Pet::class, 'created_by');
     }
 
 
