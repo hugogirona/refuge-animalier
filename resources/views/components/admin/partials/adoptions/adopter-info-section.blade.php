@@ -21,7 +21,7 @@
         </article>
 
         {{-- Situation --}}
-        <x-admin.adoptions.adopter-situation-section
+        <x-admin.partials.adoptions.adopter-situation-section
             :housingType="$adopter['housing_type'] ?? null"
             :hasGarden="$adopter['has_garden'] ?? null"
             :gardenSize="$adopter['garden_size'] ?? null"
@@ -31,7 +31,7 @@
 
 
         {{-- Disponibilités --}}
-        <x-admin.adoptions.adopter-availability-section
+        <x-admin.partials.adoptions.adopter-availability-section
             :preferredDays="$adopter['preferred_days'] ?? null"
             :timeSlots="$adopter['time_slots'] ?? null"
             :contactPreference="$adopter['contact_preference'] ?? null"

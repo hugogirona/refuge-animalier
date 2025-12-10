@@ -90,7 +90,7 @@ new class extends Component {
     <div class="max-w-7xl mx-auto p-5 md:p-6 grid grid-cols-1 lg:grid-cols-[auto_1Fr] gap-4">
         <div class="flex flex-col gap-4 lg:order-2 min-w-sm">
 
-                <x-admin.adoptions.adoption-pet-card
+                <x-admin.partials.adoptions.adoption-pet-card
                     :name="$pet['name']"
                     :breed="$pet['breed']"
                     :age="$pet['age']"
@@ -100,9 +100,9 @@ new class extends Component {
                     :status="$pet['status']"
                 />
 
-            <x-admin.adoptions.quick-actions :actions="$actions"/>
+            <x-admin.partials.adoptions.quick-actions :actions="$actions"/>
         </div>
-        <x-admin.adoptions.adopter-info-section :adopter="$adopter"/>
+        <x-admin.partials.adoptions.adopter-info-section :adopter="$adopter"/>
     </div>
 
 </main>
