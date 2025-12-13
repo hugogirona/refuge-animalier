@@ -39,10 +39,13 @@ class PetFactory extends Factory
                 'Tigré', 'Tricolore', 'Beige', 'Crème', 'Chocolat'
             ]),
             'birth_date' => fake()->dateTimeBetween('-10 years', '-6 months'),
+            'last_vet_visit' => fake()->dateTimeBetween('-6 months, -1 week'),
             'vaccinations' => fake()->boolean(80)
                 ? 'Vaccins à jour (rage, maladie de Carré, parvovirose)'
                 : 'Vaccins incomplets - à mettre à jour',
+            'sterilized' => fake()->boolean(80),
             'personality' => fake()->paragraph(2),
+            'story' => fake()->paragraph(2),
             'status' => PetStatus::AVAILABLE,
             'photo_path' => null,
             'is_published' => false,

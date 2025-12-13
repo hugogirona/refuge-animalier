@@ -7,14 +7,10 @@ use App\Models\AdoptionRequest;
 use App\Models\InternalNote;
 use App\Models\Pet;
 use App\Models\User;
-use Database\Factories\InternalNoteFactory;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    use WithoutModelEvents;
-
     /**
      * Seed the application's database.
      */
@@ -23,7 +19,12 @@ class DatabaseSeeder extends Seeder
          User::factory(10)->create();
 
         User::factory()
-            ->has(Pet::factory()
+            ->has(Pet::factory(
+                [
+                    'is_published' => true,
+                    'published_at' => now(),
+                ]
+            )
                 ->count(10)
                 ->has(AdoptionRequest::factory()->count(2), 'adoptionRequests'))
             ->create([
@@ -35,7 +36,6 @@ class DatabaseSeeder extends Seeder
                 'password' => bcrypt('change_this'),
             ]);
 
-        InternalNote::factory(10)->create();
     }
 
 }

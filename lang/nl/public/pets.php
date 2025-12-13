@@ -40,7 +40,7 @@ return [
     // Pet Show Page
     'show' => [
         'cta_button' => 'Ik wil :name ontmoeten',
-        'image_alt' => ':name, :breed van :age jaar oud',
+        'image_alt' => ':name, :breed van :age',
 
         'info' => [
             'title' => 'Informatie',

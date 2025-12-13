@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
 
 class Pet extends Model
 {
@@ -28,10 +29,14 @@ class Pet extends Model
         'sex',
         'coat_color',
         'birth_date',
+        'last_vet_visit',
         'vaccinations',
+        'sterilized',
         'personality',
+        'story',
         'status',
         'photo_path',
+        'slug',
         'is_published',
         'created_by',
         'published_by',
@@ -235,8 +240,8 @@ class Pet extends Model
         }
 
         return $years === 1
-            ? "1 an et $months mois"
-            : "$years ans et $months mois";
+            ? "1 an"
+            : "$years ans";
     }
 
 
@@ -247,4 +252,27 @@ class Pet extends Model
     {
         return $this->arrived_at?->diffInDays(now());
     }
+
+    // 1. L'Accesseur (Génère la chaîne)
+    public function getSlugAttribute(): string
+    {
+        return $this->id . '-' . Str::slug($this->name);
+    }
+
+    public function getRouteKey(): string
+    {
+        return $this->slug;
+    }
+
+    public function resolveRouteBinding($value, $field = null): Model|Pet|null
+    {
+        $id = (int) $value;
+
+        return $this->query()
+            ->where('id', $id)
+            ->available()
+            ->firstOrFail();
+
+    }
+
 }
