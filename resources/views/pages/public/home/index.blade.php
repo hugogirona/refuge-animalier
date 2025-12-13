@@ -3,7 +3,7 @@
 
     <x-public.partials.home.hero-section/>
     <x-public.partials.home.about-section/>
-    <x-pet.pet-list :pets="$featured_pets"/>
+    <x-pet.pet-list :pets="$random_pets"/>
     <x-public.partials.home.stats-section :stats="$stats"/>
     <x-public.partials.home.faq-section/>
 </x-layout>
