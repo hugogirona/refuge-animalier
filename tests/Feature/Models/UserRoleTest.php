@@ -5,36 +5,38 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-it('returns true when user is admin', function () {
-    $user = User::factory()->admin()->create();
+describe('User Roles Helper Methods', function () {
+    it('returns true when user is admin', function () {
+        $user = User::factory()->admin()->create();
 
-    expect($user->isAdmin())->toBeTrue();
-});
+        expect($user->isAdmin())->toBeTrue();
+    });
 
-it('returns false when user is not admin', function () {
-    $user = User::factory()->volunteer()->create();
+    it('returns false when user is not admin', function () {
+        $user = User::factory()->volunteer()->create();
 
-    expect($user->isAdmin())->toBeFalse();
-});
+        expect($user->isAdmin())->toBeFalse();
+    });
 
-it('returns true when user is volunteer', function () {
-    $user = User::factory()->volunteer()->create();
+    it('returns true when user is volunteer', function () {
+        $user = User::factory()->volunteer()->create();
 
-    expect($user->isVolunteer())->toBeTrue();
-});
+        expect($user->isVolunteer())->toBeTrue();
+    });
 
-it('returns false when user is not volunteer', function () {
-    $user = User::factory()->admin()->create();
+    it('returns false when user is not volunteer', function () {
+        $user = User::factory()->admin()->create();
 
-    expect($user->isVolunteer())->toBeFalse();
-});
+        expect($user->isVolunteer())->toBeFalse();
+    });
 
-it('admin and volunteer are mutually exclusive', function () {
-    $admin = User::factory()->admin()->create();
-    $volunteer = User::factory()->volunteer()->create();
+    it('admin and volunteer are mutually exclusive', function () {
+        $admin = User::factory()->admin()->create();
+        $volunteer = User::factory()->volunteer()->create();
 
-    expect($admin->isAdmin())->toBeTrue()
-        ->and($admin->isVolunteer())->toBeFalse()
-        ->and($volunteer->isVolunteer())->toBeTrue()
-        ->and($volunteer->isAdmin())->toBeFalse();
+        expect($admin->isAdmin())->toBeTrue()
+            ->and($admin->isVolunteer())->toBeFalse()
+            ->and($volunteer->isVolunteer())->toBeTrue()
+            ->and($volunteer->isAdmin())->toBeFalse();
+    });
 });

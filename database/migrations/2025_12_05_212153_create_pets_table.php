@@ -34,11 +34,7 @@ return new class extends Migration
             $table->timestamp('published_at')->nullable();
             $table->date('arrived_at')->nullable();
             $table->timestamps();
-
-            // Indexes
-            $table->index('species');
-            $table->index('status');
-            $table->index('is_published');
+            $table->softDeletes();
         });
     }
 

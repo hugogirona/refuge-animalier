@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\UserRoles;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -56,6 +57,11 @@ class User extends Authenticatable
         ];
     }
 
+    public function pets(): HasMany
+    {
+        return $this->hasMany(Pet::class, 'created_by');
+    }
+
 
     /**
      * Indicate that the user is an admin.
@@ -71,6 +77,11 @@ class User extends Authenticatable
     public function isVolunteer(): bool
     {
         return $this->role === UserRoles::VOLUNTEER->value;
+    }
+
+    public function getFullNameAttribute(): string
+    {
+        return "{$this->first_name} {$this->last_name}";
     }
 
 }
