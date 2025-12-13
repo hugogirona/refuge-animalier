@@ -5,36 +5,48 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-it('denies volunteer from accessing admin-only routes by displaying a 403', function () {
-    $volunteer = User::factory()->volunteer()->create();
+describe('User Policy', function () {
 
-    $response = $this->actingAs($volunteer)->get('/admin/users');
+    it('allows admin to create users', function () {
+        $admin = User::factory()->admin()->create();
 
-    $response->assertStatus(403);
-});
+        expect($admin->can('create', User::class))->toBeTrue();
+    });
 
-it('redirects guest to login', function () {
-    $response = $this->get('/admin/dashboard');
+    it('denies volunteer from creating users', function () {
+        $volunteer = User::factory()->volunteer()->create();
 
-    $response->assertRedirect('/login');
-});
+        expect($volunteer->cannot('create', User::class))->toBeTrue();
+    });
 
-it('allows volunteer to access volunteer routes', function () {
-    $volunteer = User::factory()->volunteer()->create();
+    it('allows admin to view all users', function () {
+        $admin = User::factory()->admin()->create();
 
-    $response = $this->actingAs($volunteer)->get('/admin/dashboard');
+        expect($admin->can('viewAny', User::class))->toBeTrue();
+    });
 
-    $response->assertStatus(200);
-});
+    it('denies volunteer from viewing all users', function () {
+        $volunteer = User::factory()->volunteer()->create();
 
-it('middleware accepts multiple roles', function () {
-    $admin = User::factory()->admin()->create();
-    $volunteer = User::factory()->volunteer()->create();
+        expect($volunteer->cannot('viewAny', User::class))->toBeTrue();
+    });
 
-    // Route accessible par admin ET volunteer
-    $adminResponse = $this->actingAs($admin)->get('/admin/pets');
-    $volunteerResponse = $this->actingAs($volunteer)->get('/admin/pets');
+    it('allows volunteer to view their own profile', function () {
+        $volunteer = User::factory()->volunteer()->create();
 
-    $adminResponse->assertStatus(200);
-    $volunteerResponse->assertStatus(200);
+        expect($volunteer->can('view', $volunteer))->toBeTrue();
+    });
+
+    it('denies volunteer from viewing other users', function () {
+        $volunteer = User::factory()->volunteer()->create();
+        $otherUser = User::factory()->create();
+
+        expect($volunteer->cannot('view', $otherUser))->toBeTrue();
+    });
+
+    it('prevents admin from deleting themselves', function () {
+        $admin = User::factory()->admin()->create();
+
+        expect($admin->cannot('delete', $admin))->toBeTrue();
+    });
 });

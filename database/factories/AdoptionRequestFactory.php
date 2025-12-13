@@ -5,7 +5,6 @@ namespace Database\Factories;
 use App\Enums\AdoptionRequestStatus;
 use App\Models\AdoptionRequest;
 use App\Models\Pet;
-use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**

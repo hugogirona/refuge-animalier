@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\AdoptionRequestStatus;
 use Database\Factories\ContactMessageFactory;
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -84,13 +85,13 @@ class AdoptionRequest extends Model
     {
         return "{$this->first_name} {$this->last_name}";
     }
-
-    public function scopeNew($query)
+    #[Scope]
+    public function new($query)
     {
         return $query->where('status', AdoptionRequestStatus::NEW);
     }
-
-    public function scopePending($query)
+    #[Scope]
+    public function pending($query)
     {
         return $query->where('status', AdoptionRequestStatus::PENDING);
     }

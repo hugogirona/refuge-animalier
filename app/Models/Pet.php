@@ -7,6 +7,7 @@ use App\Enums\PetSex;
 use App\Enums\PetSpecies;
 use App\Enums\PetStatus;
 use Database\Factories\PetFactory;
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -105,7 +106,8 @@ class Pet extends Model
     /**
      * Scope to get only published pets.
      */
-    public function scopePublished($query)
+    #[Scope]
+    public function published($query)
     {
         return $query->where('is_published', true);
     }
@@ -113,7 +115,8 @@ class Pet extends Model
     /**
      * Scope to get available pets.
      */
-    public function scopeAvailable($query)
+    #[Scope]
+    public function available($query)
     {
         return $query->where('status', PetStatus::AVAILABLE)
             ->where('is_published', true);
@@ -122,7 +125,8 @@ class Pet extends Model
     /**
      * Scope to filter by species.
      */
-    public function scopeOfSpecies($query, PetSpecies $species)
+    #[Scope]
+    public function ofSpecies($query, PetSpecies $species)
     {
         return $query->where('species', $species);
     }
@@ -130,7 +134,8 @@ class Pet extends Model
     /**
      * Scope to filter by status.
      */
-    public function scopeWithStatus($query, PetStatus $status)
+    #[Scope]
+    public function withStatus($query, PetStatus $status)
     {
         return $query->where('status', $status);
     }
@@ -138,7 +143,8 @@ class Pet extends Model
     /**
      * Scope to get pets created by a specific user.
      */
-    public function scopeCreatedBy($query, User $user)
+    #[Scope]
+    public function createdBy($query, User $user)
     {
         return $query->where('created_by', $user->id);
     }
