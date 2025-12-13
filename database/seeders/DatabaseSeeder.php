@@ -4,8 +4,10 @@ namespace Database\Seeders;
 
 use App\Enums\UserRoles;
 use App\Models\AdoptionRequest;
+use App\Models\InternalNote;
 use App\Models\Pet;
 use App\Models\User;
+use Database\Factories\InternalNoteFactory;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -32,6 +34,8 @@ class DatabaseSeeder extends Seeder
                 'email' => 'gironahugo@gmail.com',
                 'password' => bcrypt('change_this'),
             ]);
+
+        InternalNote::factory(10)->create();
     }
 
 }

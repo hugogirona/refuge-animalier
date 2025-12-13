@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\AdoptionRequest;
+use App\Models\Pet;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +22,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Relation::enforceMorphMap([
+            'pet' => Pet::class,
+            'adoption_request' => AdoptionRequest::class,
+        ]);
     }
 }
