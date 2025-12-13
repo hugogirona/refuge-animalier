@@ -1,6 +1,6 @@
 @props([
     'story' => '',
-    'arrivalDate' => '15 juin 2024'
+    'arrivalDate' => ''
 ])
 
 <section class="bg-secondary-surface-default-subtle rounded-xl border border-secondary-border-default-subtle p-6">

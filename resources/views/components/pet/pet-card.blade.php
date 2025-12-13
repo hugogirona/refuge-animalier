@@ -5,9 +5,10 @@
     'sex',
     'trait',
     'image',
-    'slug',
-    'status'
+    'status',
+    'pet',
 ])
+
 
 <article class="bg-white border
                 border-neutral-200
@@ -31,13 +32,13 @@
             >
             <img
                 src="{{ asset('storage/images/animals/' . $image . '_2x.webp') }}"
-                alt="{{ $name }}, {{ $breed }} de {{ $age }} ans"
-                class="w-full aspect-[4/3] object-cover"
+                alt="{{ $name }}, {{ $breed }} de {{ $age }}"
+                class="w-full aspect-4/3 object-cover"
                 loading="lazy"
             >
         </picture>
 
-        <span class="absolute top-3 right-3 px-3 py-1 {{$status == 'Disponible' ? 'bg-success-surface-default-subtle' : 'bg-warning-surface-default-subtle'}} text-grayscale-text-subtle text-sm font-medium rounded-full shadow-md">
+        <span class="absolute top-3 right-3 px-3 py-1 {{$status == \App\Enums\PetStatus::AVAILABLE ? 'bg-success-surface-default-subtle' : 'bg-warning-surface-default-subtle'}} text-grayscale-text-subtle text-sm font-medium rounded-full shadow-md">
             {{ $status }}
         </span>
     </div>
@@ -49,7 +50,7 @@
         </h3>
 
         <div class="space-y-1 text-grayscale-text-subtle">
-            <p class="text-base">{{ $breed }} · {{ $age }} ans</p>
+            <p class="text-base">{{ $breed }} · {{ $age }}</p>
             <p class="text-base">{{ $sex }}</p>
         </div>
 
@@ -61,11 +62,11 @@
         </div>
 
 
-            <x-cta-button variant="secondary" size="sm" class="z-1">
+            <x-cta-button href="{{route('pets.show', $pet)}}" variant="secondary" size="sm" class="z-1">
                 Découvrir {{$name}}
             </x-cta-button>
         <a class="absolute right-0 top-0 bottom-0 left-0"
-            href="{{route('pets.show')}}">&nbsp;</a>
+            href="{{route('pets.show', $pet)}}">&nbsp;</a>
 
 
     </div>

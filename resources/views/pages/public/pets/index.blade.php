@@ -1,6 +1,7 @@
 @php
-    $petCount = 23; // Valeur en dur temporaire
+    $petCount = count($pets);
 @endphp
+
 
 <x-layout :title="__('public/pets.page_title')">
 
@@ -31,6 +32,6 @@
         </div>
     </div>
 
-    <x-pet.pet-list :pets="$featured_pets"/>
+    <x-pet.pet-list :pets="$pets"/>
 
 </x-layout>

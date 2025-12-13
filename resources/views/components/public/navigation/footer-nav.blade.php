@@ -1,5 +1,5 @@
 <nav class="text-center lg:text-left lg:order-first">
-    <h2 class="text-xl md:text-2xl font-bold mb-6 !text-grayscale-text-disabled">
+    <h2 class="text-xl md:text-2xl font-bold mb-6 text-grayscale-text-disabled!">
         {{ __('public/footer.navigation.title') }}
     </h2>
     <ul class="flex flex-col items-center space-y-3 text-center lg:items-start">

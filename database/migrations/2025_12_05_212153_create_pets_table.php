@@ -20,10 +20,13 @@ return new class extends Migration
             $table->string('species');
             $table->string('breed')->default(PetBreeds::UNKNOWN->value);
             $table->string('sex')->default(PetSex::UNKNOWN->value);
-            $table->string('coat_color')->nullable();
+            $table->string('coat_color');
             $table->date('birth_date')->nullable();
+            $table->date('last_vet_visit')->nullable();
             $table->text('vaccinations')->nullable();
-            $table->text('personality')->nullable();
+            $table->boolean('sterilized');
+            $table->text('personality');
+            $table->text('story');
             $table->string('status')->default(PetStatus::AVAILABLE->value);
             $table->string('photo_path')->nullable();
             $table->boolean('is_published')->default(false);

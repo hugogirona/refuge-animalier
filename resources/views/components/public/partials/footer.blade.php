@@ -16,7 +16,7 @@
             <x-public.navigation.footer-infos/>
 
             <!--Derniers arrivants -->
-            <x-public.navigation.footer-pet/>
+{{--            <x-public.navigation.footer-pet/>--}}
 
         </div>
 

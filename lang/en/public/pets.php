@@ -40,7 +40,7 @@ return [
     // Pet Show Page
     'show' => [
         'cta_button' => 'I want to meet :name',
-        'image_alt' => ':name, :breed :age years old',
+        'image_alt' => ':name, :breed :age',
 
         'info' => [
             'title' => 'Information',
