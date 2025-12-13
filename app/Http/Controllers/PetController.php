@@ -13,9 +13,7 @@ class PetController extends Controller
             ->latest('published_at')
             ->paginate(9);
 
-        return view('pages.public.pets.index', [
-            'pets' => $pets
-        ]);
+        return view('pages.public.pets.index', compact('pets'));
     }
 
     public function show(Pet $pet)
@@ -27,8 +25,7 @@ class PetController extends Controller
             ->take(3)
             ->get();
 
-        return view('pages.public.pets.show',
-            ['pet' => $pet, 'random_pets' => $random_pets]);
+        return view('pages.public.pets.show', compact('pet', 'random_pets'));
     }
 
 }

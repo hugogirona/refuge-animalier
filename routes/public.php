@@ -1,71 +1,11 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PetController;
 use Illuminate\Support\Facades\Route;
 
 
-Route::get('/', function () {
-    $featured_pets = [
-        [
-            'name' => 'Moka',
-            'breed' => 'Caniche',
-            'age' => 5,
-            'sex' => 'Mâle',
-            'trait' => 'Affectueux',
-            'image' => 'moka',
-            'slug' => 'moka',
-            'status' => 'Disponible'
-        ],
-        [
-            'name' => 'Luna',
-            'breed' => 'Berger Australien',
-            'age' => 3,
-            'sex' => 'Femelle',
-            'trait' => 'Affectueux',
-            'image' => 'luna',
-            'slug' => 'luna',
-            'status' => 'Indisponible'
-        ],
-        [
-            'name' => 'Rex',
-            'breed' => 'Berger Allemand',
-            'age' => 4,
-            'sex' => 'Mâle',
-            'trait' => 'Joueur',
-            'image' => 'rex',
-            'slug' => 'rex',
-            'status' => 'Disponible'
-        ],
-    ];
-    $stats = [
-        [
-            'number' => 127,
-            'label' => __('public/home.stats.adoptions'),
-            'color' => 'orange',
-            'icon' => 'heart'
-        ],
-        [
-            'number' => 12,
-            'label' => __('public/home.stats.volunteers'),
-            'color' => 'green',
-            'icon' => 'users'
-        ],
-        [
-            'number' => 23,
-            'label' => __('public/home.stats.animals'),
-            'color' => 'blue',
-            'icon' => 'paw'
-        ],
-        [
-            'number' => 5,
-            'label' => __('public/home.stats.years'),
-            'color' => 'purple',
-            'icon' => 'calendar'
-        ],
-    ];
-
-    return view('pages.public.home.index', compact('featured_pets', 'stats'));
-})->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/pets', [PetController::class, 'index'])->name('pets.index');
 
