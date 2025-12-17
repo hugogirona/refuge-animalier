@@ -11,7 +11,7 @@ return [
 
     'heading' => [
         'title' => 'Adoptieverzoek voor :name',
-        'subtitle' => ':age oude :sex :species',
+        'subtitle' => ':age oude :sex :breed',
     ],
 
     'intro' => [
@@ -62,20 +62,19 @@ return [
             'preferred_days' => 'Voorkeursdagen voor een afspraak',
             'preferred_days_helper' => 'Selecteer een of meer dagen',
             'days' => [
-                'lundi' => 'Maandag',
-                'mardi' => 'Dinsdag',
-                'mercredi' => 'Woensdag',
-                'jeudi' => 'Donderdag',
-                'vendredi' => 'Vrijdag',
-                'samedi' => 'Zaterdag',
-                'dimanche' => 'Zondag',
+                'monday' => 'Maandag',
+                'tuesday' => 'Dinsdag',
+                'wednesday' => 'Woensdag',
+                'thursday' => 'Donderdag',
+                'friday' => 'Vrijdag',
+                'saturday' => 'Zaterdag',
             ],
             'preferred_hours' => 'Voorkeurstijden',
             'preferred_hours_helper' => 'Selecteer een of meer tijdslots',
             'hours' => [
-                'matin' => 'Ochtend (9u-12u)',
-                'apres-midi' => 'Namiddag (14u-17u)',
-                'soir' => 'Avond (17u-19u)',
+                'morning' => 'Ochtend (9u-12u)',
+                'afternoon' => 'Namiddag (14u-17u)',
+                'evening' => 'Avond (17u-19u)',
             ],
             'contact_method' => 'Voorkeur contactmethode',
             'contact_phone' => 'Telefoon',

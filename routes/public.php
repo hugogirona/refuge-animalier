@@ -14,9 +14,9 @@ Route::get('/pets/{pet}', [PetController::class, 'show'])->name('pets.show');
 
 Route::get('/adoption/{pet}', [AdoptionRequestController::class, 'create'])->name('adoption.create');
 
-Route::get('/adoption/confirmation', function () {
-    return view('pages.public.adoption.confirmation');
-})->name('adoption.confirmation');
+Route::post('/adoption', [AdoptionRequestController::class, 'store'])->name('adoption.store');
+
+Route::get('/adoption/confirmation/{adoption_request}', [AdoptionRequestController::class, 'confirm'])->name('adoption.confirmation');
 
 Route::get('/about', function () {
     $team_members = [

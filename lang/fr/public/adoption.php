@@ -11,7 +11,7 @@ return [
 
     'heading' => [
         'title' => 'Demande d\'adoption pour :name',
-        'subtitle' => ':species :sex de :age',
+        'subtitle' => ':breed :sex de :age',
     ],
 
     'intro' => [
@@ -62,20 +62,19 @@ return [
             'preferred_days' => 'Jours préférés pour un rendez-vous',
             'preferred_days_helper' => 'Sélectionnez un ou plusieurs jours',
             'days' => [
-                'lundi' => 'Lundi',
-                'mardi' => 'Mardi',
-                'mercredi' => 'Mercredi',
-                'jeudi' => 'Jeudi',
-                'vendredi' => 'Vendredi',
-                'samedi' => 'Samedi',
-                'dimanche' => 'Dimanche',
+                'monday' => 'Lundi',
+                'tuesday' => 'Mardi',
+                'wednesday' => 'Mercredi',
+                'thursday' => 'Jeudi',
+                'friday' => 'Vendredi',
+                'saturday' => 'Samedi',
             ],
             'preferred_hours' => 'Plages horaires préférées',
             'preferred_hours_helper' => 'Sélectionnez une ou plusieurs plages',
             'hours' => [
-                'matin' => 'Matin (9h-12h)',
-                'apres-midi' => 'Après-midi (14h-17h)',
-                'soir' => 'Soir (17h-19h)',
+                'morning' => 'Matin (9h-12h)',
+                'afternoon' => 'Après-midi (14h-17h)',
+                'evening' => 'Soir (17h-19h)',
             ],
             'contact_method' => 'Mode de contact préféré',
             'contact_phone' => 'Téléphone',
