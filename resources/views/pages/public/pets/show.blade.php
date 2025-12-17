@@ -26,7 +26,7 @@
             </span>
         </div>
         <div class="hidden md:block">
-            <x-cta-button variant="secondary" href="{{ route('adoption.create') }}">
+            <x-cta-button variant="secondary" href="{{ route('adoption.create', $pet) }}">
                 {{ __('public/pets.show.cta_button', ['name' => $pet->name]) }}
             </x-cta-button>
         </div>
@@ -98,7 +98,7 @@
                 :story="$pet->story"
                 :arrivalDate="$pet->arrived_at"></x-public.partials.pet-show.pet-story>
             <div class="lg:hidden md:flex justify-center">
-                <x-cta-button href="{{ route('adoption.create') }}" size="md" class="w-full md:w-auto">
+                <x-cta-button href="{{ route('adoption.create', $pet) }}" size="md" class="w-full md:w-auto">
                     {{ __('public/pets.show.cta_button', ['name' =>  $pet->name]) }}
                 </x-cta-button>
             </div>

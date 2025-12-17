@@ -1,8 +1,9 @@
-@props(['petName' => 'Moka'])
+@props(['pet' => ''])
 
-<form id="adoptionForm" class="max-w-3xl mx-auto" novalidate>
+<form id="adoptionForm" method="POST"  class="max-w-3xl mx-auto" novalidate>
 
     @csrf
+    <input type="hidden" name="pet_id" value="{{ $pet->id }}">
 
     {{-- SECTION 1: IDENTITÉ --}}
     <x-form.form-section number="1" :title="__('public/adoption.form.section_1.title')">
@@ -168,7 +169,8 @@
         />
     </x-form.form-section>
 
-    <div class="bg-secondary-surface-default-subtle flex flex-col rounded-xl border border-secondary-border-default-subtle p-6 text-center">
+    <div
+        class="bg-secondary-surface-default-subtle flex flex-col rounded-xl border border-secondary-border-default-subtle p-6 text-center">
         <p class="text-grayscale-text-subtitle mb-4">
             {{ __('public/adoption.form.submit_info') }}
         </p>

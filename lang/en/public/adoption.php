@@ -11,7 +11,7 @@ return [
 
     'heading' => [
         'title' => 'Adoption request for :name',
-        'subtitle' => ':age year old :sex :species',
+        'subtitle' => ':age :sex :species',
     ],
 
     'intro' => [
