@@ -30,7 +30,7 @@
     </ul>
     <x-cta-button
         size="sm"
-        href="{{ route('contact') }}"
+        href="{{ route('contact.create') }}"
         :title="__('public/navigation.titles.contact')"
     >
         {{ __('public/navigation.menu.contact') }}

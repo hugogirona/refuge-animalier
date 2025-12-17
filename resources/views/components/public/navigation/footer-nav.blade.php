@@ -32,8 +32,8 @@
         </li>
         <li>
             <x-public.navigation.footer-link
-                href="{{ route('contact') }}"
-                :active="request()->routeIs('contact')"
+                href="{{ route('contact.create') }}"
+                :active="request()->routeIs('contact.create')"
                 :title="__('public/footer.titles.contact')"
             >
                 {{ __('public/footer.navigation.contact') }}

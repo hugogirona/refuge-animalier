@@ -48,10 +48,7 @@ if($icon != NULL || $showPasswordToggle)
             @if($required) required @endif
             @if($autocomplete) autocomplete="{{ $autocomplete }}" @endif
             class="w-full {{$icon ? 'pr-4 pl-10' :'px-4'}} py-3 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-border-default focus:border-transparent
-                {{ $error
-       ? 'border-error-text-link-light!'
-       : 'border-neutral-300 focus:ring-primary-border-default'
-    }}"
+                {{ $error ? 'border-error-text-link-light! focus:border-transparent!' : 'border-neutral-300 focus:ring-primary-border-default' }}"
             {{ $attributes }}
         >
         @if($showPasswordToggle)

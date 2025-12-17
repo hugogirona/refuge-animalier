@@ -47,7 +47,7 @@
                     {{ __('public/about.team.cta.adopt_button') }}
                 </x-cta-button>
 
-                <x-cta-button href="{{ route('contact', ['subject' => 'volunteering']) }}" variant="secondary">
+                <x-cta-button href="{{ route('contact.create', ['subject' => 'volunteering']) }}" variant="secondary">
                     {{ __('public/about.team.cta.volunteer_button') }}
                 </x-cta-button>
             </div>

@@ -32,7 +32,7 @@
         </li>
         <li>
             <x-public.navigation.nav-link
-                href="{{ route('contact') }}"
+                href="{{ route('contact.create') }}"
                 :active="request()->routeIs('contact')"
                 :title="__('public/navigation.titles.contact')"
                 mobile

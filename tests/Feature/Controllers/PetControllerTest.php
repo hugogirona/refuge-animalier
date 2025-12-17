@@ -36,10 +36,9 @@ describe('Public Pet Listing (Index Page)', function () {
 
         $response->assertOk()
             ->assertViewHas('pets', function ($pets) use ($visible, $hidden) {
-                // On vérifie que la collection passée à la vue contient le visible et pas le caché
                 return $pets->contains($visible) && !$pets->contains($hidden);
             })
-            ->assertSee('VisibleDog') // Vérifie que le HTML contient le nom
+            ->assertSee('VisibleDog')
             ->assertDontSee('HiddenDog');
     });
 
@@ -94,7 +93,7 @@ describe('Public Pet Detail (Show Page)', function () {
             'is_published' => true,
         ]);
 
-        $response = $this->get(route('pets.show', $pet)); // On peut passer l'objet, Laravel devine l'ID
+        $response = $this->get(route('pets.show', $pet));
 
         $response->assertOk()
             ->assertViewIs('pages.public.pets.show')

@@ -205,7 +205,7 @@
         <p class="text-grayscale-text-subtitle mb-4">
             {{ __('public/adoption.form.submit_info') }}
         </p>
-        <x-cta-button role="button" type="submit">{{ __('public/adoption.form.submit_button') }}</x-cta-button>
+        <x-cta-button role="button">{{ __('public/adoption.form.submit_button') }}</x-cta-button>
     </div>
 
 </form>
