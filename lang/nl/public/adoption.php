@@ -11,7 +11,7 @@ return [
 
     'heading' => [
         'title' => 'Adoptieverzoek voor :name',
-        'subtitle' => ':age jaar oude :sex :species',
+        'subtitle' => ':age oude :sex :species',
     ],
 
     'intro' => [

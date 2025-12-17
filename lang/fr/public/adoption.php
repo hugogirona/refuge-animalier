@@ -11,7 +11,7 @@ return [
 
     'heading' => [
         'title' => 'Demande d\'adoption pour :name',
-        'subtitle' => ':species :sex de :age ans',
+        'subtitle' => ':species :sex de :age',
     ],
 
     'intro' => [
