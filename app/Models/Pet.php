@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\AdoptionRequestStatus;
+use App\Enums\PetBreeds;
 use App\Enums\PetSex;
 use App\Enums\PetSpecies;
 use App\Enums\PetStatus;
@@ -48,6 +49,7 @@ class Pet extends Model
     {
         return [
             'species' => PetSpecies::class,
+            'breed'=> PetBreeds::class,
             'sex' => PetSex::class,
             'status' => PetStatus::class,
             'is_published' => 'boolean',

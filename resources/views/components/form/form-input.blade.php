@@ -35,26 +35,30 @@ if($icon != NULL || $showPasswordToggle)
             </div>
         @endif
         <input
-                @if($showPasswordToggle)
-                    :type="showPassword ? 'text' : 'password'"
-                @else
-                    type="{{ $type }}"
-                @endif
-                id="{{ $name }}"
-                name="{{ $name }}"
-                value="{{ $value }}"
-                placeholder="{{ $placeholder }}"
-                @if($wireModel) wire:model="{{$wireModel}}" @endif
-                @if($required) required @endif
-                @if($autocomplete) autocomplete="{{ $autocomplete }}" @endif
-                class="w-full {{$icon ? 'pr-4 pl-10' :'px-4'}} py-3 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-border-default focus:border-transparent"
-                {{ $attributes }}
+            @if($showPasswordToggle)
+                :type="showPassword ? 'text' : 'password'"
+            @else
+                type="{{ $type }}"
+            @endif
+            id="{{ $name }}"
+            name="{{ $name }}"
+            value="{{ $value }}"
+            placeholder="{{ $placeholder }}"
+            @if($wireModel) wire:model="{{$wireModel}}" @endif
+            @if($required) required @endif
+            @if($autocomplete) autocomplete="{{ $autocomplete }}" @endif
+            class="w-full {{$icon ? 'pr-4 pl-10' :'px-4'}} py-3 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-border-default focus:border-transparent
+                {{ $error
+       ? 'border-error-text-link-light!'
+       : 'border-neutral-300 focus:ring-primary-border-default'
+    }}"
+            {{ $attributes }}
         >
         @if($showPasswordToggle)
             <button
-                    type="button"
-                    @click="showPassword = !showPassword"
-                    class="absolute inset-y-0 right-0 px-3 flex items-center text-grayscale-text-caption hover:text-grayscale-text-subtitle  transition-colors"
+                type="button"
+                @click="showPassword = !showPassword"
+                class="absolute inset-y-0 right-0 px-3 flex items-center text-grayscale-text-caption hover:text-grayscale-text-subtitle  transition-colors"
             >
                 {!! IconTypes::tryFrom('eye-open')->svg() !!}
                 {!! IconTypes::tryFrom('eye-close')->svg() !!}
@@ -66,7 +70,7 @@ if($icon != NULL || $showPasswordToggle)
         <p class="text-xs text-grayscale-text-subtitle mt-1">{{ $helper }}</p>
     @endif
     @if($error)
-        <p class="text-error-text-link-light text-sm mt-1 hidden error-message"
+        <p class="text-error-text-link-light text-sm mt-1 error-message"
            data-error="{{ $name }}">{{ $error }}</p>
     @endif
 </div>

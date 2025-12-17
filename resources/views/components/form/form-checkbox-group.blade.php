@@ -1,4 +1,3 @@
-{{-- components/form-checkbox-group.blade.php --}}
 @props([
     'label',
     'name',
@@ -6,37 +5,39 @@
     'required' => false,
     'helper' => '',
     'columns' => 1,
+    'value' => [],
+    'error' => null,
 ])
 
 <fieldset>
-    {{-- Legend (titre sémantique du groupe) --}}
     <legend class="block text-sm font-medium text-grayscale-text-subtitle mb-3">
         {{ $label }} @if($required)<span class="text-primary-text-link-light">*</span>@endif
     </legend>
 
-    {{-- Helper text --}}
     @if($helper)
         <p class="text-sm text-grayscale-text-caption mb-3">{{ $helper }}</p>
     @endif
 
-    {{-- Grid de checkboxes --}}
     <div class="grid grid-cols-{{ $columns }} gap-4">
-        @foreach($options as $value => $optionLabel)
+        @foreach($options as $optionValue => $optionLabel)
             @php
-                // Générer un ID unique pour chaque checkbox
-                $uniqueId = $name . '_' . $value . '_' . uniqid();
+                $uniqueId = $name . '_' . $optionValue . '_' . uniqid();
+                // On vérifie si la valeur est dans le tableau old()
+                // On utilise in_array strict ou non selon vos besoins (ici non strict pour string/int)
+                $isChecked = is_array($value) && in_array($optionValue, $value);
             @endphp
 
             <label
                 for="{{ $uniqueId }}"
-                class="flex items-center p-4 border-2 border-neutral-300 rounded-lg cursor-pointer hover:border-primary-border-default transition-colors"
+                class="flex items-center p-4 border-2 rounded-lg cursor-pointer transition-colors
+                {{ $error ? 'border-error-text-link-light' : ($isChecked ? 'border-primary-border-default bg-primary-surface-default-subtle' : 'border-neutral-300 hover:border-primary-border-default') }}"
             >
                 <input
                     type="checkbox"
                     id="{{ $uniqueId }}"
                     name="{{ $name }}[]"
-                    value="{{ $value }}"
-                    @if($required && $loop->first) required @endif
+                    value="{{ $optionValue }}"
+                    @checked($isChecked)
                     class="w-5 h-5 text-primary-500 border-neutral-300 rounded focus:ring-primary-border-default"
                 >
                 <span class="ml-2 text-grayscale-text-subtitle">{{ $optionLabel }}</span>
@@ -44,10 +45,9 @@
         @endforeach
     </div>
 
-    {{-- Message d'erreur --}}
-    @if($required)
-        <p class="text-error-text-link-light text-sm mt-2 hidden error-message" data-error="{{ $name }}">
-            Veuillez sélectionner au moins une option
+    @if($error)
+        <p class="text-error-text-link-light text-sm mt-2">
+            {{ $error }}
         </p>
     @endif
 </fieldset>

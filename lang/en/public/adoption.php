@@ -11,7 +11,7 @@ return [
 
     'heading' => [
         'title' => 'Adoption request for :name',
-        'subtitle' => ':age :sex :species',
+        'subtitle' => ':age :sex :breed',
     ],
 
     'intro' => [
@@ -62,20 +62,19 @@ return [
             'preferred_days' => 'Preferred days for an appointment',
             'preferred_days_helper' => 'Select one or more days',
             'days' => [
-                'lundi' => 'Monday',
-                'mardi' => 'Tuesday',
-                'mercredi' => 'Wednesday',
-                'jeudi' => 'Thursday',
-                'vendredi' => 'Friday',
-                'samedi' => 'Saturday',
-                'dimanche' => 'Sunday',
+                'monday' => 'Monday',
+                'tuesday' => 'Tuesday',
+                'wednesday' => 'Wednesday',
+                'thursday' => 'Thursday',
+                'friday' => 'Friday',
+                'saturday' => 'Saturday',
             ],
             'preferred_hours' => 'Preferred time slots',
             'preferred_hours_helper' => 'Select one or more slots',
             'hours' => [
-                'matin' => 'Morning (9am-12pm)',
-                'apres-midi' => 'Afternoon (2pm-5pm)',
-                'soir' => 'Evening (5pm-7pm)',
+                'morning' => 'Morning (9am-12pm)',
+                'afternoon' => 'Afternoon (2pm-5pm)',
+                'evening' => 'Evening (5pm-7pm)',
             ],
             'contact_method' => 'Preferred contact method',
             'contact_phone' => 'Phone',

@@ -21,7 +21,7 @@
         </h1>
         <p class="text-grayscale-text-subtitle" id="animalCount">
             {{ __('public/adoption.heading.subtitle', [
-                'species' => $pet->species->value,
+                'breed' => $pet->breed->value,
                 'sex' => $pet->sex->value,
                 'age' => $pet->getAgeTextAttribute()
             ]) }}
