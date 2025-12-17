@@ -15,6 +15,23 @@
     <div class="bg-white">
         <div class="max-w-6xl mx-auto px-5 py-6 md:px-8">
 
+            @if(session('success'))
+                <div class="mb-8 p-4 rounded-xl bg-success-surface-default-subtle border border-success-border-default-subtle flex items-start gap-3 animate-fade-in">
+                    <svg
+                        class="w-6 h-6 shrink-0 text-success-text-link-light fill-none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        viewBox="0 0 24 24"
+                    >
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <div>
+                        <p class="font-bold">Message envoyé !</p>
+                        <p class="text-sm mt-1">{{ session('success') }}</p>
+                    </div>
+                </div>
+            @endif
+
             <div class="grid lg:grid-cols-2 gap-8">
 
                 <div>

@@ -1,36 +1,37 @@
 <div class="bg-white rounded-xl border border-neutral-200 p-6 md:p-8">
-    <h2 class="text-2xl font-bold text-neutral-900 mb-2">{{ __('public/contact.form.title') }}</h2>
-    <p class="text-neutral-600 mb-6">
-        {{ __('public/contact.form.subtitle') }}
-    </p>
+    {{-- ... --}}
 
-    <form id="contactForm" class="flex flex-col gap-4">
+    {{-- CORRECTION 1 : method POST et action --}}
+    <form id="contactForm" method="POST" action="{{ route('contact.store') }}" class="flex flex-col gap-4" novalidate>
+        @csrf
 
         {{-- Nom --}}
         <x-form.form-input
             :label="__('public/contact.form.fields.name')"
             name="name"
             required
+            :value="old('name')"
             :placeholder="__('public/contact.form.fields.name_placeholder')"
-            :error="__('public/contact.form.errors.required')"
+            :error="$errors->first('name')"
         />
 
-        {{-- Email --}}
         <x-form.form-input
             :label="__('public/contact.form.fields.email')"
             name="email"
             type="email"
             required
+            :value="old('email')"
             :placeholder="__('public/contact.form.fields.email_placeholder')"
-            :error="__('ublic/contact.form.errors.email')"
+            :error="$errors->first('email')"
         />
 
-        {{-- Téléphone --}}
         <x-form.form-input
             :label="__('public/contact.form.fields.phone')"
             name="phone"
             type="tel"
+            :value="old('phone')"
             :placeholder="__('public/contact.form.fields.phone_placeholder')"
+            :error="$errors->first('phone')"
         />
 
         {{-- Sujet --}}
@@ -40,26 +41,28 @@
             required
             :placeholder="__('public/contact.form.fields.subject_placeholder')"
             :options="__('public/contact.form.subjects')"
-            :value="request('subject', '')"
-            :error="__('public/contact.form.errors.subject')"
+            :value="old('subject', request('subject', ''))"
+            :error="$errors->first('subject')"
         />
 
-        {{-- Message --}}
         <x-form.form-textarea
             :label="__('public/contact.form.fields.message')"
-            name="message"
+            name="content"
             required
             rows="5"
+            :value="old('content')"
             :placeholder="__('public/contact.form.fields.message_placeholder')"
-            :error="__('public/contact.form.errors.required')"
+            :error="$errors->first('content')"
         />
 
         {{-- RGPD --}}
         <x-form.form-checkbox
             name="rgpd"
-            value="rgpd"
+            value="1"
             required
             :label="__('public/contact.form.fields.rgpd')"
+            :checked="(bool)old('rgpd')"
+            :error="$errors->first('rgpd')"
         />
 
         {{-- Submit Button --}}

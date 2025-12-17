@@ -13,7 +13,7 @@
             </div>
 
             <x-cta-button
-                href="{{ route('contact') }}#faq-section"
+                href="{{ route('contact.create') }}#faq-section"
             >
                 {{ __('public/home.faq.button_text') }}
             </x-cta-button>

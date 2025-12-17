@@ -28,7 +28,7 @@
 
             <label
                 for="{{ $uniqueId }}"
-                class="flex items-center p-4 border-2 rounded-lg cursor-pointer transition-colors {{ $layout === 'horizontal' ? 'flex-1' : '' }}
+                class="flex items-center p-4 border rounded-lg cursor-pointer transition-colors {{ $layout === 'horizontal' ? 'flex-1' : '' }}
                 {{-- Style dynamique si coché ou erreur --}}
                 {{ $error ? 'border-error-text-link-light' : ($isChecked ? 'border-primary-border-default bg-primary-surface-default-subtle' : 'border-neutral-300 hover:border-primary-border-default') }}"
             >
