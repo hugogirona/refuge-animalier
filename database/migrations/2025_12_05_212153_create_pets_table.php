@@ -18,7 +18,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('species');
-            $table->string('breed')->default(PetBreeds::UNKNOWN->value);
+            $table->foreignId('breed_id')->constrained('breeds');
             $table->string('sex')->default(PetSex::UNKNOWN->value);
             $table->string('coat_color');
             $table->date('birth_date')->nullable();

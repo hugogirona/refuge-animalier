@@ -49,7 +49,6 @@ class Pet extends Model
     {
         return [
             'species' => PetSpecies::class,
-            'breed'=> PetBreeds::class,
             'sex' => PetSex::class,
             'status' => PetStatus::class,
             'is_published' => 'boolean',
@@ -79,6 +78,11 @@ class Pet extends Model
     public function publisher(): BelongsTo
     {
         return $this->belongsTo(User::class, 'published_by');
+    }
+
+    public function breed(): BelongsTo
+    {
+        return $this->belongsTo(Breed::class);
     }
 
     /**

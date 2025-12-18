@@ -3,11 +3,10 @@
 namespace Database\Factories;
 
 use App\Enums\PetStatus;
+use App\Models\Breed; // <-- Import du modèle Breed
 use App\Models\Pet;
 use App\Enums\PetSex;
-use App\Enums\PetBreeds;
 use App\Enums\PetSpecies;
-
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -16,32 +15,26 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class PetFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
     public function definition(): array
     {
         $species = fake()->randomElement([PetSpecies::DOG, PetSpecies::CAT]);
 
-        $breedList = match ($species) {
-            PetSpecies::DOG => PetBreeds::dogs(),
-            PetSpecies::CAT => PetBreeds::cats(),
-        };
         return [
             'name' => fake()->firstName(),
-            'species' => $species->value,
-            'breed' => PetBreeds::random($breedList)->value,
+            'species' => $species,
+            'breed_id' => function () use ($species) {
+                $existingBreed = Breed::where('species', $species)->inRandomOrder()->first();
+                return $existingBreed?->id ?? Breed::factory()->create(['species' => $species])->id;
+            },
             'sex' => fake()->randomElement([PetSex::MALE, PetSex::FEMALE]),
             'coat_color' => fake()->randomElement([
                 'Noir', 'Blanc', 'Marron', 'Gris', 'Roux',
                 'Tigré', 'Tricolore', 'Beige', 'Crème', 'Chocolat'
             ]),
             'birth_date' => fake()->dateTimeBetween('-10 years', '-6 months'),
-            'last_vet_visit' => fake()->dateTimeBetween('-6 months, -1 week'),
+            'last_vet_visit' => fake()->dateTimeBetween('-6 months', '-1 week'),
             'vaccinations' => fake()->boolean(80)
-                ? 'Vaccins à jour (rage, maladie de Carré, parvovirose)'
+                ? 'Vaccins à jour'
                 : 'Vaccins incomplets - à mettre à jour',
             'sterilized' => fake()->boolean(80),
             'personality' => fake()->paragraph(2),

@@ -9,56 +9,46 @@ class PetController extends Controller
 {
     public function index(Request $request)
     {
-        // Requête de base
-        $query = Pet::query()->available();
-
-        // Ici je clone pour ne pas altérer la requête principale
-        $statsQuery = clone $query;
+        $query = Pet::query()->available()->with('breed');
 
         $filters = [
             [
                 'id' => '',
                 'label' => 'Tous',
-                'count' => $statsQuery->count()
+                'count' => Pet::query()->available()->count()
             ],
             [
                 'id' => 'dog',
                 'label' => 'Chiens',
-                'count' => (clone $statsQuery)->where('species', 'dog')->count()
+                'count' => Pet::query()->available()->where('species', 'dog')->count()
             ],
             [
                 'id' => 'cat',
                 'label' => 'Chats',
-                'count' => (clone $statsQuery)->where('species', 'cat')->count()
-            ],
+                'count' => Pet::query()->available()->where('species', 'cat')->count()
+
+        ],
         ];
 
-        // clone ici aussi pour la même raison
-        $breedsQuery = clone $query;
-
-        // Si déja cliqué sur chat, alors on voit pas les races de chiens
-        if ($request->has('species') && $request->species) {
-            $breedsQuery->where('species', $request->species);
-        }
-
-        $availableBreeds = $breedsQuery
-            ->select('breed')
-            ->distinct() // pas de doublon
-            ->pluck('breed')
-            ->mapWithKeys(function ($breedValue) {
-                return [$breedValue->value => $breedValue->value];
+        $availableBreeds = Pet::query()
+            ->available()
+            ->when($request->species, function ($q) use ($request) {
+                $q->where('pets.species', $request->species);
             })
-            ->sort()
+            ->join('breeds', 'pets.breed_id', '=', 'breeds.id')
+            ->select('breeds.id', 'breeds.name')
+            ->distinct()
+            ->orderBy('breeds.name')
+            ->pluck('name', 'id')
             ->toArray();
 
-        //Ici, j'applique les filtres sur la requête principale
 
         if ($species = $request->input('species')) {
             $query->where('species', $species);
         }
 
-        if ($breed = $request->input('breed')) {
-            $query->where('breed', $breed);
+        if ($breedId = $request->input('breed')) {
+            $query->where('breed_id', $breedId);
         }
 
         if ($sex = $request->input('sex')) {
@@ -69,20 +59,21 @@ class PetController extends Controller
             $now = now();
             match ($ageGroup) {
                 'junior' => $query->where('birth_date', '>=', $now->copy()->subYear()),
-                'adult' => $query->whereBetween('birth_date', [
+                'adult'  => $query->whereBetween('birth_date', [
                     $now->copy()->subYears(8),
                     $now->copy()->subYear()
                 ]),
                 'senior' => $query->where('birth_date', '<', $now->copy()->subYears(8)),
-                default => null,
+                default  => null,
             };
         }
 
-        $pets = $query->latest('published_at')->paginate(9)->withQueryString();
+        $pets = $query->latest('published_at')
+            ->paginate(9)
+            ->withQueryString();
 
-        return view('pages.public.pets.index', compact('pets', 'filters', 'availableBreeds', 'query'));
+        return view('pages.public.pets.index', compact('pets', 'filters', 'availableBreeds'));
     }
-
 
     public function show(Pet $pet)
     {
@@ -95,5 +86,4 @@ class PetController extends Controller
 
         return view('pages.public.pets.show', compact('pet', 'random_pets'));
     }
-
 }

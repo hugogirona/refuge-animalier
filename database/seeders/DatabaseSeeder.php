@@ -2,8 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Enums\PetBreeds;
 use App\Enums\UserRoles;
 use App\Models\AdoptionRequest;
+use App\Models\Breed;
 use App\Models\InternalNote;
 use App\Models\Pet;
 use App\Models\User;
@@ -16,7 +18,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-         User::factory(10)->create();
+        $this->call(BreedSeeder::class);
+
+        User::factory(10)->create();
 
         User::factory()
             ->has(Pet::factory(
@@ -25,7 +29,7 @@ class DatabaseSeeder extends Seeder
                     'published_at' => now(),
                 ]
             )
-                ->count(10)
+                ->count(40)
                 ->has(AdoptionRequest::factory()->count(2), 'adoptionRequests'))
             ->create([
                 'first_name' => 'Hugo',
