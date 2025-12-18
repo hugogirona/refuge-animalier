@@ -46,7 +46,7 @@
                     >
                     <img
                         src="{{ asset('storage/images/animals/'. $pet->photo_path .'_2x.webp') }}"
-                        alt="{{ __('public/pets.show.image_alt', ['name' => $pet->name, 'breed' => $pet->breed->value, 'age' => $pet->getAgeTextAttribute()]) }}"
+                        alt="{{ __('public/pets.show.image_alt', ['name' => $pet->name, 'breed' => $pet->breed->name, 'age' => $pet->getAgeTextAttribute()]) }}"
                         class="w-full aspect-video lg:aspect-4/3 object-cover rounded-xl"
                         loading="lazy"
                     >

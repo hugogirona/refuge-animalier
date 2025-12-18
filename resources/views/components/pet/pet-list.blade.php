@@ -15,7 +15,7 @@
             @foreach($pets as $pet)
                 <x-pet.pet-card
                     :name="$pet->name"
-                    :breed="$pet->breed"
+                    :breed="$pet->breed->name"
                     :age="$pet->getAgeTextAttribute()"
                     :sex="$pet->sex"
                     :trait="$pet->trait"
@@ -27,7 +27,7 @@
         </div>
 
         @if($pets instanceof \Illuminate\Pagination\LengthAwarePaginator && $pets->hasPages())
-            <div class="w-full mt-12 flex justify-end">
+            <div class="w-full mt-12 flex justify-center lg:justify-end">
                 {{ $pets->links('vendor.pagination.custom-orange') }}
             </div>
         @endif
