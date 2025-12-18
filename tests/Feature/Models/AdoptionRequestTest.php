@@ -57,7 +57,7 @@ describe('AdoptionRequest Scopes', function () {
         AdoptionRequest::factory()->create(['status' => AdoptionRequestStatus::NEW]);
         AdoptionRequest::factory()->create(['status' => AdoptionRequestStatus::PENDING]); // En cours
 
-        $pendingRequests = AdoptionRequest::pending()->get();
+        $pendingRequests = AdoptionRequest::query()->pending()->get();
 
         expect($pendingRequests)->toHaveCount(1)
             ->and($pendingRequests->first()->status)->toBe(AdoptionRequestStatus::PENDING->value);
@@ -68,7 +68,7 @@ describe('AdoptionRequest Scopes', function () {
         AdoptionRequest::factory()->create(['status' => AdoptionRequestStatus::PENDING]);
         AdoptionRequest::factory()->create(['status' => AdoptionRequestStatus::ACCEPTED]);
 
-        $inProgressRequests = AdoptionRequest::pending()->get();
+        $inProgressRequests = AdoptionRequest::query()->pending()->get();
 
         expect($inProgressRequests)->toHaveCount(1)
             ->and($inProgressRequests->first()->status)->toBe(AdoptionRequestStatus::PENDING->value);
@@ -82,16 +82,16 @@ describe('AdoptionRequest Internal Notes', function () {
 
         $note = $request->addInternalNote('Ceci est une note importante.', $user);
 
+        $request->refresh();
+
         expect($note)->toBeInstanceOf(InternalNote::class)
             ->content->toBe('Ceci est une note importante.')
             ->user_id->toBe($user->id)
-            ->and($request->internalNotes)->toHaveCount(1)
-            ->and($request->internalNotes->first()->content)->toBe('Ceci est une note importante.');
-
+            ->and($request->internalNotes)->toHaveCount(1);
 
         $this->assertDatabaseHas('internal_notes', [
             'notable_id' => $request->id,
-            'notable_type' => AdoptionRequest::class,
+            'notable_type' => $request->getMorphClass(),
             'content' => 'Ceci est une note importante.',
         ]);
     });

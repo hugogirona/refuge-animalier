@@ -1,33 +1,32 @@
 @props([
-    'filters' => [
-        ['id' => 'all', 'label' => 'Tous', 'count' => 23],
-        ['id' => 'chien', 'label' => 'Chiens', 'count' => 12],
-        ['id' => 'chat', 'label' => 'Chats', 'count' => 9],
-        ['id' => 'lapin', 'label' => 'Lapins', 'count' => 2],
-    ],
-    'name' => 'filters'
+    'filters' => [],
+    'name' => 'species',
+    'current' => ''
 ])
 
 <div {{ $attributes->merge(['class' => 'flex justify-start gap-2 overflow-x-auto hide-scrollbar']) }}>
     @foreach($filters as $filter)
-        <label
-            @class([
-                'filter-chip flex-shrink-0 px-4 py-2 rounded-full border-2 text-sm font-medium transition-colors cursor-pointer',
-                'border-neutral-300 bg-white text-neutral-700 hover:border-amber-500 hover:text-amber-500',
-            ])
-        >
+        <label class="relative shrink-0 cursor-pointer group">
             <input
-                type="checkbox"
-                name="{{ $name }}[]"
+                type="radio"
+                name="{{ $name }}"
                 value="{{ $filter['id'] }}"
-                class="hidden filter-checkbox"
-                data-filter="{{ $filter['id'] }}"
-                {{ $filter['id'] === 'all' ? 'checked' : '' }}
+                class="peer sr-only"
+                onchange="this.form.submit()"
+                {{ (string)$current === (string)$filter['id'] ? 'checked' : '' }}
             >
-            <span class="filter-label">
+            <span class="block px-4 py-2 rounded-full border-2 text-sm font-medium transition-all duration-200
+                         bg-white border-neutral-200 text-neutral-600
+                         group-hover:border-primary-surface-default-light group-hover:text-primary-text-link-light
+                         peer-checked:bg-primary-surface-default-light
+                         peer-checked:border-primary-surface-default-light
+                         peer-checked:text-white">
                 {{ $filter['label'] }}
+
                 @if(isset($filter['count']))
-                    <span class="ml-1">({{ $filter['count'] }})</span>
+                    <span class="ml-1 text-xs opacity-70 group-hover:opacity-100 peer-checked:text-white peer-checked:opacity-100">
+                        ({{ $filter['count'] }})
+                    </span>
                 @endif
             </span>
         </label>

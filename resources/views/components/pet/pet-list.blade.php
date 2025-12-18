@@ -26,6 +26,12 @@
             @endforeach
         </div>
 
+        @if($pets instanceof \Illuminate\Pagination\LengthAwarePaginator && $pets->hasPages())
+            <div class="w-full mt-12 flex justify-end">
+                {{ $pets->links('vendor.pagination.custom-orange') }}
+            </div>
+        @endif
+
         @if(!request()->routeIs('pets.index'))
             <div class="w-full flex justify-center lg:justify-end">
                 <x-cta-button
