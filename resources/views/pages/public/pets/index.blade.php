@@ -1,8 +1,3 @@
-@php
-    $petCount = count($pets);
-@endphp
-
-
 <x-layout :title="__('public/pets.page_title')">
 
     <x-breadcrumb.breadcrumb>
@@ -19,15 +14,60 @@
             {{ __('public/pets.heading.title') }}
         </h1>
         <p class="text-grayscale-text-subtitle" id="animalCount">
-            {{ trans_choice('public/pets.heading.count', $petCount, ['count' => $petCount]) }}
+            {{ trans_choice('public/pets.heading.count', $query->count(), ['count' => $query->count()]) }}
         </p>
     </div>
 
-    <!-- SEARCH & FILTERS BAR (Sticky) -->
+
     <div class="sticky top-16 md:top-20 z-30 bg-white border-b border-neutral-200">
         <div class="max-w-6xl mx-auto">
-            <div class="mx-auto px-4 md:px-8 py-6">
-                <x-search-filter.search-bar :placeholder="__('public/pets.search.placeholder')"/>
+            <div class="mx-auto px-4 md:px-8 py-4">
+                <form action="{{ route('pets.index') }}" method="GET" class="flex flex-wrap gap-4">
+
+                    <div class="flex items-center">
+                        <x-search-filter.filter-chip
+                            name="species"
+                            :filters="$filters"
+                            :current="request('species', '')"
+                        />
+                    </div>
+
+                    <div class="flex flex-wrap items-center gap-4 py-2">
+
+                        <x-search-filter.sort-filter
+                            name="age"
+                            label="Tous les âges"
+                            :options="['junior' => 'Junior (- 1 an)', 'adult'  => 'Adulte (1 - 8 ans)', 'senior' => 'Senior (+ 8 ans)',]"
+                            :selected="request('age')"
+                        />
+
+                        @if(count($availableBreeds) > 1)
+                            <x-search-filter.sort-filter
+                                name="breed"
+                                label="Toutes les races"
+                                :options="$availableBreeds"
+                                :selected="request('breed')"
+                            />
+                        @endif
+
+                        <x-search-filter.sort-filter
+                            name="sex"
+                            label="Tous les sexes"
+                            :options="['male'   => 'Mâle','female' => 'Femelle',]"
+                            :selected="request('sex')"
+                        />
+
+                        {{-- Lien Reset --}}
+                        @if(request()->anyFilled(['species', 'age', 'sex']))
+                            <a href="{{ route('pets.index') }}"
+                               class="text-sm font-medium text-red-500 hover:text-red-700 hover:underline transition-colors ml-auto sm:ml-0">
+                                Effacer les filtres
+                            </a>
+                        @endif
+                    </div>
+
+                </form>
+
             </div>
         </div>
     </div>

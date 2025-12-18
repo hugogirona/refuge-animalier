@@ -73,9 +73,7 @@ class AdoptionRequest extends Model
      */
     public function addInternalNote(string $content, User $user): InternalNote
     {
-        return InternalNote::create([
-            'notable_type' => self::class,
-            'notable_id' => $this->id,
+        return $this->internalNotes()->create([
             'content' => $content,
             'user_id' => $user->id,
         ]);

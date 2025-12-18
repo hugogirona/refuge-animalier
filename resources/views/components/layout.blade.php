@@ -15,7 +15,7 @@
     @endif
     {{ $head ?? '' }}
 </head>
-<body class="bg-white overflow-visible" x-data="{ menuOpen: false }"
+<body class="bg-white overflow-visible min-w-[360px]" x-data="{ menuOpen: false }"
       x-effect="document.body.style.overflow = menuOpen ? 'hidden' : ''">
 
 @if(request()->routeIs('login') || request()->routeIs('password.request') )
