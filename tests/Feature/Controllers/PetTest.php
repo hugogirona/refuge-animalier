@@ -1,8 +1,8 @@
 <?php
 
-use App\Enums\PetBreeds;
 use App\Enums\PetSpecies;
 use App\Enums\PetStatus;
+use App\Models\Breed;
 use App\Models\Pet;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -64,24 +64,31 @@ describe('Public Pet Listing (Index Page)', function () {
     });
 
     it('can filter pets by breed', function () {
-        $labrador = Pet::factory()->create([
+        // 1. Créer les races
+        $labradorBreed = Breed::factory()->create(['name' => 'Labrador Retriever']);
+        $poodleBreed = Breed::factory()->create(['name' => 'Poodle']);
+
+        $labradorPet = Pet::factory()->create([
             'name' => 'Buddy',
-            'breed' => PetBreeds::LABRADOR_RETRIEVER,
-            'status' => PetStatus::AVAILABLE, 'is_published' => true
+            'breed_id' => $labradorBreed->id,
+            'status' => PetStatus::AVAILABLE,
+            'is_published' => true
         ]);
 
-        $poodle = Pet::factory()->create([
+        $poodlePet = Pet::factory()->create([
             'name' => 'Fifi',
-            'breed' => PetBreeds::POODLE,
-            'status' => PetStatus::AVAILABLE, 'is_published' => true
+            'breed_id' => $poodleBreed->id,
+            'status' => PetStatus::AVAILABLE,
+            'is_published' => true
         ]);
 
-        $response = $this->get(route('pets.index', ['breed' => PetBreeds::LABRADOR_RETRIEVER->value]));
+        $response = $this->get(route('pets.index', ['breed' => $labradorBreed->id]));
 
         $response->assertOk()
             ->assertSee('Buddy')
             ->assertDontSee('Fifi');
     });
+
 });
 
 describe('Public Pet Detail (Show Page)', function () {
