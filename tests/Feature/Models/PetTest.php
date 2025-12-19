@@ -1,11 +1,11 @@
 <?php
 
 use App\Enums\AdoptionRequestStatus;
-use App\Enums\PetBreeds;
 use App\Enums\PetSex;
 use App\Enums\PetSpecies;
 use App\Enums\PetStatus;
 use App\Models\AdoptionRequest;
+use App\Models\Breed;
 use App\Models\InternalNote;
 use App\Models\Pet;
 use App\Models\User;
@@ -15,15 +15,17 @@ uses(RefreshDatabase::class);
 
 describe('Pet Attributes & Casting', function () {
     it('has fillable attributes', function () {
+        $breed = Breed::factory()->create(['name' => 'Labrador Retriever']);
+
         $pet = Pet::factory()->create([
             'name' => 'Moka',
             'species' => PetSpecies::DOG,
-            'breed' => PetBreeds::LABRADOR_RETRIEVER,
+            'breed_id' => $breed->id,
         ]);
-
         expect($pet->name)->toBe('Moka')
             ->and($pet->species)->toBe(PetSpecies::DOG)
-            ->and($pet->breed)->toBe(PetBreeds::LABRADOR_RETRIEVER);
+            ->and($pet->breed_id)->toBe($breed->id)
+            ->and($pet->breed->name)->toBe('Labrador Retriever');
     });
 
     it('casts species to enum', function () {
@@ -50,11 +52,14 @@ describe('Pet Attributes & Casting', function () {
             ->and($pet->status->value)->toBe('available');
     });
 
-    it('casts breed to enum', function () {
-        $pet = Pet::factory()->create(['breed' => PetBreeds::GOLDEN_RETRIEVER]);
+    it('belongs to a breed', function () {
+        $breed = Breed::factory()->create(['name' => 'Golden Retriever']);
+        $pet = Pet::factory()->create(['breed_id' => $breed->id]);
 
-        expect($pet->breed)->toBeInstanceOf(PetBreeds::class)
-            ->and($pet->breed)->toBe(PetBreeds::GOLDEN_RETRIEVER);
+        expect($pet->breed)
+            ->toBeInstanceOf(Breed::class)
+            ->and($pet->breed->id)->toBe($breed->id)
+            ->and($pet->breed->name)->toBe('Golden Retriever');
     });
 
     it('casts dates correctly', function () {
