@@ -1,6 +1,6 @@
 <x-layout :title="__('public/about.page_title')">
 
-    <x-breadcrumb.breadcrumb class="!mb-0">
+    <x-breadcrumb.breadcrumb class="mb-0!">
         <x-breadcrumb.breadcrumb-item href="{{ route('home') }}">
             {{ __('public/about.breadcrumb.home') }}
         </x-breadcrumb.breadcrumb-item>

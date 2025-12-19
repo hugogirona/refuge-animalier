@@ -25,9 +25,9 @@
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-16">
                 @foreach($team_members as $member)
                     <x-public.partials.about.team-member-card
-                        :name="$member['name']"
-                        :role="$member['role']"
-                        :image="$member['image']"
+                        :name="$member->first_name"
+                        :role="$member->role"
+                        :image="$member->avatar"
                     />
                 @endforeach
             </div>
