@@ -11,28 +11,28 @@
                 'action' => 'a créé la fiche de',
                 'target' => 'Moka',
                 'time' => 'Il y a 2 jours',
-                'link' => route('admin-pets.show'),
+                'link' => '#',
             ],
             [
                 'user' => 'Thomas',
                 'action' => 'a créé la fiche de',
                 'target' => 'Moka',
                 'time' => 'Il y a 2 jours',
-                'link' => route('admin-pets.show'),
+                'link' => '#',
             ],
             [
                 'user' => 'Thomas',
                 'action' => 'a créé la fiche de',
                 'target' => 'Moka',
                 'time' => 'Il y a 2 jours',
-                'link' => route('admin-pets.show'),
+                'link' => '#',
             ],
             [
                 'user' => 'Thomas',
                 'action' => 'a créé la fiche de',
                 'target' => 'Moka',
                 'time' => 'Il y a 2 jours',
-                'link' => route('admin-pets.show'),
+                'link' => '#',
             ],
         ];
 @endphp
