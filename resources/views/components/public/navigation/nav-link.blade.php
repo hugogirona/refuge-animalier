@@ -15,7 +15,7 @@
         'desktop' => [
             'base' => 'text-base inline-flex items-center px-4 py-2 rounded text-sm font-lg transition-colors',
             'default' => 'text-grayscale-text-body hover:text-primary-text-link-label hover:bg-primary-surface-default-subtle',
-            'active' => 'text-primary-text-link-label font-semibold',
+            'active' => 'text-primary-text-link-label',
         ],
     ];
 

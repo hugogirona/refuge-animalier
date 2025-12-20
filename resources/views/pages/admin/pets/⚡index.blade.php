@@ -111,7 +111,7 @@ new class extends Component {
 
         {{-- Desktop: Table --}}
         <template x-if="isDesktop">
-            <livewire:admin.partials.pets.pets-table :pets="$pets" />
+            <livewire:admin.partials.pets.pets-table />
         </template>
     </div>
 
