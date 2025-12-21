@@ -23,7 +23,7 @@
                 {{ $error ? 'border-error-text-link-light! focus:border-transparent!' : 'border-neutral-300 focus:ring-primary-border-default' }}"
         placeholder="{{ $placeholder }}"
         {{ $attributes }}
-    >{{ $value }}</textarea>
+    ></textarea>
 
     @if($helper)
         <p class="text-xs text-neutral-500 mt-1">{{ $helper }}</p>

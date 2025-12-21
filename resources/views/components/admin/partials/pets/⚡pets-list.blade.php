@@ -140,7 +140,7 @@ new class extends Component {
 
                 <div class="flex flex-col items-center text-center mt-6">
                     <img
-                        src="{{ $pet->photo_path ? asset('storage/'.$pet->photo_path) : 'placeholder' }}"
+                        src="{{ $pet->photo_path ? asset('storage/'.$pet->photo_path) : 'https://ui-avatars.com/api/?name='.$pet->name }}"
                         alt="{{ $pet->name }}"
                         class="w-20 h-20 rounded-full object-cover mb-3 bg-neutral-100 border border-neutral-100"
                     >

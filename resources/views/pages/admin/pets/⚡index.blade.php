@@ -1,69 +1,14 @@
 <?php
 
+use App\Models\Pet;
 use Livewire\Component;
 
 new class extends Component {
-    public array $pets = [];
+    public int $pets_count = 0;
 
     public function mount(): void
     {
-        $this->pets = [
-            [
-                'id' => 1,
-                'nom' => 'Moka',
-                'espece' => 'Chien',
-                'race' => 'Caniche',
-                'photo_url' => 'https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?w=200',
-                'statut' => 'Disponible',
-                'statut_publication' => 'Oui',
-                'date_arrivee' => '15/06/2024',
-                'createur' => 'Élise D.',
-            ],
-            [
-                'id' => 2,
-                'nom' => 'Luna',
-                'espece' => 'Chat',
-                'race' => 'Persan',
-                'photo_url' => 'https://images.unsplash.com/photo-1574158622682-e40e69881006?w=200',
-                'statut' => 'Disponible',
-                'statut_publication' => 'Oui',
-                'date_arrivee' => '20/06/2024',
-                'createur' => 'Thomas B.',
-            ],
-            [
-                'id' => 3,
-                'nom' => 'Tango',
-                'espece' => 'Chat',
-                'race' => 'Européen',
-                'photo_url' => 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=200',
-                'statut' => 'En soins',
-                'statut_publication' => 'Non',
-                'date_arrivee' => '10/06/2024',
-                'createur' => 'Élise D.',
-            ],
-            [
-                'id' => 4,
-                'nom' => 'Rex',
-                'espece' => 'Chien',
-                'race' => 'Berger Allemand',
-                'photo_url' => 'https://images.unsplash.com/photo-1568572933382-74d440642117?w=200',
-                'statut' => 'Disponible',
-                'statut_publication' => 'Oui',
-                'date_arrivee' => '05/06/2024',
-                'createur' => 'Thomas B.',
-            ],
-            [
-                'id' => 5,
-                'nom' => 'Bella',
-                'espece' => 'Chien',
-                'race' => 'Labrador',
-                'photo_url' => 'https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=200',
-                'statut' => 'Adopté',
-                'statut_publication' => 'Non',
-                'date_arrivee' => '01/06/2024',
-                'createur' => 'Chloé M.',
-            ],
-        ];
+        $this->pets_count = Pet::count();
     }
 };
 ?>
@@ -81,7 +26,7 @@ new class extends Component {
     <div>
         <x-admin.partials.title-header
             title="Gestion des animaux"
-            subtitle="23 animaux disponibles"
+            :subtitle="$this->pets_count . ' ' . 'animaux disponibles'"
             buttonHref="#"
             buttonLabel="Ajouter un animal"
             buttonIcon="plus"
@@ -106,12 +51,12 @@ new class extends Component {
     >
         {{-- Mobile/Tablet: Cards --}}
         <template x-if="!isDesktop">
-            <livewire:admin.partials.pets.pets-list :pets="$pets" />
+            <livewire:admin.partials.pets.pets-list/>
         </template>
 
         {{-- Desktop: Table --}}
         <template x-if="isDesktop">
-            <livewire:admin.partials.pets.pets-table />
+            <livewire:admin.partials.pets.pets-table/>
         </template>
     </div>
 

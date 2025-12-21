@@ -198,7 +198,7 @@ new class extends Component {
 
                     <x-admin.table.td>
                         <img
-                            src="{{ $pet->photo_path ? asset('storage/'.$pet->photo_path) : 'placeholder' }}"
+                            src="{{ $pet->photo_path ? asset('storage/'.$pet->photo_path) : 'https://ui-avatars.com/api/?name='.$pet->name }}"
                             alt="{{ $pet->name }}"
                             class="w-12 h-12 rounded-lg object-cover bg-neutral-100"
                         >

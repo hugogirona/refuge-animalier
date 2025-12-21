@@ -274,7 +274,6 @@ class Pet extends Model
 
         return $this->query()
             ->where('id', $id)
-            ->available()
             ->firstOrFail();
 
     }

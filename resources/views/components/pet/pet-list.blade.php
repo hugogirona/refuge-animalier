@@ -16,7 +16,7 @@
                 <x-pet.pet-card
                     :name="$pet->name"
                     :breed="$pet->breed->name"
-                    :age="$pet->getAgeTextAttribute()"
+                    :age="$pet->age_text"
                     :sex="$pet->sex"
                     :trait="$pet->trait"
                     :image="$pet->photo_path"
