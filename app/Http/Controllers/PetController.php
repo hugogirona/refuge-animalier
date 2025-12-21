@@ -77,6 +77,15 @@ class PetController extends Controller
 
     public function show(Pet $pet)
     {
+        if (! $pet->isAvailable()) {
+            abort(404);
+        }
+
+        $expectedUrl = route('pets.show', $pet);
+        if (request()->url() !== $expectedUrl) {
+            return redirect($expectedUrl, 301);
+        }
+
         $random_pets = Pet::query()
             ->available()
             ->where('id', '!=', $pet->id)

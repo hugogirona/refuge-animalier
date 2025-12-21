@@ -1,16 +1,14 @@
 <?php
 
+use App\Models\Pet;
 use Livewire\Component;
 
-new class extends Component
-{
-    public string $description;
-    public string $story;
+new class extends Component {
+    public Pet $pet;
 
-    public function mount(): void
+    public function mount(Pet $pet): void
     {
-        $this->description = 'Une belle description';
-        $this->story = 'Moka est arrivé au refuge en juin 2024...';
+        $this->pet = $pet->load(['breed', 'creator']);
     }
 };
 ?>
@@ -24,13 +22,13 @@ new class extends Component
             Animaux
         </x-breadcrumb.breadcrumb-item>
         <x-breadcrumb.breadcrumb-item current data-last>
-            Moka
+            {{ $pet->name }}
         </x-breadcrumb.breadcrumb-item>
     </x-admin.partials.breadcrumb>
 
     <div>
         <x-admin.partials.title-header
-            title="Moka"
+            :title="$pet->name"
             buttonHref="#"
             buttonLabel="Éditer la fiche"
             buttonIcon="edit"
@@ -39,47 +37,42 @@ new class extends Component
 
     <div class="px-4 lg:px-6 py-8 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-[minmax(320px,1fr)_2fr] gap-6">
 
-        <!-- Colonne de gauche -->
         <div class="flex flex-col gap-4">
             <div>
-                <picture>
-                    <source
-                        srcset="{{ asset('storage/images/animals/moka_1x.webp') }} 1x,
-                    {{ asset('storage/images/animals/moka_2x.webp') }} 2x,
-                    {{ asset('storage/images/animals/moka_3x.webp') }} 3x"
-                        type="image/webp"
-                    >
-                    <img
-                        src="{{ asset('storage/images/animals/moka_2x.webp') }}"
-                        alt="Moka, caniche de 5 ans"
-                        class="w-full aspect-video lg:aspect-4/3 object-cover rounded-xl"
-                        loading="lazy"
-                    >
-                </picture>
+                <img
+                    src="{{ $pet->photo_path ? asset('storage/'.$pet->photo_path) : 'https://ui-avatars.com/api/?name='.$pet->name }}"
+                    alt="{{ $pet->name }}"
+                    class="w-full aspect-video lg:aspect-4/3 object-cover rounded-xl bg-neutral-100 border border-neutral-200"
+                    loading="lazy"
+                >
             </div>
+
             <section class="bg-white rounded-xl border border-neutral-200 p-6">
-                <h2 class="text-2xl md:text-3xl font-bold mb-4">Moka</h2>
-                <p class="text-xl text-neutral-600 mb-4">Caniche • Mâle</p>
+                <h2 class="text-2xl md:text-3xl font-bold mb-4">{{ $pet->name }}</h2>
+                <p class="text-xl text-neutral-600 mb-4">
+                    {{ $pet->breed->name ?? 'Race inconnue' }} • {{ $pet->sex->value }}
+                </p>
 
                 @php
                     $animalInfo = [
-                        ['icon' => 'calendar', 'label' => 'Âge', 'value' => '5 ans'],
-                        ['icon' => 'male', 'label' => 'Sexe', 'value' => 'Mâle'],
-                        ['icon' => 'paw', 'label' => 'Pelage', 'value' => 'Brun'],
-                        ['icon' => 'weight', 'label' => 'Poids', 'value' => '8 kg'],
+                        ['icon' => 'calendar', 'label' => 'Âge', 'value' => $pet->age_text],
+                        ['icon' => 'male', 'label' => 'Sexe', 'value' => $pet->sex->value],
+                        ['icon' => 'paw', 'label' => 'Pelage', 'value' => $pet->coat_color],
+                        ['icon' => 'weight', 'label' => 'Poids', 'value' => $pet->weight ?? '-'],
                     ];
                 @endphp
 
                 <x-public.partials.pet-show.info-grid :items="$animalInfo"/>
             </section>
+
             <section class="bg-white rounded-xl border border-neutral-200 p-6">
                 <h2 class="text-2xl md:text-3xl font-semibold mb-4">Santé</h2>
                 @php
                     $animalHealth = [
-                        ['icon' => 'calendar', 'label' => 'Dernière visite vétérinaire', 'value' => '15 octobre 2024'],
-                        ['icon' => 'medicine', 'label' => 'Traitements en cours', 'value' => 'Aucun traitement particulier'],
-                        ['icon' => 'check', 'label' => 'Stérilisé', 'value' => 'Oui'],
-                        ['icon' => 'check', 'label' => 'Vaccins', 'value' => 'À jour - Prochain rappel en mars 2025'],
+                        ['icon' => 'calendar', 'label' => 'Dernière visite', 'value' => $pet->last_vet_visit],
+                        ['icon' => 'medicine', 'label' => 'Traitements', 'value' => 'Aucun (statique)'],
+                        ['icon' => 'check', 'label' => 'Stérilisé', 'value' => $pet->sterilized ? 'Oui' : 'Non'],
+                        ['icon' => 'check', 'label' => 'Vaccins', 'value' => $pet->vaccinations],
                     ];
                 @endphp
 
@@ -87,11 +80,21 @@ new class extends Component
             </section>
         </div>
 
-        <!-- Colonne de droite -->
-        <div class="grid grid-rows-[1fr_auto_auto_auto] space-y-4 pb-8 lg:pb-0">
-            <x-public.partials.pet-show.pet-personality :description="$description" class="min-h-0"/>
-            <x-public.partials.pet-show.pet-story :story="$story"/>
-            <x-admin.partials.pets.internal-notes-section/>
+        <div class="grid grid-rows-[1fr_auto_auto] space-y-4 pb-8 lg:pb-0">
+
+            @if($pet->personality)
+                <x-public.partials.pet-show.pet-personality
+                    :description="$pet->personality"
+                    class="min-h-0"
+                />
+            @endif
+
+            @if($pet->story)
+                <x-public.partials.pet-show.pet-story :story="$pet->story"/>
+            @endif
+
+            <livewire:admin.partials.pets.internal-notes-section :pet="$pet"/>
+
         </div>
 
     </div>
