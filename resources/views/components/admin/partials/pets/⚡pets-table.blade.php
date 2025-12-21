@@ -5,6 +5,7 @@ use App\Models\Pet;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Livewire\Attributes\Computed;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -89,16 +90,14 @@ new class extends Component {
         }
     }
 
-    public function getPetsProperty(): LengthAwarePaginator
+    #[Computed]
+    public function pets(): LengthAwarePaginator
     {
         return Pet::query()
             ->with(['breed', 'creator'])
-            ->when($this->search, function (Builder $q) {
-                $q->where('name', 'like', '%' . $this->search . '%')
-                    ->orWhereHas('breed', function ($bq) {
-                        $bq->where('name', 'like', '%' . $this->search . '%');
-                    });
-            })
+            ->where('name', 'like', '%' . $this->search . '%')
+            ->orWhereHas('breed')
+            ->where('name', 'like', '%' . $this->search . '%')
             ->orderBy($this->sortCol, $this->sortAsc ? 'asc' : 'desc')
             ->paginate(5);
     }
@@ -118,16 +117,19 @@ new class extends Component {
 
         {{-- ACTIONS DE MASSE (Apparaît si sélection) --}}
         @if(count($selected) > 0)
-            <div class="flex items-center gap-2 bg-primary-surface-default-subtle border border-primary-border-default px-4 py-2 rounded-lg animate-fade-in">
+            <div
+                class="flex items-center gap-2 bg-primary-surface-default-subtle border border-primary-border-default px-4 py-2 rounded-lg animate-fade-in">
                 <span class="text-sm font-medium text-primary-text-link-light">
                     {{ count($selected) }} sélectionné(s)
                 </span>
 
-                <button wire:click="publishSelected" class="text-sm px-3 py-1 bg-white border border-neutral-300 rounded hover:bg-neutral-50 text-neutral-700 transition-colors">
+                <button wire:click="publishSelected"
+                        class="text-sm px-3 py-1 bg-white border border-neutral-300 rounded hover:bg-neutral-50 text-neutral-700 transition-colors">
                     Publier
                 </button>
 
-                <button wire:click="unpublishSelected" class="text-sm px-3 py-1 bg-white border border-neutral-300 rounded hover:bg-neutral-50 text-neutral-700 transition-colors">
+                <button wire:click="unpublishSelected"
+                        class="text-sm px-3 py-1 bg-white border border-neutral-300 rounded hover:bg-neutral-50 text-neutral-700 transition-colors">
                     Archiver
                 </button>
 
@@ -185,7 +187,8 @@ new class extends Component {
 
         <x-admin.table.tbody>
             @forelse($this->pets as $pet)
-                <x-admin.table.tr wire:key="pet-{{ $pet->id }}" class="{{ in_array($pet->id, $selected) ? 'bg-primary-surface-default-subtle' : '' }}">
+                <x-admin.table.tr wire:key="pet-{{ $pet->id }}"
+                                  class="{{ in_array($pet->id, $selected) ? 'bg-primary-surface-default-subtle' : '' }}">
                     <x-admin.table.td>
                         {{-- Checkbox INDIVIDUELLE --}}
                         <input
