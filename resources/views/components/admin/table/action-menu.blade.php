@@ -1,8 +1,7 @@
 @props([
-    'viewHref' => null,
-    'editHref' => null,
+    'editAction' => null,
     'deleteAction' => null,
-   'deleteMessage' => 'Êtes-vous sûr de vouloir supprimer cet élément ?',
+    'deleteMessage' => 'Êtes-vous sûr de vouloir supprimer cet élément ?',
 ])
 
 <div class="relative" x-data="{ open: false }">
@@ -11,7 +10,6 @@
         @click="open = !open"
         @click.away="open = false"
         class="inline-flex items-center justify-center text-neutral-400 hover:text-grayscale-text-subtitle p-1 rounded hover:bg-neutral-100 transition"
-        {{ $attributes }}
     >
         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
             <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"/>
@@ -31,26 +29,20 @@
         style="display: none;"
     >
 
-        @if($viewHref)
-            <a href="{{ $viewHref }}" class="flex items-center gap-3 px-4 py-2.5 text-sm text-grayscale-text-subtitle bg-white hover:bg-neutral-50 transition">
-                <svg class="w-4 h-4 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-                </svg>
-                <span>Voir</span>
-            </a>
-        @endif
-
-
-        @if($editHref)
-            <a href="{{ $editHref }}" class="flex items-center gap-3 px-4 py-2.5 text-sm text-grayscale-text-subtitle bg-white hover:bg-neutral-50 transition">
+        @if($editAction)
+            <button
+                wire:click="{{ $editAction }}"
+                @click="open = false"
+                class="flex items-center gap-3 w-full px-4 py-2.5 text-sm text-grayscale-text-subtitle bg-white hover:bg-neutral-50 transition text-left"
+            >
                 <svg class="w-4 h-4 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
                 </svg>
                 <span>Éditer</span>
-            </a>
+            </button>
         @endif
 
-        @if(($viewHref || $editHref) && $deleteAction)
+        @if( $editAction && $deleteAction)
             <div class="border-t border-neutral-200"></div>
         @endif
 
@@ -58,6 +50,7 @@
             <button
                 wire:click="{{ $deleteAction }}"
                 wire:confirm="{{ $deleteMessage }}"
+                @click="open = false"
                 class="flex items-center gap-3 w-full px-4 py-2.5 text-sm text-error-text-link-light bg-white hover:bg-error-surface-default-subtle transition text-left"
             >
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
