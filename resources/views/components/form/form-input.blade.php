@@ -7,19 +7,19 @@
     'value' => '',
     'error' => '',
     'helper' => '',
-    'icon' => NULL,
+    'icon' => null,
     'autocomplete' => null,
     'showPasswordToggle' => false,
-    'wireModel' => null,
 ])
+
 @php
     use App\Enums\IconTypes;
 
-if($icon != NULL || $showPasswordToggle)
-
+    $svgContent = '';
+    if($icon != null || $showPasswordToggle) {
         $iconEnum = IconTypes::tryFrom($icon);
         $svgContent = $iconEnum?->svg() ?? '';
-
+    }
 @endphp
 
 <div>
@@ -44,7 +44,6 @@ if($icon != NULL || $showPasswordToggle)
             name="{{ $name }}"
             value="{{ $value }}"
             placeholder="{{ $placeholder }}"
-            @if($wireModel) wire:model="{{$wireModel}}" @endif
             @if($required) required @endif
             @if($autocomplete) autocomplete="{{ $autocomplete }}" @endif
             class="w-full {{$icon ? 'pr-4 pl-10' :'px-4'}} py-3 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-border-default focus:border-transparent
@@ -55,13 +54,12 @@ if($icon != NULL || $showPasswordToggle)
             <button
                 type="button"
                 @click="showPassword = !showPassword"
-                class="absolute inset-y-0 right-0 px-3 flex items-center text-grayscale-text-caption hover:text-grayscale-text-subtitle  transition-colors"
+                class="absolute inset-y-0 right-0 px-3 flex items-center text-grayscale-text-caption hover:text-grayscale-text-subtitle transition-colors"
             >
                 {!! IconTypes::tryFrom('eye-open')->svg() !!}
                 {!! IconTypes::tryFrom('eye-close')->svg() !!}
             </button>
         @endif
-
     </div>
     @if($helper)
         <p class="text-xs text-grayscale-text-subtitle mt-1">{{ $helper }}</p>

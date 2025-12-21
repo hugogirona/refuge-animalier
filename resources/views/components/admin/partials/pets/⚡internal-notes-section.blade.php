@@ -23,7 +23,7 @@ new class extends Component {
 
     public function addNote(): void
     {
-        $this->validate(['content' => 'required|string|min:3']);
+        $this->validate(['content' => 'required|string|min:10']);
 
         $this->pet->internalNotes()->create([
             'content' => $this->content,

@@ -2,12 +2,11 @@
     'title',
     'subtitle' => null,
     'buttonLabel' => null,
-    'buttonHref' => null,
+    'buttonAction' => null,
     'buttonVariant' => 'primary',
     'buttonIcon' => null,
     'badgeStatus' => null,
     'badgeType' => 'secondary'
-
 ])
 
 <div {{ $attributes->merge(['class' => 'max-w-7xl m-auto px-5 py-4 md:px-6 flex items-center gap-4 justify-between flex-wrap']) }}>
@@ -25,12 +24,14 @@
         </div>
     </div>
 
-    @if($buttonLabel && $buttonHref)
+    @if($buttonLabel)
         <div>
             <x-cta-button
-                :href="$buttonHref"
+                role="button"
+                type="button"
                 :variant="$buttonVariant"
                 :icon="$buttonIcon"
+                wire:click="{{$buttonAction}}"
             >
                 {{ $buttonLabel }}
             </x-cta-button>

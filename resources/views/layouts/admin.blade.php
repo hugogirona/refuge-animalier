@@ -27,6 +27,8 @@
 
 
     </div>
+
+    <livewire:global-modal />
 </body>
 </html>
 

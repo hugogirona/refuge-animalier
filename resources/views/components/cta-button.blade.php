@@ -5,7 +5,8 @@
     'icon' => null,
     'icon_position' => 'right',
     'external' => false,
-    'role' => 'cta'
+    'role' => 'cta',
+    'type' => 'submit'
 ])
 
 @php
@@ -46,7 +47,7 @@
 
 @if($role == 'button')
     <button
-        type="submit"
+        type="{{$type}}"
         {{ $attributes->merge(['class' => "inline-flex justify-center items-center gap-2 font-semibold rounded transition-all transform duration-200 {$variantClass} {$sizeClass}"]) }}
     >
         @if($iconSvg && $icon_position === 'left')
@@ -76,4 +77,3 @@
         @endif
     </a>
 @endif
-

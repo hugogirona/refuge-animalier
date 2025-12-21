@@ -14,7 +14,6 @@ describe('Internal Notes Component', function () {
         $user = User::factory()->create();
         $pet = Pet::factory()->create();
 
-        // On crée une note existante
         InternalNote::factory()->create([
             'content' => 'Note historique',
             'user_id' => $user->id,

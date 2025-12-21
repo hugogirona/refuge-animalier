@@ -22,14 +22,12 @@
         @foreach($options as $optionValue => $optionLabel)
             @php
                 $uniqueId = $name . '_' . $optionValue . '_' . uniqid();
-                // On vérifie si cette option correspond à la valeur old()
                 $isChecked = (string)$value === (string)$optionValue;
             @endphp
 
             <label
                 for="{{ $uniqueId }}"
                 class="flex items-center p-4 border rounded-lg cursor-pointer transition-colors {{ $layout === 'horizontal' ? 'flex-1' : '' }}
-                {{-- Style dynamique si coché ou erreur --}}
                 {{ $error ? 'border-error-text-link-light' : ($isChecked ? 'border-primary-border-default bg-primary-surface-default-subtle' : 'border-neutral-300 hover:border-primary-border-default') }}"
             >
                 <input
@@ -40,6 +38,7 @@
                     @if($required) required @endif
                     @checked($isChecked)
                     class="w-5 h-5 text-primary-500 border-neutral-300 focus:ring-primary-border-default"
+                    {{ $attributes }}
                 >
                 <span class="ml-2 text-grayscale-text-subtitle">{{ $optionLabel }}</span>
             </label>
@@ -47,7 +46,7 @@
     </div>
 
     @if($error)
-        <p class="text-error-text-link-light text-sm mt-2">
+        <p class="text-error-text-link-light text-sm mt-2 error-message" data-error="{{ $name }}">
             {{ $error }}
         </p>
     @endif

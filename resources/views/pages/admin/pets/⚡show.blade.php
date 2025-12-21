@@ -10,6 +10,14 @@ new class extends Component {
     {
         $this->pet = $pet->load(['breed', 'creator']);
     }
+
+    public function edit(): void
+    {
+        $this->dispatch('open_modal',
+            form: 'admin.partials.pets.form',
+            model_id: (string) $this->pet->id
+        );
+    }
 };
 ?>
 
@@ -29,8 +37,8 @@ new class extends Component {
     <div>
         <x-admin.partials.title-header
             :title="$pet->name"
-            buttonHref="#"
             buttonLabel="Éditer la fiche"
+            buttonAction="edit"
             buttonIcon="edit"
         />
     </div>
@@ -80,22 +88,23 @@ new class extends Component {
             </section>
         </div>
 
-        <div class="grid grid-rows-[1fr_auto_auto] space-y-4 pb-8 lg:pb-0">
-
+        <div class="flex flex-col gap-4 pb-8 lg:pb-0 min-w-0">
             @if($pet->personality)
                 <x-public.partials.pet-show.pet-personality
                     :description="$pet->personality"
-                    class="min-h-0"
                 />
             @endif
 
             @if($pet->story)
-                <x-public.partials.pet-show.pet-story :story="$pet->story"/>
+                <x-public.partials.pet-show.pet-story
+                    :story="$pet->story"
+                    :arrivalDate="$pet->arrived_at?->format('d/m/Y') ?? 'Date inconnue'"
+                />
             @endif
 
             <livewire:admin.partials.pets.internal-notes-section :pet="$pet"/>
-
         </div>
+
 
     </div>
 </main>

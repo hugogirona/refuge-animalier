@@ -26,7 +26,7 @@ class Pet extends Model
     protected $fillable = [
         'name',
         'species',
-        'breed',
+        'breed_id',
         'sex',
         'coat_color',
         'birth_date',
@@ -52,6 +52,7 @@ class Pet extends Model
             'sex' => PetSex::class,
             'status' => PetStatus::class,
             'is_published' => 'boolean',
+            'last_vet_visit' => 'date',
             'published_at' => 'datetime',
             'arrived_at' => 'date',
             'birth_date' => 'date',

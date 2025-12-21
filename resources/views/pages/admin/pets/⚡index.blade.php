@@ -10,6 +10,16 @@ new class extends Component {
     {
         $this->pets_count = Pet::count();
     }
+
+    public function create(): void
+    {
+
+        $this->dispatch('open_modal',
+            form: 'admin.partials.pets.form',
+            model_id: null
+        );
+    }
+
 };
 ?>
 
@@ -27,13 +37,12 @@ new class extends Component {
         <x-admin.partials.title-header
             title="Gestion des animaux"
             :subtitle="$this->pets_count . ' ' . 'animaux disponibles'"
-            buttonHref="#"
             buttonLabel="Ajouter un animal"
+            buttonAction="create"
             buttonIcon="plus"
         />
     </div>
 
-    {{-- Responsive Container --}}
     <div
         x-data="{
         isDesktop: window.innerWidth >= 1350,
