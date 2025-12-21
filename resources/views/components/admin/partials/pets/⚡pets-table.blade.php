@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Livewire\Attributes\Computed;
+use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -53,6 +54,19 @@ new class extends Component {
         $this->resetSelection();
     }
 
+    public function edit($id): void
+    {
+        $this->dispatch('open_modal',
+            form: 'admin.partials.pets.form',
+            model_id: (string)$id
+        );
+    }
+
+    public function show($id): void
+    {
+        $this->redirect(route('admin-pets.show', $id), navigate: true);
+    }
+
     public function delete($id): void
     {
         $pet = Pet::find($id);
@@ -60,7 +74,6 @@ new class extends Component {
             $pet->delete();
         }
     }
-
 
     public function unpublishSelected(): void
     {
@@ -90,6 +103,13 @@ new class extends Component {
         }
     }
 
+    #[On('pet-saved')]
+    public function refreshPets(): void
+    {
+        unset($this->pets);
+    }
+
+
     #[Computed]
     public function pets(): LengthAwarePaginator
     {
@@ -115,7 +135,7 @@ new class extends Component {
             />
         </div>
 
-        {{-- ACTIONS DE MASSE (Apparaît si sélection) --}}
+
         @if(count($selected) > 0)
             <div
                 class="flex items-center gap-2 bg-primary-surface-default-subtle border border-primary-border-default px-4 py-2 rounded-lg animate-fade-in">
@@ -144,12 +164,12 @@ new class extends Component {
         @endif
     </div>
 
-    {{-- Table --}}
+
     <x-admin.table.table>
         <x-admin.table.thead>
             <x-admin.table.tr>
                 <x-admin.table.th class="w-12">
-                    {{-- Checkbox TOUT SÉLECTIONNER --}}
+
                     <input
                         type="checkbox"
                         wire:model.live="selectAll"
@@ -171,7 +191,6 @@ new class extends Component {
                 <x-admin.table.th>Statut</x-admin.table.th>
                 <x-admin.table.th>Publié</x-admin.table.th>
 
-                {{-- Colonne DATE Triable --}}
                 <x-admin.table.th
                     sortable
                     wire:click="sortBy('arrived_at')"
@@ -187,16 +206,20 @@ new class extends Component {
 
         <x-admin.table.tbody>
             @forelse($this->pets as $pet)
-                <x-admin.table.tr wire:key="pet-{{ $pet->id }}"
-                                  class="{{ in_array($pet->id, $selected) ? 'bg-primary-surface-default-subtle' : '' }}">
+                <x-admin.table.tr
+                    wire:key="pet-{{ $pet->id }}"
+                    wire:click="show({{ $pet->id }})"
+                    class="cursor-pointer hover:bg-neutral-50 transition-colors {{ in_array($pet->id, $selected) ? 'bg-primary-surface-default-subtle' : '' }}"
+                >
                     <x-admin.table.td>
-                        {{-- Checkbox INDIVIDUELLE --}}
-                        <input
-                            type="checkbox"
-                            wire:model.live="selected"
-                            value="{{ $pet->id }}"
-                            class="w-4 h-4 text-primary-600 border-neutral-300 rounded focus:ring-primary-500 cursor-pointer"
-                        >
+                        <div @click.stop>
+                            <input
+                                type="checkbox"
+                                wire:model.live="selected"
+                                value="{{ $pet->id }}"
+                                class="w-4 h-4 text-primary-600 border-neutral-300 rounded focus:ring-primary-500 cursor-pointer"
+                            >
+                        </div>
                     </x-admin.table.td>
 
                     <x-admin.table.td>
@@ -241,12 +264,13 @@ new class extends Component {
                     </x-admin.table.td>
 
                     <x-admin.table.td>
-                        <x-admin.table.action-menu
-                            :viewHref="route('admin-pets.show', $pet)"
-                            :editHref="'#'"
-                            deleteAction="delete({{ $pet->id }})"
-                            deleteMessage="Voulez-vous vraiment supprimer {{ $pet->name }} ?"
-                        />
+                        <div @click.stop>
+                            <x-admin.table.action-menu
+                                editAction="edit({{ $pet->id }})"
+                                deleteAction="delete({{ $pet->id }})"
+                                deleteMessage="Voulez-vous vraiment supprimer {{ $pet->name }} ?"
+                            />
+                        </div>
                     </x-admin.table.td>
 
                 </x-admin.table.tr>

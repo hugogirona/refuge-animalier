@@ -3,6 +3,8 @@
 use App\Models\Pet;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Livewire\Attributes\Computed;
+use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -41,6 +43,19 @@ new class extends Component {
         $this->selectAll = false;
     }
 
+    public function edit($id): void
+    {
+        $this->dispatch('open_modal',
+            form: 'admin.partials.pets.form',
+            model_id: (string)$id
+        );
+    }
+
+    public function show($id): void
+    {
+        $this->redirect(route('admin-pets.show', $id), navigate: true);
+    }
+
     public function delete($id): void
     {
         Pet::find($id)?->delete();
@@ -64,23 +79,28 @@ new class extends Component {
         $this->selected = [];
     }
 
-    public function getPetsProperty(): LengthAwarePaginator
+    #[On('pet-saved')]
+    public function refreshPets(): void
+    {
+        unset($this->pets);
+    }
+
+    #[Computed]
+    public function pets(): LengthAwarePaginator
     {
         return Pet::query()
             ->with(['breed', 'creator'])
-            ->when($this->search, function (Builder $q) {
-                $q->where('name', 'like', '%' . $this->search . '%')
-                    ->orWhereHas('breed', function ($bq) {
-                        $bq->where('name', 'like', '%' . $this->search . '%');
-                    });
-            })
+            ->where('name', 'like', '%' . $this->search . '%')
+            ->orWhereHas('breed')
+            ->where('name', 'like', '%' . $this->search . '%')
             ->orderBy($this->sortCol, $this->sortAsc ? 'asc' : 'desc')
-            ->paginate(8);
+            ->paginate(6);
     }
 };
 ?>
 
-<div class="mb-12 flex flex-col gap-4">
+<div class="mb-12 flex flex-col gap-4"
+     >
 
     <div class="flex flex-col gap-3">
         <x-search-filter.search-bar
@@ -122,20 +142,24 @@ new class extends Component {
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
         @forelse($this->pets as $pet)
             <div wire:key="pet-mobile-{{ $pet->id }}"
+                 wire:click="show({{ $pet->id }})"
                  class="bg-white rounded-xl border border-neutral-200 p-4 shadow-sm relative {{ in_array($pet->id, $selected) ? 'ring-2 ring-primary-border-default bg-primary-surface-default-subtle' : '' }}">
 
                 <div class="absolute top-4 left-4 z-10">
-                    <input type="checkbox" wire:model.live="selected" value="{{ $pet->id }}"
-                           class="w-5 h-5 text-primary-600 border-neutral-300 rounded focus:ring-primary-500 shadow-sm">
+                    <div @click.stop>
+                        <input type="checkbox" wire:model.live="selected" value="{{ $pet->id }}"
+                               class="w-5 h-5 text-primary-600 border-neutral-300 rounded focus:ring-primary-500 shadow-sm">
+                    </div>
                 </div>
 
                 <div class="absolute top-4 right-4 z-10">
-                    <x-admin.table.action-menu
-                        :viewHref="route('admin-pets.show', $pet)"
-                        :editHref="'#'"
-                        deleteAction="delete({{ $pet->id }})"
-                        deleteMessage="Supprimer {{ $pet->name }} ?"
-                    />
+                    <div @click.stop>
+                        <x-admin.table.action-menu
+                            editAction="edit({{ $pet->id }})"
+                            deleteAction="delete({{ $pet->id }})"
+                            deleteMessage="Voulez-vous vraiment supprimer {{ $pet->name }} ?"
+                        />
+                    </div>
                 </div>
 
                 <div class="flex flex-col items-center text-center mt-6">

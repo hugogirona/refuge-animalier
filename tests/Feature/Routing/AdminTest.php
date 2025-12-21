@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Pet;
 use App\Models\User;
 
 
@@ -21,7 +22,9 @@ it('can load the pets index page', function () {
 });
 
 it('can load the pets show page', function () {
-    $response = $this->get(route('admin-pets.show'));
+    $pet = Pet::factory()->create();
+
+    $response = $this->get(route('admin-pets.show', $pet));
     $response->assertStatus(200);
 });
 

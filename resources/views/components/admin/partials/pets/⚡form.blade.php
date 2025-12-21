@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\PetUpdated;
 use App\Models\Pet;
 use App\Models\Breed;
 use App\Enums\PetSex;
@@ -32,10 +33,10 @@ new class extends Component {
     public ?string $arrived_at = null;
 
     // Pour les selects
-    public $breeds = [];
-    public $species_options = [];
-    public $sex_options = [];
-    public $status_options = [];
+    public array $breeds = [];
+    public array $species_options = [];
+    public array $sex_options = [];
+    public array $status_options = [];
 
     public function mount(?string $model_id = null): void
     {
@@ -165,7 +166,9 @@ new class extends Component {
             }
 
             $pet->update($data);
-            session()->flash('success', 'Animal modifié avec succès !');
+
+            event(new PetUpdated($pet->fresh()));
+
         } else {
             $data['created_by'] = Auth::id();
 
@@ -174,12 +177,14 @@ new class extends Component {
                 $data['published_at'] = now();
             }
 
-            Pet::create($data);
-            session()->flash('success', 'Animal créé avec succès !');
+            $pet = Pet::create($data);
+
+            event(new PetUpdated($pet));
         }
 
         $this->dispatch('close_modal');
         $this->dispatch('pet-saved');
+
     }
 
     public function isEditing(): bool

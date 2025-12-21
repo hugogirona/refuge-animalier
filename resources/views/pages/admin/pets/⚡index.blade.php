@@ -45,13 +45,13 @@ new class extends Component {
 
     <div
         x-data="{
-        isDesktop: window.innerWidth >= 1350,
+        isDesktop: window.innerWidth >= 1500,
         resizeTimer: null,
         init() {
             window.addEventListener('resize', () => {
                 clearTimeout(this.resizeTimer)
                 this.resizeTimer = setTimeout(() => {
-                    this.isDesktop = window.innerWidth >= 1350
+                    this.isDesktop = window.innerWidth >= 1500
                 }, 50)
             })
         }
