@@ -1,108 +1,145 @@
 <?php
 
+use App\Enums\AdoptionRequestStatus;
+use App\Models\AdoptionRequest;
+use Livewire\Attributes\Computed;
 use Livewire\Component;
 
 new class extends Component {
-    public array $adopter = [];
-    public array $pet = [];
-    public array $actions = [];
 
-    public function mount(): void
+    public AdoptionRequest $adoption;
+
+    public function mount(AdoptionRequest $adoption): void
     {
-        $this->adopter = [
-            'first_name' => 'Sarah',
-            'last_name' => 'Martin',
-            'email' => 'sarah.martin@email.com',
-            'phone' => '+32 475 12 34 56',
-            'birth_date' => '15 mars 1990 (34 ans)',
-            'address' => '45 Avenue des Fleurs',
-            'postal_code' => '1050',
-            'city' => 'Bruxelles',
-            'profession' => 'Enseignante',
-            'housing_type' => 'Maison',
-            'has_garden' => true,
-            'garden_size' => '500m²',
-            'pet_experience' => 'J\'ai eu un caniche pendant 12 ans. Je connais bien la race et ses besoins spécifiques.',
-            'other_pets' => 'Aucun',
-            'motivation' => 'Je cherche un compagnon calme et affectueux. Moka semble parfait ! J\'ai un grand jardin et beaucoup de temps à lui consacrer. J\'ai déjà eu un caniche et je connais bien leurs besoins.',
-            'preferred_days' => ['Mercredi', 'Samedi', 'Dimanche'],
-            'time_slots' => ['Après-midi', 'Soir'],
-            'contact_preference' => 'Téléphone',
-        ];
+        $this->adoption = $adoption->load(['pet', 'pet.breed']);
+    }
 
-        $this->pet = [
-            'name' => 'Moka',
-            'breed' => 'Caniche',
-            'age' => '5',
-            'sex' => 'Mâle',
-            'image' => 'moka',
-            'slug' => 'moka',
-            'status' => 'Disponible',
-        ];
-
-        $this->actions = [
+    #[Computed]
+    public function actions(): array
+    {
+        $actions = [
             [
                 'label' => 'Envoyer un email',
-                'href' => 'mailto:' . $this->adopter['email'],
+                'href' => 'mailto:' . $this->adoption->email,
                 'variant' => 'secondary',
+                'icon' => 'envelope',
             ],
             [
                 'label' => 'Appeler',
-                'href' => 'tel:' . str_replace(' ', '', $this->adopter['phone']),
+                'href' => 'tel:' . str_replace(' ', '', $this->adoption->phone),
                 'variant' => 'secondary',
-            ],
-            [
-                'label' => 'Valider la demande',
-                'href' => '#',
-                'variant' => 'success',
-            ],
-            [
-                'label' => 'Refuser la demande',
-                'href' => '#',
-                'variant' => 'error',
+                'icon' => 'phone',
             ],
         ];
 
+        $status = $this->adoption->status instanceof AdoptionRequestStatus
+            ? $this->adoption->status
+            : AdoptionRequestStatus::from($this->adoption->status);
+
+        if (in_array($status, [AdoptionRequestStatus::PENDING, AdoptionRequestStatus::NEW])) {
+            $actions[] = [
+                'label' => 'Valider la demande',
+                'action' => 'accept',
+                'variant' => 'success',
+                'icon' => 'check',
+                'confirm' => 'Êtes-vous sûr de vouloir accepter cette demande d\'adoption ?',
+            ];
+
+            $actions[] = [
+                'label' => 'Refuser la demande',
+                'action' => 'reject',
+                'variant' => 'error',
+                'confirm' => 'Êtes-vous sûr de vouloir refuser cette demande d\'adoption ?',
+            ];
+        }
+
+        if ($status === AdoptionRequestStatus::ACCEPTED) {
+            $actions[] = [
+                'label' => 'Remettre en attente',
+                'action' => 'setPending',
+                'variant' => 'secondary',
+            ];
+        }
+
+        if ($status === AdoptionRequestStatus::REJECTED) {
+            $actions[] = [
+                'label' => 'Reconsidérer',
+                'action' => 'setPending',
+                'variant' => 'secondary',
+            ];
+        }
+
+        return $actions;
     }
-}
+
+    #[Computed]
+    public function statusBadgeType(): string
+    {
+        return match($this->adoption->status) {
+            AdoptionRequestStatus::NEW => 'primary',
+            AdoptionRequestStatus::PENDING => 'warning',
+            AdoptionRequestStatus::ACCEPTED => 'success',
+            AdoptionRequestStatus::REJECTED => 'error',
+        };
+    }
+
+    #[Computed]
+    public function statusLabel(): string
+    {
+        return match($this->adoption->status) {
+            AdoptionRequestStatus::NEW => 'Nouvelle',
+            AdoptionRequestStatus::PENDING => 'En attente',
+            AdoptionRequestStatus::ACCEPTED => 'Acceptée',
+            AdoptionRequestStatus::REJECTED => 'Refusée',
+        };
+    }
+
+
+    // Actions
+    public function accept(): void
+    {
+        $this->adoption->update(['status' => AdoptionRequestStatus::ACCEPTED]);
+    }
+
+    public function reject(): void
+    {
+        $this->adoption->update(['status' => AdoptionRequestStatus::REJECTED]);
+    }
+
+    public function setPending(): void
+    {
+        $this->adoption->update(['status' => AdoptionRequestStatus::PENDING]);
+    }
+};
 ?>
 
 <main class="flex-1">
+    {{-- Breadcrumb Dynamique --}}
     <x-admin.partials.breadcrumb>
-        <x-breadcrumb.breadcrumb-item href="{{ route('dashboard.index') }}">
-            Tableau de bord
+        <x-breadcrumb.breadcrumb-item href="{{ route('dashboard.index') }}">Tableau de bord
         </x-breadcrumb.breadcrumb-item>
-        <x-breadcrumb.breadcrumb-item href="{{ route('adoptions.index') }}">
-            Adoptions
-        </x-breadcrumb.breadcrumb-item>
-        <x-breadcrumb.breadcrumb-item current data-last>
-            Dossier #1234
-        </x-breadcrumb.breadcrumb-item>
+        <x-breadcrumb.breadcrumb-item href="{{ route('adoptions.index') }}">Demandes</x-breadcrumb.breadcrumb-item>
+        <x-breadcrumb.breadcrumb-item current data-last>Dossier
+            #{{ date('Y') . $adoption->id }}</x-breadcrumb.breadcrumb-item>
     </x-admin.partials.breadcrumb>
-
     <div>
         <x-admin.partials.title-header
             title="Demande d'adoption"
-            subtitle="Sarah Martin pour Moka"
+            :subtitle="$this->adoption->full_name . ' pour ' . $this->adoption->pet->name"
+            :badgeStatus="$this->statusLabel"
+            :badgeType="$this->statusBadgeType"
         />
     </div>
 
-    <div class="max-w-7xl mx-auto p-5 md:p-6 grid grid-cols-1 lg:grid-cols-[auto_1Fr] gap-4">
-        <div class="flex flex-col gap-4 lg:order-2 min-w-sm">
+    <div class="max-w-7xl mx-auto p-5 md:p-6 grid grid-cols-1 lg:grid-cols-[2Fr_1Fr] gap-4">
+        <div class="flex flex-col gap-4 lg:order-2 lg:col-span-1">
 
-                <x-admin.partials.adoptions.adoption-pet-card
-                    :name="$pet['name']"
-                    :breed="$pet['breed']"
-                    :age="$pet['age']"
-                    :sex="$pet['sex']"
-                    :image="$pet['image']"
-                    :slug="$pet['slug']"
-                    :status="$pet['status']"
-                />
+            <x-admin.partials.adoptions.adoption-pet-card :pet="$this->adoption->pet"/>
 
-            <x-admin.partials.adoptions.quick-actions :actions="$actions"/>
+            <x-admin.partials.adoptions.quick-actions :actions="$this->actions"/>
         </div>
-        <x-admin.partials.adoptions.adopter-info-section :adopter="$adopter"/>
+        <x-admin.partials.adoptions.adopter-info-section :adoption="$this->adoption"/>
     </div>
 
 </main>
+

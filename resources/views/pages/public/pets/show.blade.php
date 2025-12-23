@@ -37,21 +37,17 @@
         <!-- Colonne de gauche -->
         <div class="flex flex-col gap-4">
             <div>
-                <picture>
-                    <source
-                        srcset="{{ asset('storage/images/animals/'. $pet->photo_path .'_1x.webp') }} 1x,
-                                {{ asset('storage/images/animals/'. $pet->photo_path .'_2x.webp') }} 2x,
-                                {{ asset('storage/images/animals/'. $pet->photo_path .'_3x.webp') }} 3x"
-                        type="image/webp"
-                    >
-                    <img
-                        src="{{ asset('storage/images/animals/'. $pet->photo_path .'_2x.webp') }}"
-                        alt="{{ __('public/pets.show.image_alt', ['name' => $pet->name, 'breed' => $pet->breed->name, 'age' => $pet->age_text]) }}"
-                        class="w-full aspect-video lg:aspect-4/3 object-cover rounded-xl"
-                        loading="lazy"
-                    >
-                </picture>
+                <img
+                    src="{{ $pet->large_url }}"
+                    srcset="{{ $pet->medium_url }} 600w,
+                {{ $pet->large_url }} 1200w"
+                    sizes="(max-width: 1024px) 100vw, 1200px"
+                    alt="{{ __('public/pets.show.image_alt', ['name' => $pet->name, 'breed' => $pet->breed->name, 'age' => $pet->age_text]) }}"
+                    class="w-full aspect-video lg:aspect-4/3 object-cover rounded-xl"
+                    loading="lazy"
+                >
             </div>
+
 
             <section class="bg-white rounded-xl border border-neutral-200 p-6">
                 <h2 class="text-2xl md:text-3xl font-bold mb-4">{{ $pet->name }}</h2>

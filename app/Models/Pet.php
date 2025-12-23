@@ -163,10 +163,10 @@ class Pet extends Model
     }
 
     /*
-    |--------------------------------------------------------------------------
-    | Image Accessors
-    |--------------------------------------------------------------------------
-    */
+|--------------------------------------------------------------------------
+| Image Accessors
+|--------------------------------------------------------------------------
+*/
 
     /**
      * Get thumbnail URL
@@ -192,18 +192,6 @@ class Pet extends Model
         return $this->getVariantUrl('large');
     }
 
-    /**
-     * Get original photo URL (serve from private storage via controller)
-     */
-    public function getPhotoUrlAttribute(): ?string
-    {
-        if (!$this->photo_path) {
-            return null;
-        }
-
-        // L'original est privé, il faut passer par une route
-        return route('pets.image.original', ['filename' => $this->photo_path]);
-    }
 
     /**
      * Get variant URL or fallback to placeholder
@@ -211,7 +199,7 @@ class Pet extends Model
     protected function getVariantUrl(string $variantName): ?string
     {
         if (!$this->photo_path) {
-            return null;
+            return $this->getPlaceholderUrl();
         }
 
         $fileNameWithoutExt = pathinfo($this->photo_path, PATHINFO_FILENAME);
@@ -220,12 +208,10 @@ class Pet extends Model
         $variantPath = sprintf(config('pets.path_to_variant'), $variantName);
         $fullPath = $variantPath . '/' . $fileNameWithoutExt . '.' . $extension;
 
-        // Si le variant PUBLIC existe, le retourner
         if (Storage::disk('public')->exists($fullPath)) {
             return asset('storage/' . $fullPath);
         }
 
-        // Fallback : placeholder
         return $this->getPlaceholderUrl();
     }
 

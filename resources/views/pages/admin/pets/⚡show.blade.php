@@ -48,12 +48,16 @@ new class extends Component {
         <div class="flex flex-col gap-4">
             <div>
                 <img
-                    src="{{ $pet->photo_path ? asset('storage/'.$pet->photo_path) : 'https://ui-avatars.com/api/?name='.$pet->name }}"
+                    src="{{ $pet->large_url }}"
+                    srcset="{{ $pet->medium_url }} 600w,
+                {{ $pet->large_url }} 1200w"
+                    sizes="(max-width: 1024px) 100vw, 1200px"
                     alt="{{ $pet->name }}"
                     class="w-full aspect-video lg:aspect-4/3 object-cover rounded-xl bg-neutral-100 border border-neutral-200"
                     loading="lazy"
                 >
             </div>
+
 
             <section class="bg-white rounded-xl border border-neutral-200 p-6">
                 <h2 class="text-2xl md:text-3xl font-bold mb-4">{{ $pet->name }}</h2>
