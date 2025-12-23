@@ -115,9 +115,14 @@ new class extends Component {
     {
         return Pet::query()
             ->with(['breed', 'creator'])
-            ->where('name', 'like', '%' . $this->search . '%')
-            ->orWhereHas('breed')
-            ->where('name', 'like', '%' . $this->search . '%')
+            ->when($this->search, function (Builder $q) {
+                $q->where(function ($query) {
+                    $query->where('name', 'like', '%' . $this->search . '%')
+                        ->orWhereHas('breed', function ($breedQuery) {
+                            $breedQuery->where('name', 'like', '%' . $this->search . '%');
+                        });
+                });
+            })
             ->orderBy($this->sortCol, $this->sortAsc ? 'asc' : 'desc')
             ->paginate(5);
     }
@@ -224,11 +229,12 @@ new class extends Component {
 
                     <x-admin.table.td>
                         <img
-                            src="{{ $pet->photo_path ? asset('storage/'.$pet->photo_path) : 'https://ui-avatars.com/api/?name='.$pet->name }}"
+                            src="{{ $pet->thumbnail_url }}"
                             alt="{{ $pet->name }}"
                             class="w-12 h-12 rounded-lg object-cover bg-neutral-100"
                         >
                     </x-admin.table.td>
+
 
                     <x-admin.table.td>
                         <span class="font-semibold text-grayscale-text-title">{{ $pet->name }}</span>

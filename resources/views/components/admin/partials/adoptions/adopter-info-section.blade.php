@@ -1,5 +1,5 @@
 @props([
-    'adopter' => []
+    'adoption'
 ])
 
 <section>
@@ -10,42 +10,35 @@
             <h3 class="text-sm font-semibold text-neutral-500 uppercase tracking-wider mb-3">Contact</h3>
             @php
                 $adopterInfo = [
-                    ['icon' => 'user', 'label' => 'Nom complet', 'value' => 'Sarah Martin'],
-                    ['icon' => 'email', 'label' => 'Email', 'value' => 'sarah.martin@email.com '],
-                    ['icon' => 'phone', 'label' => 'Téléphone', 'value' => 'Brun'],
-                    ['icon' => 'location', 'label' => 'Adresse', 'value' => '8 kg'],
+                    ['icon' => 'user', 'label' => 'Nom complet', 'value' => $adoption->full_name],
+                    ['icon' => 'email', 'label' => 'Email', 'value' => $adoption->email],
+                    ['icon' => 'phone', 'label' => 'Téléphone', 'value' => $adoption->phone],
+                    ['icon' => 'location', 'label' => 'Adresse', 'value' => $adoption->address . ', ' . $adoption->zip_code . ' ' . $adoption->city],
                 ];
             @endphp
 
             <x-public.partials.pet-show.info-grid :items="$adopterInfo"/>
         </article>
 
-        {{-- Situation --}}
         <x-admin.partials.adoptions.adopter-situation-section
-            :housingType="$adopter['housing_type'] ?? null"
-            :hasGarden="$adopter['has_garden'] ?? null"
-            :gardenSize="$adopter['garden_size'] ?? null"
-            :otherPets="$adopter['other_pets'] ?? null"
-            :petExperience="$adopter['pet_experience'] ?? null"
+            :housingType="$adoption->accommodation_type"
+            :hasGarden="$adoption->has_garden"
+            :otherPets="$adoption->has_other_pets"
+            :petExperience="$adoption->had_same"
         />
 
-
-        {{-- Disponibilités --}}
         <x-admin.partials.adoptions.adopter-availability-section
-            :preferredDays="$adopter['preferred_days'] ?? null"
-            :timeSlots="$adopter['time_slots'] ?? null"
-            :contactPreference="$adopter['contact_preference'] ?? null"
+            :preferredDays="$adoption->available_days"
+            :timeSlots="$adoption->available_hours"
+            :contactPreference="$adoption->preferred_contact_method"
         />
 
-        {{-- Message --}}
-        @if(isset($adopter['motivation']))
-            <article>
-                <h3 class="text-sm font-semibold text-neutral-500 uppercase tracking-wider mb-3">Message de
-                    l'adoptant</h3>
-                <div
-                    class="bg-secondary-surface-default-subtle border border-secondary-border-default-subtle rounded-lg p-4">
+        @if($adoption->message)
+            <article class="mt-6">
+                <h3 class="text-sm font-semibold text-neutral-500 uppercase tracking-wider mb-3">Message de l'adoptant</h3>
+                <div class="bg-secondary-surface-default-subtle border border-secondary-border-default-subtle rounded-lg p-4">
                     <p class="text-grayscale-text-body leading-relaxed italic">
-                        "{{ $adopter['motivation'] }}"
+                        "{{ $adoption->message }}"
                     </p>
                 </div>
             </article>

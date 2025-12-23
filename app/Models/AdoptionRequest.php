@@ -41,6 +41,7 @@ class AdoptionRequest extends Model
     protected function casts(): array
     {
         return [
+            'status' => AdoptionRequestStatus::class,
             'has_garden' => 'boolean',
             'newsletter_consent' => 'boolean',
             'available_days' => 'array',

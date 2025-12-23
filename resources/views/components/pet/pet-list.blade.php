@@ -14,13 +14,6 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full mb-6">
             @foreach($pets as $pet)
                 <x-pet.pet-card
-                    :name="$pet->name"
-                    :breed="$pet->breed->name"
-                    :age="$pet->age_text"
-                    :sex="$pet->sex"
-                    :trait="$pet->trait"
-                    :image="$pet->photo_path"
-                    :status="$pet->status"
                     :pet="$pet"
                 />
             @endforeach

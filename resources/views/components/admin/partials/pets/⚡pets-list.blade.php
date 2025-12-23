@@ -90,10 +90,15 @@ new class extends Component {
     {
         return Pet::query()
             ->with(['breed', 'creator'])
-            ->where('name', 'like', '%' . $this->search . '%')
-            ->orWhereHas('breed')
-            ->where('name', 'like', '%' . $this->search . '%')
-            ->orderBy($this->sortCol, $this->sortAsc ? 'asc' : 'desc')
+            ->when($this->search, function (Builder $q) {
+                $q->where(function ($query) {
+                    $query->where('name', 'like', '%' . $this->search . '%')
+                        ->orWhereHas('breed', function ($breedQuery) {
+                            $breedQuery->where('name', 'like', '%' . $this->search . '%');
+                        });
+                });
+            })
+            ->latest()
             ->paginate(6);
     }
 };
@@ -102,11 +107,13 @@ new class extends Component {
 <div class="mb-12 flex flex-col gap-4"
      >
 
-    <div class="flex flex-col gap-3">
-        <x-search-filter.search-bar
-            wire:model.live.debounce.300ms="search"
-            placeholder="Rechercher..."
-        />
+    <div class="bg-transparent flex flex-col gap-3">
+        <div class="lg:max-w-xl mr-auto pt-4 w-full">
+            <x-search-filter.search-bar
+                wire:model.live.debounce.300ms="search"
+                placeholder="Rechercher par nom, email ou animal..."
+            />
+        </div>
 
         @if(count($selected) > 0)
             <div
