@@ -167,6 +167,9 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/laravel-lang/routes" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/laravel-lang/starter-kits" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/polyfill-php81" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/intervention/gif" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/intervention/image-laravel" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/laravel/horizon" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

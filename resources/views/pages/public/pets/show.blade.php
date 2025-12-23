@@ -46,7 +46,7 @@
                     >
                     <img
                         src="{{ asset('storage/images/animals/'. $pet->photo_path .'_2x.webp') }}"
-                        alt="{{ __('public/pets.show.image_alt', ['name' => $pet->name, 'breed' => $pet->breed->name, 'age' => $pet->getAgeTextAttribute()]) }}"
+                        alt="{{ __('public/pets.show.image_alt', ['name' => $pet->name, 'breed' => $pet->breed->name, 'age' => $pet->age_text]) }}"
                         class="w-full aspect-video lg:aspect-4/3 object-cover rounded-xl"
                         loading="lazy"
                     >
@@ -56,12 +56,12 @@
             <section class="bg-white rounded-xl border border-neutral-200 p-6">
                 <h2 class="text-2xl md:text-3xl font-bold mb-4">{{ $pet->name }}</h2>
                 <p class="text-xl text-neutral-600 mb-4">
-                    {{ $pet->breed}} • {{ __('public/pets.show.sex_values.' . $pet->sex->value) }}
+                    {{ $pet->breed->name}} • {{ __('public/pets.show.sex_values.' . $pet->sex->value) }}
                 </p>
 
                 @php
                     $animalInfo = [
-                        ['icon' => 'calendar', 'label' => __('public/pets.show.info.age'), 'value' => $pet->getAgeTextAttribute()],
+                        ['icon' => 'calendar', 'label' => __('public/pets.show.info.age'), 'value' => $pet->age_text],
                         ['icon' => 'male', 'label' => __('public/pets.show.info.sex'), 'value' => __('public/pets.show.sex_values.' . $pet->sex->value)],
                         ['icon' => 'paw', 'label' => __('public/pets.show.info.coat'), 'value' => $pet->coat_color],
                         ['icon' => 'weight', 'label' => __('public/pets.show.info.weight'), 'value' => '8 kg'],

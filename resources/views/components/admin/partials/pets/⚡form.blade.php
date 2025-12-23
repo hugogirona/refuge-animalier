@@ -1,5 +1,6 @@
 <?php
 
+use App\Concerns\HandleImages;
 use App\Events\PetUpdated;
 use App\Models\Pet;
 use App\Models\Breed;
@@ -10,7 +11,7 @@ use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Auth;
 
 new class extends Component {
-    use WithFileUploads;
+    use WithFileUploads, HandleImages;
 
     public ?string $model_id = null;
 
@@ -120,7 +121,7 @@ new class extends Component {
             'personality' => 'required|string|min:50',
             'story' => 'required|string|min:100',
             'status' => 'required|string',
-            'photo' => 'nullable|image|max:2048',
+            'photo' => 'nullable|image|mimes:jpeg,jpg,png|max:2048',
             'is_published' => 'boolean',
             'arrived_at' => 'nullable|date|before_or_equal:today',
         ], [
@@ -134,6 +135,7 @@ new class extends Component {
             'story.required' => 'L\'histoire est obligatoire',
             'story.min' => 'L\'histoire doit contenir au moins 100 caractères',
             'photo.image' => 'Le fichier doit être une image',
+            'photo.mimes' => 'L\'image doit être au format JPEG, ou PNG',
             'photo.max' => 'L\'image ne doit pas dépasser 2 Mo',
         ]);
 
@@ -155,14 +157,15 @@ new class extends Component {
         ];
 
         if ($this->photo) {
-            $data['photo_path'] = $this->photo->store('pets', 'public');
+            $data['photo_path'] = $this->generatePetImage($this->photo, $this->name);
         }
 
         if ($this->model_id) {
+
             $pet = Pet::findOrFail($this->model_id);
 
             if ($this->photo && $pet->photo_path) {
-                \Storage::disk('public')->delete($pet->photo_path);
+                $this->deletePetImage($pet->photo_path);
             }
 
             $pet->update($data);
