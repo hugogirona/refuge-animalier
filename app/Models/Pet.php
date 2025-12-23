@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
+use App\Concerns\HandleImages;
 use App\Enums\AdoptionRequestStatus;
-use App\Enums\PetBreeds;
 use App\Enums\PetSex;
 use App\Enums\PetSpecies;
 use App\Enums\PetStatus;
@@ -16,12 +16,13 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class Pet extends Model
 {
     /** @use HasFactory<PetFactory> */
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, HandleImages;
 
     protected $fillable = [
         'name',
@@ -52,6 +53,7 @@ class Pet extends Model
             'sex' => PetSex::class,
             'status' => PetStatus::class,
             'is_published' => 'boolean',
+            'sterilized' => 'boolean',
             'last_vet_visit' => 'date',
             'published_at' => 'datetime',
             'arrived_at' => 'date',
@@ -108,7 +110,6 @@ class Pet extends Model
             ->where('status', AdoptionRequestStatus::ACCEPTED);
     }
 
-
     /*
     |--------------------------------------------------------------------------
     | Scopes
@@ -160,6 +161,82 @@ class Pet extends Model
     {
         return $query->where('created_by', $user->id);
     }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Image Accessors
+    |--------------------------------------------------------------------------
+    */
+
+    /**
+     * Get thumbnail URL
+     */
+    public function getThumbnailUrlAttribute(): ?string
+    {
+        return $this->getVariantUrl('thumbnail');
+    }
+
+    /**
+     * Get medium size URL
+     */
+    public function getMediumUrlAttribute(): ?string
+    {
+        return $this->getVariantUrl('medium');
+    }
+
+    /**
+     * Get large size URL
+     */
+    public function getLargeUrlAttribute(): ?string
+    {
+        return $this->getVariantUrl('large');
+    }
+
+    /**
+     * Get original photo URL (serve from private storage via controller)
+     */
+    public function getPhotoUrlAttribute(): ?string
+    {
+        if (!$this->photo_path) {
+            return null;
+        }
+
+        // L'original est privé, il faut passer par une route
+        return route('pets.image.original', ['filename' => $this->photo_path]);
+    }
+
+    /**
+     * Get variant URL or fallback to placeholder
+     */
+    protected function getVariantUrl(string $variantName): ?string
+    {
+        if (!$this->photo_path) {
+            return null;
+        }
+
+        $fileNameWithoutExt = pathinfo($this->photo_path, PATHINFO_FILENAME);
+        $extension = config('pets.image_type');
+
+        $variantPath = sprintf(config('pets.path_to_variant'), $variantName);
+        $fullPath = $variantPath . '/' . $fileNameWithoutExt . '.' . $extension;
+
+        // Si le variant PUBLIC existe, le retourner
+        if (Storage::disk('public')->exists($fullPath)) {
+            return asset('storage/' . $fullPath);
+        }
+
+        // Fallback : placeholder
+        return $this->getPlaceholderUrl();
+    }
+
+    /**
+     * Get placeholder image URL
+     */
+    protected function getPlaceholderUrl(): string
+    {
+        return 'https://ui-avatars.com/api/?name=' . urlencode($this->name) . '&size=600&background=f97316&color=fff';
+    }
+
 
     /*
     |--------------------------------------------------------------------------
@@ -249,7 +326,6 @@ class Pet extends Model
             : "$years ans";
     }
 
-
     /**
      * Get the number of days since arrival.
      */
@@ -258,25 +334,37 @@ class Pet extends Model
         return $this->arrived_at?->diffInDays(now());
     }
 
-    // 1. L'Accesseur (Génère la chaîne)
+    /*
+    |--------------------------------------------------------------------------
+    | Routing
+    |--------------------------------------------------------------------------
+    */
+
+    /**
+     * Get the slug for the route (id-name format)
+     */
     public function getSlugAttribute(): string
     {
         return $this->id . '-' . Str::slug($this->name);
     }
 
+    /**
+     * Get the route key (slug)
+     */
     public function getRouteKey(): string
     {
         return $this->slug;
     }
 
+    /**
+     * Resolve route binding using slug
+     */
     public function resolveRouteBinding($value, $field = null): Model|Pet|null
     {
-        $id = (int) $value;
+        $id = (int)Str::before($value, '-');
 
         return $this->query()
             ->where('id', $id)
             ->firstOrFail();
-
     }
-
 }
