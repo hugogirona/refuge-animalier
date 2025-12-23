@@ -1,15 +1,14 @@
-{{-- components/text-media.blade.php --}}
 @props([
     'title',
     'image',
     'image_alt' => '',
-    'image_order' => 'right', // left, right
+    'image_order' => 'right',
     'image_ratio' => '16/9',
     'bg_color' => 'white',
     'button_text' => null,
     'button_href' => null,
     'button_variant' => 'secondary',
-    'paragraphs' => [], // Array de paragraphes
+    'paragraphs' => [],
 ])
 
 @php
@@ -37,14 +36,11 @@
             </picture>
         </div>
 
-        {{-- Text Column --}}
         <div class="flex flex-col items-start space-y-4 md:space-y-6 w-full md:w-1/2">
-            {{-- Title --}}
             <h2 class="text-2xl md:text-3xl font-semibold text-grayscale-text-title">
                 {{ $title }}
             </h2>
 
-            {{-- Paragraphs --}}
             <div class="flex flex-col space-y-3 md:space-y-4 text-base md:text-lg text-grayscale-text-body leading-relaxed">
                 @if(count($paragraphs) > 0)
                     @foreach($paragraphs as $paragraph)
@@ -55,7 +51,6 @@
                 @endif
             </div>
 
-            {{-- Button (optionnel) --}}
             @if($button_text && $button_href)
                 <x-cta-button
                     href="{{ $buttonHref }}"
