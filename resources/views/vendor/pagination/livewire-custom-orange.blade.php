@@ -57,7 +57,7 @@
         <div class="text-sm font-medium text-grayscale-text-subtitle">
             Page <span class="text-grayscale-text-body font-semibold">{{ $paginator->currentPage() }}</span> sur <span class="text-grayscale-text-body font-semibold">{{ $paginator->lastPage() }}</span>
             <span class="mx-1">·</span>
-            <span class="text-grayscale-text-body font-semibold">{{ $paginator->total() }}</span> animaux au total
+            <span class="text-grayscale-text-body font-semibold">{{ $paginator->total() }}</span> éléments au total
         </div>
 
     </div>

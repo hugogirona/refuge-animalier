@@ -60,7 +60,7 @@ describe('AdoptionRequest Scopes', function () {
         $pendingRequests = AdoptionRequest::query()->pending()->get();
 
         expect($pendingRequests)->toHaveCount(1)
-            ->and($pendingRequests->first()->status)->toBe(AdoptionRequestStatus::PENDING->value);
+            ->and($pendingRequests->first()->status)->toBe(AdoptionRequestStatus::PENDING);
     });
 
     it('can filter in progress requests', function () {
@@ -71,7 +71,7 @@ describe('AdoptionRequest Scopes', function () {
         $inProgressRequests = AdoptionRequest::query()->pending()->get();
 
         expect($inProgressRequests)->toHaveCount(1)
-            ->and($inProgressRequests->first()->status)->toBe(AdoptionRequestStatus::PENDING->value);
+            ->and($inProgressRequests->first()->status)->toBe(AdoptionRequestStatus::PENDING);
     });
 });
 

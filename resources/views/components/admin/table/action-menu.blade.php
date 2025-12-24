@@ -4,11 +4,17 @@
     'deleteMessage' => 'Êtes-vous sûr de vouloir supprimer cet élément ?',
 ])
 
-<div class="relative" x-data="{ open: false }">
+<div
+    class="relative"
+    x-data="{ open: false }"
+    x-init="$watch('open', value => value && $dispatch('close-other-menus', $el))"
+    @close-other-menus.window="if ($event.detail !== $el) open = false"
+    @click.away="open = false"
+    @keydown.escape.window="open = false"
+>
 
     <button
         @click="open = !open"
-        @click.away="open = false"
         class="inline-flex items-center justify-center text-neutral-400 hover:text-grayscale-text-subtitle p-1 rounded hover:bg-neutral-100 transition"
     >
         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -25,7 +31,6 @@
         x-transition:leave-start="transform opacity-100 scale-100"
         x-transition:leave-end="transform opacity-0 scale-95"
         class="absolute overflow-hidden right-0 mt-2 w-48 bg-white rounded-lg shadow-md border border-neutral-200 z-50"
-        @click.away="open = false"
         style="display: none;"
     >
 
