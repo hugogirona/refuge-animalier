@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\AdoptionRequest;
 use App\Models\Pet;
 use App\Models\User;
 
@@ -34,7 +35,9 @@ it('can load the adoptions index page', function () {
 });
 
 it('can load the adoptions show page', function () {
-    $response = $this->get(route('adoptions.show'));
+    $adoption = AdoptionRequest::factory()->create();
+
+    $response = $this->get(route('adoptions.show', $adoption));
     $response->assertStatus(200);
 });
 

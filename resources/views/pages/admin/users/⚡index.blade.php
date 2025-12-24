@@ -1,71 +1,25 @@
 <?php
 
+use App\Models\User;
 use Livewire\Component;
 
 new class extends Component {
-    public array $users = [];
+    public int $users_count = 0;
 
     public function mount(): void
     {
         abort_unless(auth()->user()->isAdmin(), 403, 'Accès réservé aux administrateurs');
 
-        $this->users = [
-            [
-                'id' => 1,
-                'photo_url' => 'https://i.pravatar.cc/150?img=1',
-                'first_name' => 'Élise',
-                'last_name' => 'Dubois',
-                'email' => 'elise.dubois@email.com',
-                'role' => 'admin',
-                'active' => true,
-                'last_connection' => 'Il y a 1h',
-                'contribution' => '45 fiches',
-            ],
-            [
-                'id' => 2,
-                'photo_url' => 'https://i.pravatar.cc/150?img=5',
-                'first_name' => 'Marc',
-                'last_name' => 'Laurent',
-                'email' => 'marc.laurent@email.com',
-                'role' => 'volunteer',
-                'active' => true,
-                'last_connection' => 'Il y a 3h',
-                'contribution' => '28 fiches',
-            ],
-            [
-                'id' => 3,
-                'photo_url' => 'https://i.pravatar.cc/150?img=9',
-                'first_name' => 'Sophie',
-                'last_name' => 'Martin',
-                'email' => 'sophie.martin@email.com',
-                'role' => 'admin',
-                'active' => true,
-                'last_connection' => 'Il y a 2 jours',
-                'contribution' => '67 fiches',
-            ],
-            [
-                'id' => 4,
-                'photo_url' => 'https://i.pravatar.cc/150?img=12',
-                'first_name' => 'Thomas',
-                'last_name' => 'Petit',
-                'email' => 'thomas.petit@email.com',
-                'role' => 'volunteer',
-                'active' => false,
-                'last_connection' => 'Il y a 1 semaine',
-                'contribution' => '12 fiches',
-            ],
-            [
-                'id' => 5,
-                'photo_url' => 'https://i.pravatar.cc/150?img=20',
-                'first_name' => 'Julie',
-                'last_name' => 'Rousseau',
-                'email' => 'julie.rousseau@email.com',
-                'role' => 'volunteer',
-                'active' => true,
-                'last_connection' => 'Il y a 5h',
-                'contribution' => '34 fiches',
-            ],
-        ];
+        $this->users_count = User::count();
+    }
+
+    public function create(): void
+    {
+
+        $this->dispatch('open_modal',
+            form: 'admin.partials.users.form',
+            model_id: null
+        );
     }
 }
 ?>
@@ -83,9 +37,10 @@ new class extends Component {
     <div>
         <x-admin.partials.title-header
             title="Gestion des utilisateurs"
-            subtitle="12 bénévoles enregistrés"
-            buttonHref="#"
-            buttonLabel="Créer un utilisateur"
+            subtitle="12 "
+            :subtitle="$this->users_count . ' ' . 'bénévoles enregistrés'"
+            buttonLabel="Ajouter un utilisateur"
+            buttonAction="create"
             buttonIcon="plus"
         />
     </div>
@@ -107,13 +62,12 @@ new class extends Component {
     >
         {{-- Mobile/Tablet: Cards --}}
         <template x-if="!isDesktop">
-            <livewire:admin.partials.users.users-list :users="$users" />
-
+            <livewire:admin.partials.users.users-list/>
         </template>
 
         {{-- Desktop: Table --}}
         <template x-if="isDesktop">
-            <livewire:admin.partials.users.users-table :users="$users" />
+            <livewire:admin.partials.users.users-table />
         </template>
     </div>
 </main>

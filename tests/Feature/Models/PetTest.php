@@ -149,7 +149,7 @@ describe('Pet Relationships', function () {
 
         expect($pet->acceptedRequest)->not->toBeNull()
             ->toBeInstanceOf(AdoptionRequest::class)
-            ->and($pet->acceptedRequest->status)->toBe(AdoptionRequestStatus::ACCEPTED->value);
+            ->and($pet->acceptedRequest->status)->toBe(AdoptionRequestStatus::ACCEPTED);
     });
 });
 

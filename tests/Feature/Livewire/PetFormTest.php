@@ -242,23 +242,38 @@ describe('Breed Management', function () {
 
 describe('Photo Upload', function () {
     it('can upload a photo when creating', function () {
+        Storage::fake('local');
+        Storage::fake('public');
+
         $file = UploadedFile::fake()->image('pet.jpg');
 
         Livewire::test('admin.partials.pets.form')
-            ->fill(fillFormWithValidData())
+        ->fill(fillFormWithValidData())
             ->set('photo', $file)
             ->call('save');
 
         $pet = Pet::where('name', 'Moka')->first();
+
         expect($pet->photo_path)->not->toBeNull();
-        Storage::disk('public')->assertExists($pet->photo_path);
+
+        Storage::disk('local')->assertExists(
+            config('pets.original_path') . '/' . $pet->photo_path
+        );
     });
 
-    it('can change photo when editing', function () {
-        $oldFile = UploadedFile::fake()->image('old.jpg');
-        $oldPath = $oldFile->store('pets', 'public');
+    it('deletes old photo when replacing', function () {
+        Storage::fake('local');
+        Storage::fake('public');
 
-        $pet = createValidPet(['photo_path' => $oldPath]);
+        $oldName = 'old-photo.jpg';
+        $oldFile = UploadedFile::fake()->image($oldName);
+
+        Storage::disk('local')->put(
+            config('pets.original_path') . '/' . $oldName,
+            $oldFile->getContent()
+        );
+
+        $pet = createValidPet(['photo_path' => $oldName]);
 
         $newFile = UploadedFile::fake()->image('new.jpg');
 
@@ -267,25 +282,16 @@ describe('Photo Upload', function () {
             ->call('save');
 
         $pet->refresh();
-        expect($pet->photo_path)->not->toBe($oldPath);
-        Storage::disk('public')->assertExists($pet->photo_path);
-        Storage::disk('public')->assertMissing($oldPath);
+
+        Storage::disk('local')->assertMissing(
+            config('pets.original_path') . '/' . $oldName
+        );
+
+        Storage::disk('local')->assertExists(
+            config('pets.original_path') . '/' . $pet->photo_path
+        );
     });
 
-    it('deletes old photo when replacing', function () {
-        $oldFile = UploadedFile::fake()->image('old.jpg');
-        $oldPath = $oldFile->store('pets', 'public');
-
-        $pet = createValidPet(['photo_path' => $oldPath]);
-
-        $newFile = UploadedFile::fake()->image('new.jpg');
-
-        Livewire::test('admin.partials.pets.form', ['model_id' => (string)$pet->id])
-            ->set('photo', $newFile)
-            ->call('save');
-
-        Storage::disk('public')->assertMissing($oldPath);
-    });
 });
 
 describe('Select Options', function () {
