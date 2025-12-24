@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Pet;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 new class extends Component {
@@ -15,7 +16,7 @@ new class extends Component {
     {
         $this->dispatch('open_modal',
             form: 'admin.partials.pets.form',
-            model_id: (string) $this->pet->id
+            model_id: (string)$this->pet->id
         );
     }
 };

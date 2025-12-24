@@ -151,7 +151,7 @@ new class extends Component {
                     {{-- Photo --}}
                     <div class="shrink-0">
                         <img
-                            src="{{ $user->avatar ?? 'https://ui-avatars.com/api/?name='.urlencode($user->full_name) }}"
+                            src="{{ $user->thumbnail_url }}"
                             alt="{{ $user->full_name }}"
                             class="w-14 h-14 rounded-full object-cover bg-neutral-100 border border-neutral-100"
                         >

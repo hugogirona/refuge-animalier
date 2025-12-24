@@ -153,7 +153,7 @@ new class extends Component {
                 <div class="p-6 flex-1 flex flex-col {{ $isSelected ? 'bg-primary-surface-default-subtle/30' : '' }}">
                     <div class="flex items-center gap-4 mb-6">
                         <img
-                            src="{{ $adoption->pet->photo_path ? asset('storage/'.$adoption->pet->photo_path) : 'https://ui-avatars.com/api/?name='.$adoption->pet->name }}"
+                            src="{{ $adoption->pet->thumbnail_url }}"
                             alt="{{ $adoption->pet->name }}"
                             class="w-14 h-14 rounded-xl object-cover bg-neutral-100 border border-neutral-200"
                         >

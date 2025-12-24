@@ -1,6 +1,34 @@
-@props([
-    'currentRoute' => null,
-])
+<?php
+
+namespace App\Livewire\Admin\Navigation;
+
+use App\Enums\AdoptionRequestStatus;
+use App\Enums\ContactMessageStatus;
+use App\Models\AdoptionRequest;
+use App\Models\ContactMessage;
+use Livewire\Component;
+use Livewire\Attributes\On;
+
+new class extends Component
+{
+    public int $adoptionsCount = 0;
+    public int $messagesCount = 0;
+
+    public function mount(): void
+    {
+        $this->refreshCounts();
+    }
+
+    #[On('adoption-updated')]
+    #[On('message-updated')]
+    public function refreshCounts(): void
+    {
+        $this->adoptionsCount = AdoptionRequest::where('status', AdoptionRequestStatus::NEW)->count();
+        $this->messagesCount = ContactMessage::where('status', ContactMessageStatus::NEW)->count();
+    }
+
+}
+?>
 
 <aside
     id="sidebar"
@@ -32,7 +60,7 @@
                     href="{{ route('adoptions.index') }}"
                     icon="heart"
                     label="Adoptions"
-                    badge="3"
+                    :badge="$adoptionsCount > 0 ? $adoptionsCount : null"
                     badgeColor="bg-primary-surface-default"
                     :active="request()->routeIs('adoptions.*')"
                 />
@@ -71,11 +99,3 @@
     </nav>
 </aside>
 
-
-{{-- Overlay mobile --}}
-<div
-    x-show="menuOpen"
-    @click="menuOpen = false"
-    class="fixed inset-0 z-20 lg:hidden"
-    style="display: none;"
-></div>

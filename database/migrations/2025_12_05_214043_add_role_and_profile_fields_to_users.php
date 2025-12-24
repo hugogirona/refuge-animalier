@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\EmailFrequency;
 use App\Enums\UserRoles;
 use App\Enums\UserStatus;
 use Illuminate\Database\Migrations\Migration;
@@ -19,8 +20,8 @@ return new class extends Migration
             $table->string('phone')->nullable()->after('status');
             $table->string('avatar')->nullable()->after('phone');
             $table->json('availability')->nullable()->after('avatar');
-            $table->boolean('email_notifications')->after('availability');
-            $table->string('email_frequency')->after('email_notifications');
+            $table->boolean('email_notifications')->after('availability')->default(true);
+            $table->string('email_frequency')->after('email_notifications')->default(EmailFrequency::IMMEDIATE->value);
         });
     }
 

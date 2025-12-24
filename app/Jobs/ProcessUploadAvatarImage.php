@@ -4,15 +4,12 @@ namespace App\Jobs;
 
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Laravel\Facades\Image;
 
-
-
-class ProcessUploadPetImage implements ShouldQueue
+class ProcessUploadAvatarImage implements ShouldQueue
 {
     use Queueable, InteractsWithQueue, SerializesModels;
 
@@ -22,11 +19,11 @@ class ProcessUploadPetImage implements ShouldQueue
 
     public function handle(): void
     {
-        $sizes = config('pets.sizes');
-        $extension = config('pets.image_type', 'webp');
-        $compression = config('pets.compression', config(90));
+        $sizes = config('avatars.sizes');
+        $extension = config('avatars.image_type', 'webp');
+        $compression = config('avatars.compression', 90);
 
-        $originalPath = config('pets.original_path') . '/' . $this->newOriginalFileName;
+        $originalPath = config('avatars.original_path') . '/' . $this->newOriginalFileName;
 
         if (!Storage::disk('local')->exists($originalPath)) {
             return;
@@ -39,12 +36,11 @@ class ProcessUploadPetImage implements ShouldQueue
         $fileNameWithoutExt = pathinfo($this->newOriginalFileName, PATHINFO_FILENAME);
 
         foreach ($sizes as $size) {
-
             $variant = clone $image;
 
             $variant->cover($size['width'], $size['height']);
 
-            $variantFolder = sprintf(config('pets.path_to_variant'), $size['name']);
+            $variantFolder = sprintf(config('avatars.path_to_variant'), $size['name']);
             $newFileName = $fileNameWithoutExt . '.' . $extension;
             $fullVariantPath = $variantFolder . '/' . $newFileName;
 

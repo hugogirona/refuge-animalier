@@ -59,7 +59,7 @@ new class extends Component {
             $this->personality = $pet->personality;
             $this->story = $pet->story;
             $this->status = $pet->status->value;
-            $this->existing_photo_path = $pet->photo_path;
+            $this->existing_photo_path = $pet->medium_url;
             $this->is_published = $pet->is_published;
             $this->arrived_at = $pet->arrived_at?->format('Y-m-d');
         } else {
@@ -204,12 +204,10 @@ new class extends Component {
 
     <form wire:submit="save" class="space-y-6">
 
-        {{-- Section Informations Générales --}}
         <fieldset class="bg-neutral-50 p-4 rounded-lg">
             <legend class="text-lg font-semibold mb-4">Informations générales</legend>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {{-- Nom --}}
                 <x-form.form-input
                     label="Nom"
                     name="name"
@@ -219,7 +217,6 @@ new class extends Component {
                     :error="$errors->first('name')"
                 />
 
-                {{-- Espèce --}}
                 <x-form.form-select
                     label="Espèce"
                     name="species"
@@ -231,7 +228,6 @@ new class extends Component {
                     :error="$errors->first('species')"
                 />
 
-                {{-- Race --}}
                 <x-form.form-select
                     label="Race"
                     name="breed_id"
@@ -243,7 +239,6 @@ new class extends Component {
                     :error="$errors->first('breed_id')"
                 />
 
-                {{-- Sexe --}}
                 <x-form.form-select
                     label="Sexe"
                     name="sex"
@@ -255,7 +250,6 @@ new class extends Component {
                     :error="$errors->first('sex')"
                 />
 
-                {{-- Couleur du pelage --}}
                 <x-form.form-input
                     label="Couleur du pelage"
                     name="coat_color"
@@ -265,7 +259,6 @@ new class extends Component {
                     :error="$errors->first('coat_color')"
                 />
 
-                {{-- Date de naissance --}}
                 <x-form.form-input
                     label="Date de naissance"
                     name="birth_date"
@@ -274,7 +267,6 @@ new class extends Component {
                     :error="$errors->first('birth_date')"
                 />
 
-                {{-- Date d'arrivée --}}
                 <x-form.form-input
                     label="Date d'arrivée au refuge"
                     name="arrived_at"
@@ -283,7 +275,6 @@ new class extends Component {
                     :error="$errors->first('arrived_at')"
                 />
 
-                {{-- Statut --}}
                 <x-form.form-select
                     label="Statut"
                     name="status"
@@ -301,7 +292,6 @@ new class extends Component {
             <legend class="text-lg font-semibold mb-4">Santé</legend>
 
             <div class="flex flex-col gap-4">
-                {{-- Dernière visite vétérinaire --}}
                 <x-form.form-input
                     label="Dernière visite vétérinaire"
                     name="last_vet_visit"
@@ -310,7 +300,6 @@ new class extends Component {
                     :error="$errors->first('last_vet_visit')"
                 />
 
-                {{-- Stérilisé --}}
                 <x-form.form-checkbox
                     label="Animal stérilisé"
                     name="sterilized"
@@ -318,7 +307,6 @@ new class extends Component {
                     wire:model="sterilized"
                 />
 
-                {{-- Vaccinations --}}
                 <x-form.form-textarea
                     label="Vaccinations et traitements"
                     name="vaccinations"
@@ -332,7 +320,6 @@ new class extends Component {
         </fieldset>
 
 
-        {{-- Section Description --}}
         <fieldset class="bg-neutral-50 p-4 rounded-lg">
             <legend class="text-lg font-semibold mb-4">Description</legend>
 
@@ -376,7 +363,7 @@ new class extends Component {
                     <div class="mb-4">
                         <p class="text-sm text-neutral-600 mb-2">Photo actuelle :</p>
                         <img
-                            src="{{ asset('storage/' . $existing_photo_path) }}"
+                            src="{{ $existing_photo_path }}"
                             alt="Photo actuelle"
                             class="w-32 h-32 object-cover rounded-lg"
                         >
