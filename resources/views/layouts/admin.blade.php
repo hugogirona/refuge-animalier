@@ -17,7 +17,7 @@
 
     <div class="flex row-reverse h-[calc(100vh-5.6rem)] bg-grayscale-negative">
 
-        <x-admin.navigation.sidebar/>
+        <livewire:admin.navigation.sidebar/>
 
         <div class="flex-1 flex flex-col min-h-[calc(100vh-5.6rem)] overflow-y-auto">
             {{ $slot }}

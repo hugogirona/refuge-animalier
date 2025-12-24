@@ -2,6 +2,7 @@
 
 namespace App\Concerns;
 
+use App\Jobs\ProcessUploadAvatarImage;
 use App\Jobs\ProcessUploadPetImage;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -17,24 +18,24 @@ trait HandleImages
      */
     public function generatePetImage(mixed $photo, string $petName): string
     {
-        $slugifiedName = Str::slug($petName);
+        $slugified_name = Str::slug($petName);
 
-        $uniqueId = uniqid();
+        $unique_id = uniqid();
 
         $extension = $photo->getClientOriginalExtension();
 
-        $fileName = $slugifiedName . '-' . $uniqueId . '.' . $extension;
+        $file_name = $slugified_name . '-' . $unique_id . '.' . $extension;
 
 
-        $originalPath = Storage::disk('local')->putFileAs(
+        $original_path = Storage::disk('local')->putFileAs(
             config('pets.original_path'),
             $photo,
-            $fileName
+            $file_name
         );
 
-        if ($originalPath) {
-            ProcessUploadPetImage::dispatch($fileName);
-            return $fileName;
+        if ($original_path) {
+            ProcessUploadPetImage::dispatch($file_name);
+            return $file_name;
         }
 
         return '';
@@ -52,7 +53,7 @@ trait HandleImages
             return;
         }
 
-        $fileNameWithoutExt = pathinfo($photoPath, PATHINFO_FILENAME);
+        $file_name_without_ext = pathinfo($photoPath, PATHINFO_FILENAME);
         $extension = config('pets.image_type');
 
         Storage::disk('local')->delete(
@@ -60,10 +61,59 @@ trait HandleImages
         );
 
         foreach (config('pets.sizes') as $size) {
-            $variantPath = sprintf(config('pets.path_to_variant'), $size['name']);
-            $variantFile = $variantPath . '/' . $fileNameWithoutExt . '.' . $extension;
+            $variant_path = sprintf(config('pets.path_to_variant'), $size['name']);
+            $variant_file = $variant_path . '/' . $file_name_without_ext . '.' . $extension;
 
-            Storage::disk('public')->delete($variantFile);
+            Storage::disk('public')->delete($variant_file);
         }
     }
+
+    public function generateAvatarImage(mixed $photo, string $userName): string
+    {
+        $slugified_name = Str::slug($userName);
+
+        $unique_id = uniqid();
+
+        $extension = $photo->getClientOriginalExtension();
+
+        $file_name = $slugified_name . '-' . $unique_id . '.' . $extension;
+
+        $original_path = Storage::disk('local')->putFileAs(
+            config('avatars.original_path'),
+            $photo,
+            $file_name
+        );
+
+        if ($original_path) {
+            ProcessUploadAvatarImage::dispatch($file_name);
+            return $file_name;
+        }
+
+        return '';
+    }
+
+    /**
+     * Delete avatar image and all its variants
+     */
+    public function deleteAvatarImage(?string $photoPath): void
+    {
+        if (!$photoPath) {
+            return;
+        }
+
+        $file_name_without_ext = pathinfo($photoPath, PATHINFO_FILENAME);
+        $extension = config('avatars.image_type');
+
+        Storage::disk('local')->delete(
+            config('avatars.original_path') . '/' . $photoPath
+        );
+
+        foreach (config('avatars.sizes') as $size) {
+            $variant_path = sprintf(config('avatars.path_to_variant'), $size['name']);
+            $variant_file = $variant_path . '/' . $file_name_without_ext . '.' . $extension;
+
+            Storage::disk('public')->delete($variant_file);
+        }
+    }
+
 }

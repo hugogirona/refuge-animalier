@@ -239,7 +239,7 @@ new class extends Component {
                     <x-admin.table.td>
                         <div class="flex items-center gap-3">
                             <img
-                                src="{{ $user->avatar ?? 'https://ui-avatars.com/api/?name='.urlencode($user->full_name) }}"
+                                src="{{ $user->thumbnail_url }}"
                                 alt="{{ $user->first_name }}"
                                 class="w-10 h-10 rounded-full object-cover bg-neutral-100"
                             >
