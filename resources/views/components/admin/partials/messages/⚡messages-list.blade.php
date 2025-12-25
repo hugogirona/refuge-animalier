@@ -1,200 +1,226 @@
 <?php
 
+use App\Enums\ContactMessageStatus;
+use App\Models\ContactMessage;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Livewire\Attributes\Computed;
 use Livewire\Component;
+use Livewire\WithPagination;
 
-new class extends Component
-{
-    public array $messages = [];
+new class extends Component {
+    use WithPagination;
 
-    public function mount(array $messages): void
-    {
-        $this->messages = $messages;
-    }
+    public string $search = '';
 
-    public function markAsRead($messageId): void
-    {
-        foreach ($this->messages as &$message) {
-            if ($message['id'] === $messageId) {
-                $message['opened'] = true;
-            }
+    public array $selected = [];
+    public bool $selectAll = false;
+
+    public function updatedSearch(): void { $this->resetPage(); }
+    public function updatedPage(): void { $this->selected = []; $this->selectAll = false; }
+
+    public function updatedSelectAll($value): void {
+        if ($value) {
+            $this->selected = $this->messages->pluck('id')->map(fn($id) => (string)$id)->toArray();
+        } else {
+            $this->selected = [];
         }
     }
+    public function updatedSelected(): void { $this->selectAll = false; }
 
-    public function markAsUnread($messageId): void
-    {
-        foreach ($this->messages as &$message) {
-            if ($message['id'] === $messageId) {
-                $message['opened'] = false;
-            }
-        }
+    public function markAsReadSelected(): void {
+        ContactMessage::whereIn('id', $this->selected)->update([
+            'status' => ContactMessageStatus::READ,
+            'read_at' => now()
+        ]);
+        $this->dispatch('message-updated');
+        $this->selected = [];
     }
 
-    public function deleteMessage($messageId): void
+    public function markAsUnreadSelected(): void {
+        ContactMessage::whereIn('id', $this->selected)->update([
+            'status' => ContactMessageStatus::NEW,
+            'read_at' => null
+        ]);
+        $this->dispatch('message-updated');
+        $this->selected = [];
+    }
+
+    public function deleteSelected(): void {
+        ContactMessage::whereIn('id', $this->selected)->delete();
+        $this->dispatch('message-updated');
+        $this->selected = [];
+    }
+
+    public function delete($id): void {
+        ContactMessage::find($id)?->delete();
+        $this->dispatch('message-updated');
+    }
+
+    public function show($id): void
     {
-        $this->messages = array_filter($this->messages, fn($msg) => $msg['id'] !== $messageId);
-        session()->flash('success', 'Message supprimé');
+        $this->redirect(route('messages.show', $id), navigate: true);
+    }
+
+    // --- DONNÉES ---
+    #[Computed]
+    public function messages(): LengthAwarePaginator
+    {
+        return ContactMessage::query()
+            ->when($this->search, function (Builder $q) {
+                $q->where(function ($sub) {
+                    $sub->where('name', 'like', '%' . $this->search . '%')
+                        ->orWhere('email', 'like', '%' . $this->search . '%')
+                        ->orWhere('subject', 'like', '%' . $this->search . '%');
+                });
+            })
+            ->latest()
+            ->paginate(6);
     }
 };
 ?>
 
-<div class="space-y-4">
-    {{-- Search Bar --}}
-    <div class="py-4" role="search" aria-label="Recherche de messages">
-        <x-search-filter.search-bar placeholder="Rechercher un message..."/>
+
+<div class="flex flex-col gap-4 mb-12">
+
+    <div class="flex flex-col gap-3">
+        <div class="bg-transparent">
+            <x-search-filter.search-bar
+                wire:model.live.debounce.300ms="search"
+                placeholder="Rechercher un message..."
+            />
+        </div>
+
+        @if(count($selected) > 0)
+            <div class="flex items-center gap-2 bg-primary-surface-default-subtle border border-primary-border-default px-4 py-2 rounded-lg animate-fade-in">
+                <span class="text-sm font-medium text-primary-text-link-light">
+                    {{ count($selected) }} sélectionné(s)
+                </span>
+
+                <button
+                    wire:click="markAsReadSelected"
+                    class="text-xs px-2 py-1 bg-white border border-neutral-300 text-neutral-700 rounded hover:bg-neutral-50 transition-colors"
+                >
+                    Marquer comme lu
+                </button>
+
+                <button
+                    wire:click="markAsUnreadSelected"
+                    class="text-xs px-2 py-1 bg-white border border-neutral-300 text-neutral-700 rounded hover:bg-neutral-50 transition-colors"
+                >
+                    Marquer non lu
+                </button>
+
+                <button
+                    wire:click="deleteSelected"
+                    wire:confirm="Supprimer ces messages ?"
+                    class="text-xs px-2 py-1 bg-white border border-error-border-default text-error-text-link-light rounded hover:bg-error-surface-default-subtle transition-colors"
+                >
+                    Supprimer
+                </button>
+            </div>
+        @endif
+
+        {{-- Tout sélectionner --}}
+        <div class="flex items-center gap-2 px-1">
+            <input type="checkbox" wire:model.live="selectAll" id="selectAllMessages" class="w-4 h-4 text-primary-600 rounded focus:ring-primary-500 border-neutral-300 cursor-pointer">
+            <label for="selectAllMessages" class="text-sm text-grayscale-text-subtitle cursor-pointer select-none">
+                Tout sélectionner
+            </label>
+        </div>
     </div>
 
-    {{-- Messages List --}}
-    <div aria-label="Liste des messages" class="flex flex-col gap-2">
+    {{-- Liste des Cartes --}}
+    <div class="flex flex-col gap-3">
+        @forelse($this->messages as $message)
+            @php
+                $isUnread = $message->status === ContactMessageStatus::NEW;
+                $isSelected = in_array($message->id, $selected);
+            @endphp
 
-        @forelse($messages as $message)
             <article
-                class="bg-white rounded-xl border border-neutral-200 p-4 hover:shadow-md transition-shadow {{ !$message['opened'] ? 'border-l-4 border-l-primary-600' : '' }}"
-                aria-labelledby="message-{{ $message['id'] }}-title"
-                aria-describedby="message-{{ $message['id'] }}-subject"
+                wire:key="msg-mobile-{{ $message->id }}"
+                wire:click="show({{ $message->id }})"
+                class="bg-white rounded-xl border p-4 transition-all hover:shadow-md relative
+                {{ $isSelected ? 'ring-2 ring-primary-border-default bg-primary-surface-default-subtle/30 border-primary-border-default' : 'border-neutral-200' }}
+                {{ $isUnread ? 'border-l-4 border-l-primary-600 pl-3' : '' }}"
             >
-                {{-- Header --}}
-                <header class="flex items-start justify-between gap-3 mb-3">
-                    <div class="flex items-center gap-3 flex-1 min-w-0">
-                        {{-- Status Icon --}}
-                        <div class="flex-shrink-0" aria-hidden="true">
-                            @if($message['opened'])
-                                <svg class="w-5 h-5 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 19v-8.93a2 2 0 01.89-1.664l7-4.666a2 2 0 012.22 0l7 4.666A2 2 0 0121 10.07V19M3 19a2 2 0 002 2h14a2 2 0 002-2M3 19l6.75-4.5M21 19l-6.75-4.5M3 10l6.75 4.5M21 10l-6.75 4.5m0 0l-1.14.76a2 2 0 01-2.22 0l-1.14-.76"/>
-                                </svg>
-                            @else
-                                <svg class="w-5 h-5 text-primary-600" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
-                                    <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
-                                </svg>
-                            @endif
-                        </div>
+                <div class="flex items-start gap-3">
 
-                        {{-- Screen reader status --}}
-                        <span class="sr-only">
-                            {{ $message['opened'] ? 'Message lu' : 'Message non lu' }}
-                        </span>
-
-                        {{-- Expeditor --}}
-                        <div class="flex-1 min-w-0">
-                            <h2
-                                id="message-{{ $message['id'] }}-title"
-                                class="font-semibold text-grayscale-text-title truncate {{ !$message['opened'] ? 'font-bold' : '' }}"
-                            >
-                                {{ $message['expeditor'] }}
-                            </h2>
-                        </div>
-
-                        {{-- Date --}}
-                        <time
-                            datetime="{{ $message['date'] }}"
-                            class="text-xs text-grayscale-text-subtitle whitespace-nowrap {{ !$message['opened'] ? 'font-semibold' : '' }}"
+                    {{-- Checkbox --}}
+                    <div class="shrink-0 pt-1" @click.stop>
+                        <input
+                            type="checkbox"
+                            value="{{ $message->id }}"
+                            wire:model.live="selected"
+                            class="w-5 h-5 text-primary-600 border-neutral-300 rounded focus:ring-primary-500 cursor-pointer"
                         >
-                            {{ $message['date'] }}
-                        </time>
                     </div>
 
-                    {{-- Actions Menu --}}
-                    <nav class="flex-shrink-0" aria-label="Actions du message">
-                        <div class="relative" x-data="{ open: false }">
-                            <button
-                                @click="open = !open"
-                                @click.away="open = false"
-                                class="inline-flex items-center justify-center text-neutral-400 hover:text-grayscale-text-subtitle p-1 rounded hover:bg-neutral-100 transition"
-                                aria-label="Ouvrir le menu d'actions"
-                                aria-expanded="false"
-                                :aria-expanded="open.toString()"
-                                aria-haspopup="true"
-                            >
-                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
-                                    <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"/>
-                                </svg>
-                            </button>
+                    {{-- Icone Statut --}}
+                    <div class="shrink-0 mt-0.5">
+                        @if(!$isUnread)
+                            <svg class="w-5 h-5 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 19v-8.93a2 2 0 01.89-1.664l7-4.666a2 2 0 012.22 0l7 4.666A2 2 0 0121 10.07V19M3 19a2 2 0 002 2h14a2 2 0 002-2M3 19l6.75-4.5M21 19l-6.75-4.5M3 10l6.75 4.5M21 10l-6.75 4.5m0 0l-1.14.76a2 2 0 01-2.22 0l-1.14-.76"/>
+                            </svg>
+                        @else
+                            <svg class="w-5 h-5 text-primary-600" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
+                                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
+                            </svg>
+                        @endif
+                    </div>
 
-                            <div
-                                x-show="open"
-                                x-transition
-                                class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-neutral-200 z-50"
-                                @click.away="open = false"
-                                role="menu"
-                                aria-orientation="vertical"
-                                style="display: none;"
-                            >
-                                <a
-                                    href="#"
-                                    class="flex items-center gap-3 px-4 py-2.5 text-sm text-grayscale-text-subtitle bg-white hover:bg-neutral-50"
-                                    role="menuitem"
-                                >
-                                    <svg class="w-4 h-4 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-                                    </svg>
-                                    <span>Voir</span>
-                                </a>
+                    {{-- Contenu --}}
+                    <div class="flex-1 min-w-0">
+                        {{-- Header : Nom + Date + Actions --}}
+                        <div class="flex items-start justify-between gap-2 mb-1">
+                            <div class="flex-1 min-w-0">
+                                <h2 class="text-sm font-semibold text-grayscale-text-title truncate {{ $isUnread ? 'font-bold' : '' }}">
+                                    {{ $message->name }}
+                                </h2>
+                                <time class="text-xs text-grayscale-text-subtitle {{ $isUnread ? 'text-primary-600 font-medium' : '' }}">
+                                    {{ $message->created_at->format('d/m/Y') }}
+                                </time>
+                            </div>
 
-                                @if(!$message['opened'])
+                            {{-- Menu Actions --}}
+                            <div @click.stop>
+                                <div @click.stop>
                                     <button
-                                        wire:click="markAsRead({{ $message['id'] }})"
-                                        @click="open = false"
-                                        class="flex items-center gap-3 w-full px-4 py-2.5 text-sm text-grayscale-text-subtitle bg-white hover:bg-neutral-50"
-                                        role="menuitem"
+                                        wire:click="delete({{ $message->id }})"
+                                        wire:confirm="Supprimer ce message ?"
+                                        class="p-2 text-neutral-400 hover:text-error-text-link-light transition-colors"
                                     >
-                                        <svg class="w-4 h-4 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 19v-8.93a2 2 0 01.89-1.664l7-4.666a2 2 0 012.22 0l7 4.666A2 2 0 0121 10.07V19M3 19a2 2 0 002 2h14a2 2 0 002-2M3 19l6.75-4.5M21 19l-6.75-4.5M3 10l6.75 4.5M21 10l-6.75 4.5m0 0l-1.14.76a2 2 0 01-2.22 0l-1.14-.76"/>
-                                        </svg>
-                                        <span>Marquer comme lu</span>
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
                                     </button>
-                                @else
-                                    <button
-                                        wire:click="markAsUnread({{ $message['id'] }})"
-                                        @click="open = false"
-                                        class="flex items-center gap-3 w-full px-4 py-2.5 text-sm text-grayscale-text-subtitle bg-white hover:bg-neutral-50"
-                                        role="menuitem"
-                                    >
-                                        <svg class="w-4 h-4 text-neutral-400" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                            <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
-                                            <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
-                                        </svg>
-                                        <span>Marquer comme non lu</span>
-                                    </button>
-                                @endif
-
-                                <div class="border-t border-neutral-200" role="separator"></div>
-
-                                <button
-                                    wire:click="deleteMessage({{ $message['id'] }})"
-                                    wire:confirm="Êtes-vous sûr de vouloir supprimer ce message ?"
-                                    @click="open = false"
-                                    class="flex items-center gap-3 w-full px-4 py-2.5 text-sm text-error-text-link-light bg-white hover:bg-error-surface-default-subtle"
-                                    role="menuitem"
-                                >
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-                                    </svg>
-                                    <span>Supprimer</span>
-                                </button>
+                                </div>
                             </div>
                         </div>
-                    </nav>
-                </header>
 
-                {{-- Subject --}}
-                <div class="pl-8">
-                    <p
-                        id="message-{{ $message['id'] }}-subject"
-                        class="text-sm text-grayscale-text-subtitle line-clamp-2 {{ !$message['opened'] ? 'font-semibold' : '' }}"
-                    >
-                        {{ $message['subject'] }}
-                    </p>
+                        {{-- Sujet --}}
+                        <p class="text-sm text-grayscale-text-body line-clamp-1 {{ $isUnread ? 'font-semibold' : '' }}">
+                            {{ $message->subject }}
+                        </p>
+                        {{-- Aperçu du message --}}
+                        <p class="text-xs text-grayscale-text-subtitle line-clamp-2 mt-1">
+                            {{ Str::limit($message->content) }}
+                        </p>
+                    </div>
                 </div>
-
             </article>
         @empty
-            <div class="bg-white rounded-xl border border-neutral-200 p-12 text-center" role="status">
-                <svg class="w-12 h-12 mx-auto mb-4 text-neutral-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-                </svg>
-                <p class="text-lg font-medium text-grayscale-text-subtitle">Aucun message trouvé</p>
+            <div class="py-12 text-center text-grayscale-text-subtitle bg-white rounded-xl border border-neutral-200">
+                <p class="text-lg font-medium">Aucun message trouvé</p>
             </div>
         @endforelse
     </div>
+
+    {{-- Pagination --}}
+    @if($this->messages->hasPages())
+        <div class="flex justify-center pt-4">
+            {{ $this->messages->onEachSide(0)->links('vendor.pagination.livewire-custom-orange', ['itemName' => 'messages']) }}
+        </div>
+    @endif
 </div>
+

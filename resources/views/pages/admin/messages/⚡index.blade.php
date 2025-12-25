@@ -1,57 +1,25 @@
 <?php
 
+use App\Enums\ContactMessageStatus;
+use App\Models\ContactMessage;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 new class extends Component {
-    public array $messages = [];
+    public int $messages_count = 0;
+    public int $new_messages_count = 0;
 
     public function mount(): void
     {
-        $this->messages = [
-            [
-                'id' => 1,
-                'opened' => false,
-                'expeditor' => 'Sarah Martin',
-                'subject' => 'Demande d\'information sur l\'adoption de Moka',
-                'date' => '28 nov. 2024',
-            ],
-            [
-                'id' => 2,
-                'opened' => true,
-                'expeditor' => 'Jean Dupont',
-                'subject' => 'Question sur les horaires de visite',
-                'date' => '27 nov. 2024',
-            ],
-            [
-                'id' => 3,
-                'opened' => false,
-                'expeditor' => 'Marie Leblanc',
-                'subject' => 'Proposition de bénévolat',
-                'date' => '26 nov. 2024',
-            ],
-            [
-                'id' => 4,
-                'opened' => true,
-                'expeditor' => 'Pierre Rousseau',
-                'subject' => 'Suivi de ma demande d\'adoption',
-                'date' => '25 nov. 2024',
-            ],
-            [
-                'id' => 5,
-                'opened' => true,
-                'expeditor' => 'Sophie Bernard',
-                'subject' => 'Remerciements pour l\'accueil',
-                'date' => '24 nov. 2024',
-            ],
-            [
-                'id' => 6,
-                'opened' => false,
-                'expeditor' => 'Thomas Petit',
-                'subject' => 'Question sur les frais d\'adoption',
-                'date' => '23 nov. 2024',
-            ],
-        ];
+        $this->messages_count = ContactMessage::count();
+        $this->new_messages_count = ContactMessage::where('status', ContactMessageStatus::NEW)->count();
+    }
 
+    #[On('message-updated')]
+    public function refreshCounts(): void
+    {
+        $this->new_messages_count = ContactMessage::where('status', ContactMessageStatus::NEW)->count();
+        $this->messages_count = ContactMessage::count();
     }
 };
 ?>
@@ -69,36 +37,33 @@ new class extends Component {
     <div>
         <x-admin.partials.title-header
             title="Messages reçus"
-            subtitle="9 messages au total"
-            badgeStatus="2 non lus"
+            subtitle="{{$this->messages_count}} messages au total"
+            badgeStatus="{{$this->new_messages_count}} non lus"
             badgeType="secondary"
         />
     </div>
 
-    {{-- Responsive Container --}}
     <div
         x-data="{
-        isDesktop: window.innerWidth >= 1350,
+        isDesktop: window.innerWidth >= 1500,
         resizeTimer: null,
         init() {
             window.addEventListener('resize', () => {
                 clearTimeout(this.resizeTimer)
                 this.resizeTimer = setTimeout(() => {
-                    this.isDesktop = window.innerWidth >= 1350
+                    this.isDesktop = window.innerWidth >= 1500
                 }, 50)
             })
         }
     }"
         class="px-4 md:px-6 max-w-7xl mx-auto"
     >
-        {{-- Mobile/Tablet: Cards --}}
         <template x-if="!isDesktop">
-            <livewire:admin.partials.messages.messages-list :messages="$messages" />
+            <livewire:admin.partials.messages.messages-list/>
         </template>
 
-        {{-- Desktop: Table --}}
         <template x-if="isDesktop">
-            <livewire:admin.partials.messages.messages-table :messages="$messages" />
+            <livewire:admin.partials.messages.messages-table/>
         </template>
     </div>
 </main>
