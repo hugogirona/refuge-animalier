@@ -33,7 +33,7 @@ new class extends Component {
     public function updatedSelectAll($value): void
     {
         if ($value) {
-            $this->selected = $this->adoptionRequests->pluck('id')->map(fn($id) => (string)$id)->toArray();
+            $this->selected = $this->adoptions->pluck('id')->map(fn($id) => (string)$id)->toArray();
         } else {
             $this->selected = [];
         }
@@ -55,11 +55,13 @@ new class extends Component {
         if ($request) {
             $request->delete();
         }
+        $this->dispatch('adoption-updated');
     }
 
     public function deleteSelected(): void
     {
         AdoptionRequest::whereIn('id', $this->selected)->delete();
+        $this->dispatch('adoption-updated');
         $this->resetSelection();
     }
 
@@ -69,6 +71,7 @@ new class extends Component {
             'status' => AdoptionRequestStatus::ACCEPTED,
             'processed_by' => auth()->id(),
         ]);
+        $this->dispatch('adoption-updated');
         $this->resetSelection();
     }
 
@@ -78,6 +81,7 @@ new class extends Component {
             'status' => AdoptionRequestStatus::REJECTED,
             'processed_by' => auth()->id(),
         ]);
+        $this->dispatch('adoption-updated');
         $this->resetSelection();
     }
 
@@ -100,7 +104,7 @@ new class extends Component {
     #[On('adoption-request-updated')]
     public function refreshRequests(): void
     {
-        unset($this->adoptionRequests);
+        unset($this->adoptions);
     }
 
     #[Computed]

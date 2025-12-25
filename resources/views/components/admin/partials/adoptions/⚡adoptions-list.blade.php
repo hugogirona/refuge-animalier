@@ -31,21 +31,21 @@ new class extends Component {
     }
     public function updatedSelected(): void { $this->selectAll = false; }
 
-    // --- ACTIONS DE MASSE ---
     public function acceptSelected(): void {
         AdoptionRequest::whereIn('id', $this->selected)->update(['status' => AdoptionRequestStatus::ACCEPTED]);
+        $this->dispatch('adoption-updated');
         $this->selected = [];
-        session()->flash('success', 'Demandes acceptées.');
     }
 
     public function rejectSelected(): void {
         AdoptionRequest::whereIn('id', $this->selected)->update(['status' => AdoptionRequestStatus::REJECTED]);
+        $this->dispatch('adoption-updated');
         $this->selected = [];
-        session()->flash('success', 'Demandes refusées.');
     }
 
     public function deleteSelected(): void {
         AdoptionRequest::whereIn('id', $this->selected)->delete();
+        $this->dispatch('adoption-updated');
         $this->selected = [];
     }
 

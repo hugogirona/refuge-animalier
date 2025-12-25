@@ -1,7 +1,4 @@
 <?php
-
-namespace App\Livewire\Admin\Navigation;
-
 use App\Enums\AdoptionRequestStatus;
 use App\Enums\ContactMessageStatus;
 use App\Models\AdoptionRequest;
@@ -11,8 +8,8 @@ use Livewire\Attributes\On;
 
 new class extends Component
 {
-    public int $adoptionsCount = 0;
-    public int $messagesCount = 0;
+    public int $adoptions_count = 0;
+    public int $messages_count = 0;
 
     public function mount(): void
     {
@@ -23,8 +20,8 @@ new class extends Component
     #[On('message-updated')]
     public function refreshCounts(): void
     {
-        $this->adoptionsCount = AdoptionRequest::where('status', AdoptionRequestStatus::NEW)->count();
-        $this->messagesCount = ContactMessage::where('status', ContactMessageStatus::NEW)->count();
+        $this->adoptions_count = AdoptionRequest::where('status', AdoptionRequestStatus::NEW)->count();
+        $this->messages_count = ContactMessage::where('status', ContactMessageStatus::NEW)->count();
     }
 
 }
@@ -60,7 +57,7 @@ new class extends Component
                     href="{{ route('adoptions.index') }}"
                     icon="heart"
                     label="Adoptions"
-                    :badge="$adoptionsCount > 0 ? $adoptionsCount : null"
+                    :badge="$adoptions_count > 0 ? $adoptions_count : null"
                     badgeColor="bg-primary-surface-default"
                     :active="request()->routeIs('adoptions.*')"
                 />
@@ -78,7 +75,7 @@ new class extends Component
                     href="{{ route('messages.index') }}"
                     icon="message"
                     label="Messages"
-                    badge="2"
+                    :badge="$messages_count > 0 ? $messages_count : null"
                     badgeColor="bg-primary-surface-default"
                     :active="request()->routeIs('messages.*')"
                 />

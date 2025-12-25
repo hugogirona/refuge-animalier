@@ -1,6 +1,7 @@
 <?php
 
 use App\Enums\AdoptionRequestStatus;
+use App\Enums\PetStatus;
 use App\Models\AdoptionRequest;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
@@ -75,7 +76,7 @@ new class extends Component {
     #[Computed]
     public function statusBadgeType(): string
     {
-        return match($this->adoption->status) {
+        return match ($this->adoption->status) {
             AdoptionRequestStatus::NEW => 'primary',
             AdoptionRequestStatus::PENDING => 'warning',
             AdoptionRequestStatus::ACCEPTED => 'success',
@@ -86,7 +87,7 @@ new class extends Component {
     #[Computed]
     public function statusLabel(): string
     {
-        return match($this->adoption->status) {
+        return match ($this->adoption->status) {
             AdoptionRequestStatus::NEW => 'Nouvelle',
             AdoptionRequestStatus::PENDING => 'En attente',
             AdoptionRequestStatus::ACCEPTED => 'Acceptée',
@@ -99,16 +100,22 @@ new class extends Component {
     public function accept(): void
     {
         $this->adoption->update(['status' => AdoptionRequestStatus::ACCEPTED]);
+        $this->adoption->pet->update(['status', PetStatus::ADOPTED]);
+        $this->dispatch('adoption-updated');
+        $this->dispatch('pet-updated');
     }
 
     public function reject(): void
     {
         $this->adoption->update(['status' => AdoptionRequestStatus::REJECTED]);
+        $this->dispatch('adoption-updated');
+
     }
 
     public function setPending(): void
     {
         $this->adoption->update(['status' => AdoptionRequestStatus::PENDING]);
+        $this->dispatch('adoption-updated');
     }
 };
 ?>

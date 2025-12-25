@@ -12,6 +12,7 @@ Route::middleware(['auth'])->group(function () {
     Route::livewire('/admin/users', 'pages::admin.users.index')->name('users.index');
     Route::livewire('/admin/users/thomas-martin', 'pages::admin.users.show')->name('users.show');
     Route::livewire('/admin/messages', 'pages::admin.messages.index')->name('messages.index');
+    Route::livewire('/admin/messages/{message}', 'pages::admin.messages.show')->name('messages.show');
     Route::livewire('/admin/settings', 'pages::admin.settings.index')->name('settings.index');
 });
 

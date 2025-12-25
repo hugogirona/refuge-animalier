@@ -2,11 +2,13 @@
 
 namespace Database\Seeders;
 
+use App\Enums\AdoptionRequestStatus;
 use App\Enums\PetBreeds;
 use App\Enums\PetStatus;
 use App\Enums\UserRoles;
 use App\Models\AdoptionRequest;
 use App\Models\Breed;
+use App\Models\ContactMessage;
 use App\Models\InternalNote;
 use App\Models\Pet;
 use App\Models\User;
@@ -36,7 +38,11 @@ class DatabaseSeeder extends Seeder
                         'is_published' => fake()->boolean(),
                         'published_at' => now(),
                     ])
-                    ->has(AdoptionRequest::factory()->count(2), 'adoptionRequests')
+                    ->has(AdoptionRequest::factory(
+                        [
+                            'status' => AdoptionRequestStatus::NEW,
+                        ]
+                    )->count(1), 'adoptionRequests')
                     ->has(InternalNote::factory()->count(rand(1, 2)), 'internalNotes')
             )
             ->create([
@@ -48,6 +54,7 @@ class DatabaseSeeder extends Seeder
                 'password' => bcrypt('change_this'),
             ]);
 
+        ContactMessage::factory(10)->create();
     }
 
 }
