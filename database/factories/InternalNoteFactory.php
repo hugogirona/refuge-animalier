@@ -23,7 +23,7 @@ class InternalNoteFactory extends Factory
 
         return [
             'content' => fake()->paragraph(),
-            'user_id' => User::factory(),
+            'user_id' => User::inRandomOrder()->first()?->id ?? User::factory(),
 
             'notable_type' => (new $targetClass)->getMorphClass(),
 

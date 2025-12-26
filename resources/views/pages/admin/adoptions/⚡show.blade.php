@@ -23,13 +23,11 @@ new class extends Component {
                 'label' => 'Envoyer un email',
                 'href' => 'mailto:' . $this->adoption->email,
                 'variant' => 'secondary',
-                'icon' => 'envelope',
             ],
             [
                 'label' => 'Appeler',
                 'href' => 'tel:' . str_replace(' ', '', $this->adoption->phone),
                 'variant' => 'secondary',
-                'icon' => 'phone',
             ],
         ];
 
@@ -37,12 +35,21 @@ new class extends Component {
             ? $this->adoption->status
             : AdoptionRequestStatus::from($this->adoption->status);
 
+        if ($status === AdoptionRequestStatus::NEW) {
+            $actions[] = [
+                'label' => 'Mettre en attente',
+                'action' => 'setPending',
+                'variant' => 'secondary',
+                'confirm' => 'Êtes-vous sûr de vouloir mettre cette demande d\'adoption en attente?'
+            ];
+        }
+
+
         if (in_array($status, [AdoptionRequestStatus::PENDING, AdoptionRequestStatus::NEW])) {
             $actions[] = [
                 'label' => 'Valider la demande',
                 'action' => 'accept',
                 'variant' => 'success',
-                'icon' => 'check',
                 'confirm' => 'Êtes-vous sûr de vouloir accepter cette demande d\'adoption ?',
             ];
 
@@ -53,6 +60,7 @@ new class extends Component {
                 'confirm' => 'Êtes-vous sûr de vouloir refuser cette demande d\'adoption ?',
             ];
         }
+
 
         if ($status === AdoptionRequestStatus::ACCEPTED) {
             $actions[] = [
@@ -100,7 +108,12 @@ new class extends Component {
     public function accept(): void
     {
         $this->adoption->update(['status' => AdoptionRequestStatus::ACCEPTED]);
-        $this->adoption->pet->update(['status', PetStatus::ADOPTED]);
+
+        $this->adoption->pet->update([
+            'status' => PetStatus::ADOPTED,
+            'is_published' => false
+        ]);
+
         $this->dispatch('adoption-updated');
         $this->dispatch('pet-updated');
     }
@@ -108,15 +121,28 @@ new class extends Component {
     public function reject(): void
     {
         $this->adoption->update(['status' => AdoptionRequestStatus::REJECTED]);
-        $this->dispatch('adoption-updated');
 
+        if ($this->adoption->pet->status === PetStatus::ADOPTION_PENDING) {
+            $this->adoption->pet->update([
+                'status' => PetStatus::AVAILABLE
+            ]);
+            $this->dispatch('pet-updated');
+        }
+
+        $this->dispatch('adoption-updated');
     }
 
     public function setPending(): void
     {
         $this->adoption->update(['status' => AdoptionRequestStatus::PENDING]);
+        $this->adoption->pet->update([
+            'status' => PetStatus::ADOPTION_PENDING
+        ]);
+
         $this->dispatch('adoption-updated');
+        $this->dispatch('pet-updated');
     }
+
 };
 ?>
 

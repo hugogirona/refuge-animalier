@@ -13,7 +13,7 @@
 <body class="bg-white overflow-visible min-w-sm" x-data="{ menuOpen: false }"
       x-effect="document.body.style.overflow = menuOpen ? 'hidden' : ''">
 
-    <x-admin.partials.header></x-admin.partials.header>
+    <livewire:admin.partials.header/>
 
     <div class="flex row-reverse h-[calc(100vh-5.6rem)] bg-grayscale-negative">
 

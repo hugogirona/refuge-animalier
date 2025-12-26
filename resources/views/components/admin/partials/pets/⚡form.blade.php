@@ -15,7 +15,6 @@ new class extends Component {
 
     public ?string $model_id = null;
 
-    // Champs du formulaire
     public string $name = '';
     public string $species = '';
     public ?int $breed_id = null;
@@ -33,7 +32,6 @@ new class extends Component {
     public bool $is_published = false;
     public ?string $arrived_at = null;
 
-    // Pour les selects
     public array $breeds = [];
     public array $species_options = [];
     public array $sex_options = [];

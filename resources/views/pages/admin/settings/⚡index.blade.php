@@ -1,38 +1,19 @@
 <?php
 
+use Livewire\Attributes\On;
 use Livewire\Component;
+use App\Enums\UserRoles;
 
 new class extends Component {
-    public array $shelter = [];
-    public array $user = [];
-    public array $notifications = [];
 
-    public function mount(): void
+    #[On('profile-updated')]
+    #[On('shelter-updated')]
+    public function refresh(): void
     {
-        $this->shelter = [
-            'name' => 'Les Pattes Heureuses',
-            'logo' => 'https://via.placeholder.com/150',
-            'address' => '123 Rue des Animaux',
-            'postal_code' => '1000',
-            'city' => 'Bruxelles',
-            'phone' => '+32 2 123 45 67',
-            'email' => 'contact@pattesheureuses.be',
-        ];
 
-        $this->user = [
-            'first_name' => 'Thomas',
-            'last_name' => 'Martin',
-            'email' => 'thomas.martin@refuge.be',
-            'phone' => '+32 470 65 43 21',
-            'avatar' => 'https://i.pravatar.cc/300?img=12',
-        ];
-
-        $this->notifications = [
-            'email_notifications' => ['new_adoption', 'new_pet', 'new_message'],
-            'frequency' => 'immediate',
-        ];
     }
-};
+}
+
 ?>
 
 <main class="flex-1">
@@ -53,24 +34,28 @@ new class extends Component {
 
     <div class="max-w-7xl mx-auto px-4 lg:px-6 mb-8">
         <div class="flex flex-col xl:flex-row-reverse gap-6">
-            {{-- Navigation secondaire (sidebar) --}}
-            <aside class="w-full xl:w-80 flex-shrink-0">
-                <x-admin.partials.settings.settings-nav currentSection="shelter-info" />
+
+            <aside class="w-full xl:w-80 shrink-0">
+                <x-admin.partials.settings.settings-nav currentSection="shelter-info"/>
             </aside>
 
-            {{-- Contenu principal --}}
             <div class="flex-1 space-y-6">
-                <div id="shelter-info" class="scroll-mt-6">
-                    <livewire:admin.partials.settings.shelter-info :shelter="$shelter"/>
-                </div>
+                @if(auth()->user()->isAdmin())
+                    <div id="shelter-info" class="scroll-mt-6">
+                        <livewire:admin.partials.settings.shelter-info/>
+                    </div>
+                @endif
 
                 <div id="my-profile" class="scroll-mt-6">
-                    <livewire:admin.partials.settings.my-profile-section :user="$user"/>
+                    <livewire:admin.partials.settings.my-profile-section/>
                 </div>
 
-                <div id="notifications" class="scroll-mt-6">
-                    <livewire:admin.partials.settings.notifications-section :notifications="$notifications"/>
-                </div>
+                @if(auth()->user()->isAdmin())
+                    <div id="notifications" class="scroll-mt-6">
+                        <livewire:admin.partials.settings.notifications-section/>
+                    </div>
+                @endif
+
 
                 <div id="security" class="scroll-mt-6">
                     <livewire:admin.partials.settings.change-password-section/>

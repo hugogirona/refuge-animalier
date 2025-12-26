@@ -23,6 +23,9 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call(BreedSeeder::class);
+        $this->call(ShelterSeeder::class);
+
+        User::factory(7)->create();
 
         User::factory()
             ->has(

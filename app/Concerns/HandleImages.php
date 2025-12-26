@@ -34,7 +34,7 @@ trait HandleImages
         );
 
         if ($original_path) {
-            ProcessUploadPetImage::dispatch($file_name);
+            ProcessUploadPetImage::dispatchSync($file_name);
             return $file_name;
         }
 
@@ -85,7 +85,7 @@ trait HandleImages
         );
 
         if ($original_path) {
-            ProcessUploadAvatarImage::dispatch($file_name);
+            ProcessUploadAvatarImage::dispatchSync($file_name);
             return $file_name;
         }
 
