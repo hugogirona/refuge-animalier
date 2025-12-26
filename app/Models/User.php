@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Storage;
 class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable, HandleImages; // <-- AJOUT DU TRAIT
+    use HasFactory, Notifiable, HandleImages;
 
     protected $fillable = [
         'first_name',
@@ -30,6 +30,7 @@ class User extends Authenticatable
         'phone',
         'availability',
         'email_notifications',
+        'email_frequency',
     ];
 
     protected $hidden = [
@@ -114,9 +115,6 @@ class User extends Authenticatable
      */
     public function getPhotoUrlAttribute(): ?string
     {
-        // Pour les avatars, on n'a peut-être pas de variant "original" public,
-        // on utilise souvent le medium comme photo principale.
-        // Si vous avez défini une taille 'original' ou 'large', utilisez-la.
         return $this->getVariantUrl('medium');
     }
 
@@ -125,25 +123,20 @@ class User extends Authenticatable
      */
     protected function getVariantUrl(string $variantName): ?string
     {
-        // 1. Si pas d'avatar, placeholder direct
         if (!$this->avatar) {
             return $this->getPlaceholderUrl();
         }
 
-        // 2. Récupération des infos
         $fileNameWithoutExt = pathinfo($this->avatar, PATHINFO_FILENAME);
-        $extension = config('avatars.image_type', 'webp'); // Config 'avatars'
+        $extension = config('avatars.image_type', 'webp');
 
-        // 3. Construction du chemin : images/avatars/thumbnail/nom.webp
         $variantPath = sprintf(config('avatars.path_to_variant'), $variantName);
         $fullPath = $variantPath . '/' . $fileNameWithoutExt . '.' . $extension;
 
-        // 4. Vérification d'existence
         if (Storage::disk('public')->exists($fullPath)) {
             return asset('storage/' . $fullPath);
         }
 
-        // 5. Fallback
         return $this->getPlaceholderUrl();
     }
 

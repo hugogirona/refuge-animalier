@@ -55,6 +55,7 @@ new class extends Component {
         @forelse($this->notes as $note)
             <x-admin.partials.pets.internal-notes-item
                 :author="$note->user->full_name"
+                :avatar="$note->user->thumbnail_url"
                 :time="$note->created_at->diffForHumans()"
                 wire:click="deleteNote({{ $note->id }})"
             >
@@ -68,7 +69,7 @@ new class extends Component {
     <form wire:submit="addNote" class="flex gap-4 pt-4 border-t border-neutral-200">
 
         <img
-            src="{{ auth()->user()->avatar ?? 'https://ui-avatars.com/api/?name='.urlencode(auth()->user()->full_name) }}"
+            src="{{ auth()->user()->thumbnail_url ?? 'https://ui-avatars.com/api/?name='.urlencode(auth()->user()->full_name) }}"
             alt="{{ auth()->user()->full_name }}"
             class="w-12 h-12 rounded-full shrink-0 bg-neutral-100"
         >

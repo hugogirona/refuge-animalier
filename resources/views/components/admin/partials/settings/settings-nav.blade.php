@@ -1,27 +1,35 @@
-
-
 @php
-    $navItems = [
-        [
+    $user = auth()->user();
+    $isAdmin = $user && $user->isAdmin();
+
+    $navItems = [];
+
+    if ($isAdmin) {
+        $navItems[] = [
             'id' => 'shelter-info',
             'label' => 'Coordonnées du refuge',
             'href' => '#shelter-info',
-        ],
-        [
-            'id' => 'my-profile',
-            'label' => 'Mon profil',
-            'href' => '#my-profile',
-        ],
-        [
+        ];
+    }
+
+    $navItems[] = [
+        'id' => 'my-profile',
+        'label' => 'Mon profil',
+        'href' => '#my-profile',
+    ];
+
+    if ($isAdmin) {
+        $navItems[] = [
             'id' => 'notifications',
             'label' => 'Notifications du refuge',
             'href' => '#notifications',
-        ],
-        [
-            'id' => 'security',
-            'label' => 'Sécurité',
-            'href' => '#security',
-        ],
+        ];
+    }
+
+    $navItems[] = [
+        'id' => 'security',
+        'label' => 'Sécurité',
+        'href' => '#security',
     ];
 @endphp
 

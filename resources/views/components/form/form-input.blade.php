@@ -22,7 +22,7 @@
     }
 @endphp
 
-<div>
+<div  x-data="{ showPassword: false }">
     <label for="{{ $name }}" class="block text-sm font-medium text-grayscale-text-subtitle mb-2">
         {{ $label }} @if($required)
             <span class="text-primary-text-link-light">*</span>

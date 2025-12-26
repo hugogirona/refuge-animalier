@@ -2,6 +2,7 @@
 
 use App\Models\AdoptionRequest;
 use App\Models\Pet;
+use App\Models\Shelter;
 use App\Models\User;
 
 
@@ -52,6 +53,7 @@ it('can load the messages index page', function () {
 });
 
 it('can load the settings index page', function () {
+    Shelter::factory()->create();
     $response = $this->get(route('settings.index'));
     $response->assertStatus(200);
 });

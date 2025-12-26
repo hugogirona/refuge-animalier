@@ -4,7 +4,6 @@
 ])
 
 
-{{-- Logo & Title --}}
 <div class="text-center mb-8">
     <div class="flex items-center justify-center mb-4">
         <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 38 33">
@@ -18,12 +17,14 @@
     <p class="text-grayscale-text-subtitle">{{ $subtitle }}</p>
 </div>
 
-{{-- Card Content --}}
 <div class="bg-white rounded-xl shadow-xl border border-neutral-200 p-8 flex flex-col gap-6">
-    <form method="POST" action="{{ route('login.store')}}" class="space-y-5" x-data="{ showPassword: false }">
+
+    <form method="POST" action="{{ route('login.store')}}" class="space-y-5" novalidate>
         @csrf
+
         <fieldset class="space-y-6 mb-12">
             <legend class="font-bold text-2xl text-center text-grayscale-text-subtitle">Se connecter</legend>
+
             {{-- Email --}}
             <x-form.form-input
                 label="Adresse email"
@@ -34,9 +35,9 @@
                 autocomplete="email"
                 placeholder="votre.email@exemple.com"
                 :value="old('email')"
+                :error="$errors->first('email')"
             />
 
-            {{-- Password --}}
             <div>
                 <x-form.form-input
                     label="Mot de passe"
@@ -44,10 +45,11 @@
                     icon="lock"
                     required
                     showPasswordToggle
+                    :error="$errors->first('password')"
                 />
             </div>
 
-            {{-- Remember Me & Forgot Password --}}
+
             <div class="flex items-center justify-between">
                 <label class="flex items-center">
                     <input
@@ -67,7 +69,6 @@
             </div>
         </fieldset>
 
-        {{-- Submit Button --}}
         <x-cta-button role="button" class="w-full">Se connecter</x-cta-button>
 
     </form>
@@ -82,7 +83,6 @@
         </div>
     </div>
 
-    {{-- Back to Site --}}
     <div class="text-center">
         <a href="{{ route('home') }}"
            class="inline-flex items-center gap-2 text-primary-500 hover:text-primary-600 transition-colors text-sm font-medium">
