@@ -27,7 +27,7 @@
                     <x-public.partials.about.team-member-card
                         :name="$member->first_name"
                         :role="$member->role"
-                        :image="$member->avatar"
+                        :image="$member->medium_url"
                     />
                 @endforeach
             </div>

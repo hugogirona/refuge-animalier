@@ -25,7 +25,16 @@ class DatabaseSeeder extends Seeder
         $this->call(BreedSeeder::class);
         $this->call(ShelterSeeder::class);
 
-        User::factory(7)->create();
+        User::factory(6)->create();
+        User::factory()->create(
+            [
+                'first_name' => 'Thomas',
+                'last_name' => 'Martin',
+                'role' => UserRoles::VOLUNTEER->value,
+                'email' => 'volunteer@refuge.be',
+                'password' => 'change_this'
+            ]
+        );
 
         User::factory()
             ->has(
@@ -49,11 +58,10 @@ class DatabaseSeeder extends Seeder
                     ->has(InternalNote::factory()->count(rand(1, 2)), 'internalNotes')
             )
             ->create([
-                'first_name' => 'Hugo',
-                'last_name' => 'Girona',
+                'first_name' => 'Elise',
+                'last_name' => 'Dubois',
                 'role' => UserRoles::ADMIN->value,
-                'phone' => '+33612345678',
-                'email' => 'gironahugo@gmail.com',
+                'email' => 'admin@refuge.be',
                 'password' => bcrypt('change_this'),
             ]);
 

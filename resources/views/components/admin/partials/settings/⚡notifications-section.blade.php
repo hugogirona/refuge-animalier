@@ -54,7 +54,7 @@ new class extends Component
 <section class="bg-white rounded-xl border border-neutral-200 p-6">
     <h2 class="text-2xl font-bold mb-6">Notifications</h2>
 
-    <form wire:submit="save">
+    <form wire:submit="save" novalidate>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-6">
 
@@ -69,6 +69,7 @@ new class extends Component
                     label="Activer les notifications par email"
                     wire:model="email_notifications"
                     :checked="$email_notifications"
+                    :error="$errors->first('email_notifications')"
                 />
                 <p class="text-xs text-neutral-500 mt-2">
                     Si désactivé, vous ne recevrez aucun email du système.
@@ -87,6 +88,7 @@ new class extends Component
                     ]"
                     wire:model="email_frequency"
                     required
+                    :error="$errors->first('email_frequency')"
                 />
             </fieldset>
 

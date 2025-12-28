@@ -57,7 +57,9 @@ new class extends Component {
                 :author="$note->user->full_name"
                 :avatar="$note->user->thumbnail_url"
                 :time="$note->created_at->diffForHumans()"
-                wire:click="deleteNote({{ $note->id }})"
+                :note_id="$note->id"
+                :showDelete="($note->user_id === auth()->id()) || auth()->user()->isAdmin()"
+
             >
                 {{ $note->content }}
             </x-admin.partials.pets.internal-notes-item>

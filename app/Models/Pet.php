@@ -7,8 +7,10 @@ use App\Enums\AdoptionRequestStatus;
 use App\Enums\PetSex;
 use App\Enums\PetSpecies;
 use App\Enums\PetStatus;
+use App\Policies\PetPolicy;
 use Database\Factories\PetFactory;
 use Illuminate\Database\Eloquent\Attributes\Scope;
+use Illuminate\Database\Eloquent\Attributes\UsePolicy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -19,6 +21,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
+#[UsePolicy(PetPolicy::class)]
 class Pet extends Model
 {
     /** @use HasFactory<PetFactory> */

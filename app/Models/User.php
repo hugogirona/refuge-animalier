@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
-use App\Concerns\HandleImages; // <-- AJOUT DU TRAIT
+use App\Concerns\HandleImages;
 use App\Enums\UserRoles;
 use App\Enums\UserStatus;
+use App\Policies\UserPolicy;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Scope;
+use Illuminate\Database\Eloquent\Attributes\UsePolicy;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -14,6 +16,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
 
+#[UsePolicy(UserPolicy::class)]
 class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */

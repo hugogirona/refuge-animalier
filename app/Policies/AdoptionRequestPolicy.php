@@ -12,7 +12,7 @@ class AdoptionRequestPolicy
      */
     public function viewAny(User $user): bool
     {
-        return true; // Tous les users authentifiés
+        return $user->isAdmin();
     }
 
     /**
@@ -20,7 +20,7 @@ class AdoptionRequestPolicy
      */
     public function view(User $user, AdoptionRequest $adoptionRequest): bool
     {
-        return true;
+        return $user->isAdmin();
     }
 
     /**

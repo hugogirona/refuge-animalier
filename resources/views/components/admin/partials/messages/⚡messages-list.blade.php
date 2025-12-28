@@ -62,7 +62,6 @@ new class extends Component {
         $this->redirect(route('messages.show', $id), navigate: true);
     }
 
-    // --- DONNÉES ---
     #[Computed]
     public function messages(): LengthAwarePaginator
     {
@@ -108,7 +107,7 @@ new class extends Component {
                     wire:click="markAsUnreadSelected"
                     class="text-xs px-2 py-1 bg-white border border-neutral-300 text-neutral-700 rounded hover:bg-neutral-50 transition-colors"
                 >
-                    Marquer non lu
+                    Marquer comme non lu
                 </button>
 
                 <button
@@ -121,7 +120,6 @@ new class extends Component {
             </div>
         @endif
 
-        {{-- Tout sélectionner --}}
         <div class="flex items-center gap-2 px-1">
             <input type="checkbox" wire:model.live="selectAll" id="selectAllMessages" class="w-4 h-4 text-primary-600 rounded focus:ring-primary-500 border-neutral-300 cursor-pointer">
             <label for="selectAllMessages" class="text-sm text-grayscale-text-subtitle cursor-pointer select-none">
@@ -130,7 +128,6 @@ new class extends Component {
         </div>
     </div>
 
-    {{-- Liste des Cartes --}}
     <div class="flex flex-col gap-3">
         @forelse($this->messages as $message)
             @php
@@ -141,13 +138,12 @@ new class extends Component {
             <article
                 wire:key="msg-mobile-{{ $message->id }}"
                 wire:click="show({{ $message->id }})"
-                class="bg-white rounded-xl border p-4 transition-all hover:shadow-md relative
-                {{ $isSelected ? 'ring-2 ring-primary-border-default bg-primary-surface-default-subtle/30 border-primary-border-default' : 'border-neutral-200' }}
+                class="bg-white rounded-xl border p-4 transition-all hover:shadow-md relative cursor-pointer
+                {{ $isSelected ? 'ring-1 ring-primary-border-default bg-primary-surface-default-subtle/30 border-primary-border-default' : 'border-neutral-200' }}
                 {{ $isUnread ? 'border-l-4 border-l-primary-600 pl-3' : '' }}"
             >
                 <div class="flex items-start gap-3">
 
-                    {{-- Checkbox --}}
                     <div class="shrink-0 pt-1" @click.stop>
                         <input
                             type="checkbox"
@@ -157,7 +153,6 @@ new class extends Component {
                         >
                     </div>
 
-                    {{-- Icone Statut --}}
                     <div class="shrink-0 mt-0.5">
                         @if(!$isUnread)
                             <svg class="w-5 h-5 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -171,9 +166,7 @@ new class extends Component {
                         @endif
                     </div>
 
-                    {{-- Contenu --}}
                     <div class="flex-1 min-w-0">
-                        {{-- Header : Nom + Date + Actions --}}
                         <div class="flex items-start justify-between gap-2 mb-1">
                             <div class="flex-1 min-w-0">
                                 <h2 class="text-sm font-semibold text-grayscale-text-title truncate {{ $isUnread ? 'font-bold' : '' }}">
@@ -184,7 +177,6 @@ new class extends Component {
                                 </time>
                             </div>
 
-                            {{-- Menu Actions --}}
                             <div @click.stop>
                                 <div @click.stop>
                                     <button
@@ -198,11 +190,9 @@ new class extends Component {
                             </div>
                         </div>
 
-                        {{-- Sujet --}}
                         <p class="text-sm text-grayscale-text-body line-clamp-1 {{ $isUnread ? 'font-semibold' : '' }}">
                             {{ $message->subject }}
                         </p>
-                        {{-- Aperçu du message --}}
                         <p class="text-xs text-grayscale-text-subtitle line-clamp-2 mt-1">
                             {{ Str::limit($message->content) }}
                         </p>
@@ -216,7 +206,6 @@ new class extends Component {
         @endforelse
     </div>
 
-    {{-- Pagination --}}
     @if($this->messages->hasPages())
         <div class="flex justify-center pt-4">
             {{ $this->messages->onEachSide(0)->links('vendor.pagination.livewire-custom-orange', ['itemName' => 'messages']) }}

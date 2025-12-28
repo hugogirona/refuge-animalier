@@ -10,6 +10,7 @@ new class extends Component
 
     public function mount(ContactMessage $message): void
     {
+        $this->authorize('view', $message);
         $this->message = $message;
 
 
@@ -34,7 +35,7 @@ new class extends Component
     </x-admin.partials.breadcrumb>
 
     {{-- Header --}}
-    <div class="flex flex-col md:flex-row justify-between items-start md:items-center px-5 md:px-6 gap-4 mb-8 max-w-7xl mx-auto">
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center px-5 md:px-6 py-4 gap-4 mb-8 max-w-7xl mx-auto">
         <div>
             <h1 class="text-2xl md:text-3xl font-bold mb-2">{{ $message->subject }}</h1>
             <div class="flex items-center gap-3">

@@ -3,13 +3,15 @@
 namespace App\Models;
 
 use App\Enums\AdoptionRequestStatus;
+use App\Policies\AdoptionRequestPolicy;
 use Database\Factories\ContactMessageFactory;
 use Illuminate\Database\Eloquent\Attributes\Scope;
+use Illuminate\Database\Eloquent\Attributes\UsePolicy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
-
+#[UsePolicy(AdoptionRequestPolicy::class)]
 class AdoptionRequest extends Model
 {
     /** @use HasFactory<ContactMessageFactory> */
@@ -36,6 +38,7 @@ class AdoptionRequest extends Model
         'status',
         'notified_at',
         'processed_by',
+        'adopted_at',
     ];
 
     protected function casts(): array

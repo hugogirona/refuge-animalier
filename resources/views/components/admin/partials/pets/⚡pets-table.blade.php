@@ -141,7 +141,7 @@ new class extends Component {
         </div>
 
 
-        @if(count($selected) > 0)
+        @if(count($selected) > 0 && auth()->user()->isAdmin())
             <div
                 class="flex items-center gap-2 bg-primary-surface-default-subtle border border-primary-border-default px-4 py-2 rounded-lg animate-fade-in">
                 <span class="text-sm font-medium text-primary-text-link-light">
@@ -173,15 +173,16 @@ new class extends Component {
     <x-admin.table.table>
         <x-admin.table.thead>
             <x-admin.table.tr>
-                <x-admin.table.th class="w-12">
+                @if(auth()->user()->isAdmin())
+                    <x-admin.table.th class="w-12">
 
-                    <input
-                        type="checkbox"
-                        wire:model.live="selectAll"
-                        class="w-4 h-4 text-primary-600 border-neutral-300 rounded focus:ring-primary-500 cursor-pointer"
-                    >
-                </x-admin.table.th>
-
+                        <input
+                            type="checkbox"
+                            wire:model.live="selectAll"
+                            class="w-4 h-4 text-primary-600 border-neutral-300 rounded focus:ring-primary-500 cursor-pointer"
+                        >
+                    </x-admin.table.th>
+                @endif
                 <x-admin.table.th>Photo</x-admin.table.th>
 
                 <x-admin.table.th
@@ -216,6 +217,7 @@ new class extends Component {
                     wire:click="show({{ $pet->id }})"
                     class="cursor-pointer hover:bg-neutral-50 transition-colors {{ in_array($pet->id, $selected) ? 'bg-primary-surface-default-subtle' : '' }}"
                 >
+                    @if(auth()->user()->isAdmin())
                     <x-admin.table.td>
                         <div @click.stop>
                             <input
@@ -226,6 +228,7 @@ new class extends Component {
                             >
                         </div>
                     </x-admin.table.td>
+                    @endif
 
                     <x-admin.table.td>
                         <img
@@ -273,7 +276,7 @@ new class extends Component {
                         <div @click.stop>
                             <x-admin.table.action-menu
                                 editAction="edit({{ $pet->id }})"
-                                deleteAction="delete({{ $pet->id }})"
+                                :deleteAction="auth()->user()->isAdmin() ? 'delete(' . $pet->id . ')' : null"
                                 deleteMessage="Voulez-vous vraiment supprimer {{ $pet->name }} ?"
                             />
                         </div>
