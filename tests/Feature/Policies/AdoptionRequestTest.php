@@ -22,11 +22,11 @@ describe('Adoption Request Policy', function () {
         expect($volunteer->cannot('approve', $adoption))->toBeTrue();
     });
 
-    it('allows both to view adoptions', function () {
+    it('allows only admin to view adoptions', function () {
         $admin = User::factory()->admin()->create();
         $volunteer = User::factory()->volunteer()->create();
 
         expect($admin->can('viewAny', AdoptionRequest::class))->toBeTrue()
-            ->and($volunteer->can('viewAny', AdoptionRequest::class))->toBeTrue();
+            ->and($volunteer->cant('viewAny', AdoptionRequest::class))->toBeTrue();
     });
 });

@@ -12,7 +12,7 @@ new class extends Component {
 
     public function mount(AdoptionRequest $adoption): void
     {
-        $this->authorize('view', $adoption)
+        $this->authorize('view', $adoption);
         $this->adoption = $adoption->load(['pet', 'pet.breed']);
     }
 

@@ -22,15 +22,29 @@
                     </x-cta-button>
 
                 @else
-                    <x-cta-button
-                        class="grow"
-                        :href="$action['href'] ?? '#'"
-                        :variant="$action['variant'] ?? 'primary'"
-                        :icon="$action['icon'] ?? null"
-                        wire:navigate.hover
-                    >
-                        {{ $action['label'] }}
-                    </x-cta-button>
+
+                    @if($action['download'] ?? false)
+                        <x-cta-button
+                            class="grow"
+                            :href="$action['href'] ?? '#'"
+                            :variant="$action['variant'] ?? 'primary'"
+                            :icon="$action['icon'] ?? null"
+                            download
+                        >
+                            {{ $action['label'] }}
+                        </x-cta-button>
+                    @else
+                        <x-cta-button
+                            class="grow"
+                            :href="$action['href'] ?? '#'"
+                            :variant="$action['variant'] ?? 'primary'"
+                            :icon="$action['icon'] ?? null"
+                            wire:navigate.hover
+                        >
+                            {{ $action['label'] }}
+                        </x-cta-button>
+                    @endif
+
                 @endif
 
             @endforeach

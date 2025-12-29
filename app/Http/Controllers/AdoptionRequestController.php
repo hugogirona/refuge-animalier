@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Enums\AdoptionRequestStatus;
 use App\Http\Requests\StoreAdoptionRequest;
+use App\Mail\AdoptionRequestReceived;
 use App\Models\AdoptionRequest;
 use App\Models\Pet;
+use Illuminate\Support\Facades\Mail;
 
 class AdoptionRequestController extends Controller
 {
@@ -27,6 +29,8 @@ class AdoptionRequestController extends Controller
             'has_garden' => $validated_data['garden'] === 'yes',
             'status' => AdoptionRequestStatus::NEW,
         ]);
+
+        Mail::to($adoption_request->email)->send(new AdoptionRequestReceived($adoption_request));
 
         return redirect()
             ->route('adoption.confirmation', $adoption_request);

@@ -127,7 +127,7 @@ new class extends Component {
             :value="$total_pets"
             label="Animaux au refuge"
             :trend="auth()->user()->isAdmin() && $pets_trend > 0 ? '+' . $pets_trend : null"
-            trendLabel="nouveaux cette sem."
+            trendLabel=" cette semaine."
         />
 
         @if(auth()->user()->isVolunteer())
