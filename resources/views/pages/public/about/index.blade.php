@@ -19,16 +19,16 @@
     <div class="max-w-6xl mx-auto">
         <x-text-media
             :title="__('public/about.history.title')"
-            image="home/cat-about"
+            image="about/trainer-about"
             :image_alt="__('public/about.history.image_alt')"
             image_ratio="video"
+            image_order="left"
             :paragraphs="__('public/about.history.paragraphs')"
         />
         <x-text-media
             :title="__('public/about.today.title')"
-            image="home/cat-about"
+            image="about/vet-about"
             :image_alt="__('public/about.today.image_alt')"
-            image_order="left"
             image_ratio="video"
             :paragraphs="__('public/about.today.paragraphs')"
         />
