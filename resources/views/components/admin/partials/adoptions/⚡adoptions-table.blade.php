@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\PetStatus;
 use App\Models\AdoptionRequest;
 use App\Enums\AdoptionRequestStatus;
 use Illuminate\Database\Eloquent\Builder;
@@ -67,23 +68,52 @@ new class extends Component {
 
     public function acceptSelected(): void
     {
-        AdoptionRequest::whereIn('id', $this->selected)->update([
-            'status' => AdoptionRequestStatus::ACCEPTED,
-            'processed_by' => auth()->id(),
-        ]);
+        $requests = AdoptionRequest::with('pet')->whereIn('id', $this->selected)->get();
+
+        foreach ($requests as $request) {
+            $request->update([
+                'status' => AdoptionRequestStatus::ACCEPTED,
+                'adopted_at' => now(),
+                'processed_by' => auth()->id(),
+            ]);
+
+            if ($request->pet) {
+                $request->pet->update([
+                    'status' => PetStatus::ADOPTED,
+                    'is_published' => false
+                ]);
+            }
+        }
+
         $this->dispatch('adoption-updated');
+        $this->dispatch('pet-updated');
         $this->resetSelection();
     }
 
+
     public function rejectSelected(): void
     {
-        AdoptionRequest::whereIn('id', $this->selected)->update([
-            'status' => AdoptionRequestStatus::REJECTED,
-            'processed_by' => auth()->id(),
-        ]);
+        $requests = AdoptionRequest::with('pet')->whereIn('id', $this->selected)->get();
+
+        foreach ($requests as $request) {
+            $request->update([
+                'status' => AdoptionRequestStatus::REJECTED,
+                'adopted_at' => null,
+                'processed_by' => auth()->id(),
+            ]);
+
+            if ($request->pet && $request->pet->status === PetStatus::ADOPTION_PENDING) {
+                $request->pet->update([
+                    'status' => PetStatus::AVAILABLE
+                ]);
+            }
+        }
+
         $this->dispatch('adoption-updated');
+        $this->dispatch('pet-updated');
         $this->resetSelection();
     }
+
 
     private function resetSelection(): void
     {
@@ -122,6 +152,7 @@ new class extends Component {
                         });
                 });
             })
+            ->orderByRaw("status = 'new' DESC")
             ->orderBy($this->sortCol, $this->sortAsc ? 'asc' : 'desc')
             ->paginate(5);
     }
@@ -139,7 +170,8 @@ new class extends Component {
         </div>
 
         @if(count($selected) > 0)
-            <div class="flex items-center gap-2 bg-primary-surface-default-subtle border border-primary-border-default px-4 py-2 rounded-lg animate-fade-in">
+            <div
+                class="flex items-center gap-2 bg-primary-surface-default-subtle border border-primary-border-default px-4 py-2 rounded-lg animate-fade-in">
                 <span class="text-sm font-medium text-primary-text-link-light">
                     {{ count($selected) }} sélectionné(s)
                 </span>
@@ -274,7 +306,8 @@ new class extends Component {
                 <x-admin.table.tr>
                     <x-admin.table.td colspan="7" class="text-center py-12">
                         <div class="text-grayscale-text-subtitle">
-                            <svg class="w-12 h-12 mx-auto mb-4 text-neutral-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-12 h-12 mx-auto mb-4 text-neutral-300" fill="none" stroke="currentColor"
+                                 viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                       d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"/>
                             </svg>

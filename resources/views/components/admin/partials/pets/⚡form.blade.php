@@ -116,8 +116,8 @@ new class extends Component {
             'last_vet_visit' => 'nullable|date|before_or_equal:today',
             'vaccinations' => 'nullable|string',
             'sterilized' => 'boolean',
-            'personality' => 'required|string|min:50',
-            'story' => 'required|string|min:100',
+            'personality' => 'required|string|min:20',
+            'story' => 'required|string|min:20',
             'status' => 'required|string',
             'photo' => 'nullable|image|mimes:jpeg,jpg,png|max:2048',
             'is_published' => 'boolean',
@@ -153,6 +153,12 @@ new class extends Component {
             'is_published' => $this->is_published,
             'arrived_at' => $this->arrived_at,
         ];
+
+        if (!Auth::user()->isAdmin()) {
+            $data['is_published'] = false;
+            $data['published_by'] = null;
+            $data['published_at'] = null;
+        }
 
         if ($this->photo) {
             $data['photo_path'] = $this->generatePetImage($this->photo, $this->name);
@@ -403,6 +409,7 @@ new class extends Component {
         </fieldset>
 
         {{-- Section Publication --}}
+        @if(auth()->user()->isAdmin())
         <fieldset class="bg-neutral-50 p-4 rounded-lg">
             <legend class="text-lg font-semibold mb-4">Publication</legend>
 
@@ -413,6 +420,7 @@ new class extends Component {
                 wire:model="is_published"
             />
         </fieldset>
+        @endif
 
         {{-- Boutons d'action --}}
         <div class="flex gap-4 justify-end py-4 border-t border-neutral-200 bg-white">

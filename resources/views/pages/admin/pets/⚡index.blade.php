@@ -8,6 +8,7 @@ new class extends Component {
 
     public function mount(): void
     {
+        $this->authorize('viewAny', Pet::class);
         $this->pets_count = Pet::count();
     }
 
@@ -36,7 +37,7 @@ new class extends Component {
     <div>
         <x-admin.partials.title-header
             title="Gestion des animaux"
-            :subtitle="$this->pets_count . ' ' . 'animaux disponibles'"
+            :subtitle="$this->pets_count . ' ' . 'animaux au refuge'"
             buttonLabel="Ajouter un animal"
             buttonAction="create"
             buttonIcon="plus"
@@ -58,12 +59,10 @@ new class extends Component {
     }"
         class="px-4 md:px-6 max-w-7xl mx-auto"
     >
-        {{-- Mobile/Tablet: Cards --}}
         <template x-if="!isDesktop">
             <livewire:admin.partials.pets.pets-list/>
         </template>
 
-        {{-- Desktop: Table --}}
         <template x-if="isDesktop">
             <livewire:admin.partials.pets.pets-table/>
         </template>

@@ -52,6 +52,7 @@ new class extends Component
                     :active="request()->routeIs('admin-pets.*')"
                 />
             </li>
+            @if(auth()->user()->isAdmin())
             <li>
                 <x-admin.navigation.nav-link
                     href="{{ route('adoptions.index') }}"
@@ -80,6 +81,8 @@ new class extends Component
                     :active="request()->routeIs('messages.*')"
                 />
             </li>
+            @endif
+
 
             <li class="border-t border-neutral-200 my-4 py-4">
                 {{-- Paramètres --}}

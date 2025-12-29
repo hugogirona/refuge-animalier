@@ -12,6 +12,7 @@ new class extends Component {
 
     public function mount(AdoptionRequest $adoption): void
     {
+        $this->authorize('view', $adoption)
         $this->adoption = $adoption->load(['pet', 'pet.breed']);
     }
 
@@ -107,7 +108,11 @@ new class extends Component {
     // Actions
     public function accept(): void
     {
-        $this->adoption->update(['status' => AdoptionRequestStatus::ACCEPTED]);
+        $this->adoption->update([
+            'status' => AdoptionRequestStatus::ACCEPTED,
+            'adopted_at' => now(),
+            'processed_by' => auth()->user()->id,
+        ]);
 
         $this->adoption->pet->update([
             'status' => PetStatus::ADOPTED,
@@ -118,9 +123,14 @@ new class extends Component {
         $this->dispatch('pet-updated');
     }
 
+
     public function reject(): void
     {
-        $this->adoption->update(['status' => AdoptionRequestStatus::REJECTED]);
+        $this->adoption->update([
+            'status' => AdoptionRequestStatus::REJECTED,
+            'adopted_at' => null,
+            'processed_by' => auth()->user()->id,
+        ]);
 
         if ($this->adoption->pet->status === PetStatus::ADOPTION_PENDING) {
             $this->adoption->pet->update([
@@ -134,9 +144,14 @@ new class extends Component {
 
     public function setPending(): void
     {
-        $this->adoption->update(['status' => AdoptionRequestStatus::PENDING]);
+        $this->adoption->update([
+            'status' => AdoptionRequestStatus::PENDING,
+            'adopted_at' => null,
+            'processed_by' => auth()->user()->id,
+            ]);
+
         $this->adoption->pet->update([
-            'status' => PetStatus::ADOPTION_PENDING
+            'status' => PetStatus::ADOPTION_PENDING,
         ]);
 
         $this->dispatch('adoption-updated');
@@ -147,7 +162,6 @@ new class extends Component {
 ?>
 
 <main class="flex-1">
-    {{-- Breadcrumb Dynamique --}}
     <x-admin.partials.breadcrumb>
         <x-breadcrumb.breadcrumb-item href="{{ route('dashboard.index') }}">Tableau de bord
         </x-breadcrumb.breadcrumb-item>

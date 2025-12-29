@@ -1,6 +1,7 @@
 <?php
 
 use App\Enums\AdoptionRequestStatus;
+use App\Enums\PetStatus;
 use App\Models\AdoptionRequest;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -11,45 +12,98 @@ use Livewire\WithPagination;
 new class extends Component {
     use WithPagination;
 
-    // --- FILTRES ---
     public string $search = '';
 
-    // --- SÉLECTION ---
+    public string $sortCol = 'created_at';
+    public bool $sortAsc = false;
+
     public array $selected = [];
     public bool $selectAll = false;
 
-    // --- LIFECYCLE ---
-    public function updatedSearch(): void { $this->resetPage(); }
-    public function updatedPage(): void { $this->selected = []; $this->selectAll = false; }
+    public function updatedSearch(): void
+    {
+        $this->resetPage();
+    }
 
-    public function updatedSelectAll($value): void {
+    public function updatedPage(): void
+    {
+        $this->selected = [];
+        $this->selectAll = false;
+    }
+
+    public function updatedSelectAll($value): void
+    {
         if ($value) {
             $this->selected = $this->adoptions->pluck('id')->map(fn($id) => (string)$id)->toArray();
         } else {
             $this->selected = [];
         }
     }
-    public function updatedSelected(): void { $this->selectAll = false; }
 
-    public function acceptSelected(): void {
-        AdoptionRequest::whereIn('id', $this->selected)->update(['status' => AdoptionRequestStatus::ACCEPTED]);
-        $this->dispatch('adoption-updated');
-        $this->selected = [];
+    public function updatedSelected(): void
+    {
+        $this->selectAll = false;
     }
 
-    public function rejectSelected(): void {
-        AdoptionRequest::whereIn('id', $this->selected)->update(['status' => AdoptionRequestStatus::REJECTED]);
-        $this->dispatch('adoption-updated');
+    public function acceptSelected(): void
+    {
+        $requests = AdoptionRequest::with('pet')
+            ->whereIn('id', $this->selected)
+            ->get();
+
+        foreach ($requests as $request) {
+            $request->update([
+                'status' => AdoptionRequestStatus::ACCEPTED,
+                'adopted_at' => now(),
+                'processed_by' => auth()->id(),
+            ]);
+
+            if ($request->pet) {
+                $request->pet->update([
+                    'status' => PetStatus::ADOPTED,
+                    'is_published' => false
+                ]);
+            }
+        }
+
         $this->selected = [];
+        $this->dispatch('adoption-updated');
+        $this->dispatch('pet-updated');
     }
 
-    public function deleteSelected(): void {
+    public function rejectSelected(): void
+    {
+        $requests = AdoptionRequest::with('pet')
+            ->whereIn('id', $this->selected)
+            ->get();
+
+        foreach ($requests as $request) {
+            $request->update([
+                'status' => AdoptionRequestStatus::REJECTED,
+                'adopted_at' => null,
+                'processed_by' => auth()->id(),
+            ]);
+
+            if ($request->pet && $request->pet->status === PetStatus::ADOPTION_PENDING) {
+                $request->pet->update([
+                    'status' => PetStatus::AVAILABLE
+                ]);
+            }
+        }
+
+        $this->selected = [];
+        $this->dispatch('adoption-updated');
+        $this->dispatch('pet-updated');
+    }
+
+
+    public function deleteSelected(): void
+    {
         AdoptionRequest::whereIn('id', $this->selected)->delete();
         $this->dispatch('adoption-updated');
         $this->selected = [];
     }
 
-    // --- DONNÉES ---
     #[Computed]
     public function adoptions(): LengthAwarePaginator
     {
@@ -65,7 +119,8 @@ new class extends Component {
                         });
                 });
             })
-            ->latest()
+            ->orderByRaw("status = 'new' DESC")
+            ->orderBy($this->sortCol, $this->sortAsc ? 'asc' : 'desc')
             ->paginate(6);
     }
 };
@@ -73,7 +128,6 @@ new class extends Component {
 
 <div class="flex flex-col gap-6 mb-12">
 
-    {{-- Header : Recherche + Actions (Inchangé) --}}
     <div class="bg-transparent flex flex-col gap-3">
         <div class="lg:max-w-xl mr-auto pt-4 w-full">
             <x-search-filter.search-bar
@@ -83,18 +137,22 @@ new class extends Component {
         </div>
 
         @if(count($selected) > 0)
-            <div class="flex items-center justify-between bg-primary-surface-default-subtle border border-primary-border-default px-4 py-2 rounded-lg animate-fade-in">
+            <div
+                class="flex items-center justify-between bg-primary-surface-default-subtle border border-primary-border-default px-4 py-2 rounded-lg animate-fade-in">
                 <span class="text-sm font-medium text-primary-text-link-light">
                     {{ count($selected) }} sélectionné(s)
                 </span>
                 <div class="flex gap-2">
-                    <button wire:click="acceptSelected" class="text-xs px-2 py-1 bg-white border border-success-border-default text-success-text-default rounded hover:bg-success-surface-default-subtle transition-colors">
+                    <button wire:click="acceptSelected"
+                            class="text-xs px-2 py-1 bg-white border border-success-border-default text-success-text-default rounded hover:bg-success-surface-default-subtle transition-colors">
                         Accepter
                     </button>
-                    <button wire:click="rejectSelected" class="text-xs px-2 py-1 bg-white border border-error-border-default text-error-text-link-light rounded hover:bg-error-surface-default-subtle transition-colors">
+                    <button wire:click="rejectSelected"
+                            class="text-xs px-2 py-1 bg-white border border-error-border-default text-error-text-link-light rounded hover:bg-error-surface-default-subtle transition-colors">
                         Refuser
                     </button>
-                    <button wire:click="deleteSelected" wire:confirm="Supprimer définitivement ?" class="text-xs px-2 py-1 bg-white border border-neutral-300 text-neutral-600 rounded hover:bg-neutral-50 transition-colors">
+                    <button wire:click="deleteSelected" wire:confirm="Supprimer définitivement ?"
+                            class="text-xs px-2 py-1 bg-white border border-neutral-300 text-neutral-600 rounded hover:bg-neutral-50 transition-colors">
                         Supprimer
                     </button>
                 </div>
@@ -166,14 +224,18 @@ new class extends Component {
                     <div class="mb-4 space-y-1">
                         <p class="text-xs font-bold uppercase tracking-wider text-grayscale-text-caption">Candidat</p>
                         <p class="text-base font-bold text-grayscale-text-body">{{ $adoption->full_name }}</p>
-                        <p class="text-sm text-grayscale-text-subtitle truncate" title="{{ $adoption->email }}">{{ $adoption->email }}</p>
+                        <p class="text-sm text-grayscale-text-subtitle truncate"
+                           title="{{ $adoption->email }}">{{ $adoption->email }}</p>
                     </div>
 
                     <div class="flex-1"></div>
 
                     <div class="mb-6 pt-4 border-t border-neutral-100">
                         <p class="text-xs text-grayscale-text-subtitle flex items-center gap-2">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
                             {{ $adoption->processor?->full_name ? 'Traité par ' . $adoption->processor->full_name : 'Pas encore traitée' }}
                         </p>
                     </div>
@@ -188,9 +250,12 @@ new class extends Component {
                 </div>
             </article>
         @empty
-            <div class="col-span-full py-12 text-center text-grayscale-text-subtitle bg-white rounded-xl border border-neutral-200">
-                <svg class="w-12 h-12 mx-auto mb-4 text-neutral-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+            <div
+                class="col-span-full py-12 text-center text-grayscale-text-subtitle bg-white rounded-xl border border-neutral-200">
+                <svg class="w-12 h-12 mx-auto mb-4 text-neutral-300" fill="none" stroke="currentColor"
+                     viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                 </svg>
                 <p class="text-lg font-medium">Aucune demande trouvée</p>
             </div>

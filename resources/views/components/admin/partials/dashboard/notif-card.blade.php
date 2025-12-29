@@ -1,6 +1,3 @@
-
-
-{{-- components/admin/notif-card.blade.php --}}
 @props([
     'title',
     'description',
@@ -41,7 +38,7 @@
     $colorClass = $colors[$color] ?? $colors['primary'];
 @endphp
 
-<div class="relative {{ $colorClass['bg'] }} border-l-4 {{ $colorClass['border'] }} rounded-lg p-4 hover:shadow transition-shadow">
+<div class="relative {{ $colorClass['bg'] }} border-l-4 {{ $colorClass['border'] }} rounded-lg p-4 hover:shadow transition-shadow {{$attributes}}">
 
     @if($count)
         <div class="absolute top-4 right-4">
@@ -61,7 +58,7 @@
             {{ $description }}
         </p>
 
-        <a href="{{ $linkHref }}" class="{{ $colorClass['link'] }} font-medium inline-flex items-center gap-1 transition-colors">
+        <a wire:navigate.hover href="{{ $linkHref }}" class="{{ $colorClass['link'] }} font-medium inline-flex items-center gap-1 transition-colors">
             {{ $linkText }}
             <svg class="w-4 h-4 fill-none"  stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>

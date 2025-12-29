@@ -3,12 +3,14 @@
 namespace App\Models;
 
 use App\Enums\ContactMessageStatus;
+use App\Policies\ContactMessagePolicy;
 use Database\Factories\ContactMessageFactory;
 use Illuminate\Database\Eloquent\Attributes\Scope;
+use Illuminate\Database\Eloquent\Attributes\UsePolicy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-
+#[UsePolicy(ContactMessagePolicy::class)]
 class ContactMessage extends Model
 {
     /** @use HasFactory<ContactMessageFactory> */

@@ -105,7 +105,7 @@ new class extends Component {
 ?>
 
 <div class="mb-12 flex flex-col gap-4"
-     >
+>
 
     <div class="bg-transparent flex flex-col gap-3">
         <div class="lg:max-w-xl mr-auto pt-4 w-full">
@@ -115,7 +115,7 @@ new class extends Component {
             />
         </div>
 
-        @if(count($selected) > 0)
+        @if(count($selected) > 0 && auth()->user()->isAdmin())
             <div
                 class="flex items-center justify-between bg-primary-surface-default-subtle border border-primary-border-default px-4 py-2 rounded-lg animate-fade-in">
                 <span class="text-sm font-medium text-primary-text-link-light">
@@ -138,12 +138,15 @@ new class extends Component {
             </div>
         @endif
 
-        <div class="flex items-center gap-2 px-1">
-            <input type="checkbox" wire:model.live="selectAll" id="mobileSelectAll"
-                   class="w-4 h-4 text-primary-600 rounded focus:ring-primary-500">
-            <label for="mobileSelectAll" class="text-sm text-grayscale-text-subtitle">Tout sélectionner sur cette
-                page</label>
-        </div>
+        @if(auth()->user()->isAdmin())
+            <div class="flex items-center gap-2 px-1">
+                <input type="checkbox" wire:model.live="selectAll" id="mobileSelectAll"
+                       class="w-4 h-4 text-primary-600 rounded focus:ring-primary-500">
+                <label for="mobileSelectAll" class="text-sm text-grayscale-text-subtitle">Tout sélectionner sur cette
+                    page</label>
+            </div>
+        @endif
+
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -152,18 +155,20 @@ new class extends Component {
                  wire:click="show({{ $pet->id }})"
                  class="bg-white rounded-xl border border-neutral-200 p-4 shadow-sm relative {{ in_array($pet->id, $selected) ? 'ring-2 ring-primary-border-default bg-primary-surface-default-subtle' : '' }}">
 
+                @if(auth()->user()->isAdmin())
                 <div class="absolute top-4 left-4 z-10">
                     <div @click.stop>
                         <input type="checkbox" wire:model.live="selected" value="{{ $pet->id }}"
                                class="w-5 h-5 text-primary-600 border-neutral-300 rounded focus:ring-primary-500 shadow-sm">
                     </div>
                 </div>
+                @endif
 
                 <div class="absolute top-4 right-4 z-10">
                     <div @click.stop>
                         <x-admin.table.action-menu
                             editAction="edit({{ $pet->id }})"
-                            deleteAction="delete({{ $pet->id }})"
+                            :deleteAction="auth()->user()->isAdmin() ? 'delete(' . $pet->id . ')' : null"
                             deleteMessage="Voulez-vous vraiment supprimer {{ $pet->name }} ?"
                         />
                     </div>

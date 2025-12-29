@@ -8,7 +8,7 @@ use App\Models\User;
 
 beforeEach(function () {
     // Exécuté AVANT CHAQUE test
-    $this->user = User::factory()->admin()->create();
+    $this->user = User::factory()->volunteer()->create();
     $this->actingAs($this->user);
 });
 

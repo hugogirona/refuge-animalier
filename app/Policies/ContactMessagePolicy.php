@@ -13,7 +13,7 @@ class ContactMessagePolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->role === UserRoles::ADMIN->value;
+        return $user->isAdmin();
     }
 
     /**
@@ -21,7 +21,7 @@ class ContactMessagePolicy
      */
     public function view(User $user, ContactMessage $contactMessage): bool
     {
-        return $user->role === UserRoles::ADMIN->value;
+        return $user->isAdmin();
     }
 
     /**
@@ -37,7 +37,7 @@ class ContactMessagePolicy
      */
     public function update(User $user, ContactMessage $contactMessage): bool
     {
-        return $user->role === UserRoles::ADMIN->value;
+        return $user->isAdmin();
     }
 
     /**
@@ -45,6 +45,6 @@ class ContactMessagePolicy
      */
     public function delete(User $user, ContactMessage $contactMessage): bool
     {
-        return $user->role === UserRoles::ADMIN->value;
+        return $user->isAdmin();
     }
 }

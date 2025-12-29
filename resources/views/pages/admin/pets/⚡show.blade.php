@@ -9,6 +9,7 @@ new class extends Component {
 
     public function mount(Pet $pet): void
     {
+        $this->authorize('view', $pet);
         $this->pet = $pet->load(['breed', 'creator']);
     }
 
@@ -71,7 +72,6 @@ new class extends Component {
                         ['icon' => 'calendar', 'label' => 'Âge', 'value' => $pet->age_text],
                         ['icon' => 'male', 'label' => 'Sexe', 'value' => $pet->sex->value],
                         ['icon' => 'paw', 'label' => 'Pelage', 'value' => $pet->coat_color],
-                        ['icon' => 'weight', 'label' => 'Poids', 'value' => $pet->weight ?? '-'],
                     ];
                 @endphp
 
@@ -82,10 +82,9 @@ new class extends Component {
                 <h2 class="text-2xl md:text-3xl font-semibold mb-4">Santé</h2>
                 @php
                     $animalHealth = [
-                        ['icon' => 'calendar', 'label' => 'Dernière visite', 'value' => $pet->last_vet_visit],
-                        ['icon' => 'medicine', 'label' => 'Traitements', 'value' => 'Aucun (statique)'],
+                        ['icon' => 'calendar', 'label' => 'Dernière visite vétérinaire', 'value' => $pet->last_vet_visit],
                         ['icon' => 'check', 'label' => 'Stérilisé', 'value' => $pet->sterilized ? 'Oui' : 'Non'],
-                        ['icon' => 'check', 'label' => 'Vaccins', 'value' => $pet->vaccinations],
+                        ['icon' => 'check', 'label' => 'Vaccins', 'value' => $pet->vaccinations ?? '-'],
                     ];
                 @endphp
 

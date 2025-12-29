@@ -8,6 +8,7 @@ new class extends Component {
 
     public function mount(): void
     {
+        $this->authorize('viewAny', AdoptionRequest::class);
         $this->adoptions_count = AdoptionRequest::count();
     }
 }
@@ -46,12 +47,10 @@ new class extends Component {
     }"
         class="px-4 md:px-6 max-w-7xl mx-auto"
     >
-        {{-- Mobile/Tablet: Cards --}}
         <template x-if="!isDesktop">
             <livewire:admin.partials.adoptions.adoptions-list/>
         </template>
 
-        {{-- Desktop: Table --}}
         <template x-if="isDesktop">
             <livewire:admin.partials.adoptions.adoptions-table/>
         </template>

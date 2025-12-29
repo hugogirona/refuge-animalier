@@ -11,6 +11,7 @@ new class extends Component {
 
     public function mount(): void
     {
+        $this->authorize('viewAny', ContactMessage::class);
         $this->messages_count = ContactMessage::count();
         $this->new_messages_count = ContactMessage::where('status', ContactMessageStatus::NEW)->count();
     }
