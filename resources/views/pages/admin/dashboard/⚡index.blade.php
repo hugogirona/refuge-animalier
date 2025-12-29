@@ -36,6 +36,12 @@ class extends Component {
                     'href' => route('adoptions.index'),
                     'variant' => 'secondary',
                 ],
+                [
+                    'label' => 'Télécharger le rapport',
+                    'href' => route('admin.reports.monthly'),
+                    'variant' => 'secondary',
+                    'download' => true,
+                ],
             ]);
         }
     }

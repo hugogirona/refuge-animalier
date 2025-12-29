@@ -3,10 +3,12 @@
 namespace App\Livewire\Admin\Users;
 
 use App\Concerns\HandleImages;
+use App\Mail\UserCreated;
 use App\Models\User;
 use App\Enums\UserRoles;
 use App\Enums\UserStatus;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -120,7 +122,9 @@ new class extends Component {
             $user = User::findOrFail($this->model_id);
             $user->update($data);
         } else {
-            User::create($data);
+            $user = User::create($data);
+
+            Mail::to($user->email)->send(new UserCreated($user, $this->password));
         }
 
         $this->dispatch('close_modal');

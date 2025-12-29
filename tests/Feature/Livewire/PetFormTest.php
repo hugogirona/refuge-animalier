@@ -53,7 +53,7 @@ function fillFormWithValidData(array $overrides = []): array
 }
 
 beforeEach(function () {
-    $this->user = User::factory()->create();
+    $this->user = User::factory()->admin()->create();
     actingAs($this->user);
     Storage::fake('public');
 });
@@ -181,10 +181,10 @@ describe('Validation', function () {
             ->assertHasErrors(['personality' => 'min']);
     });
 
-    it('validates story has at least 100 characters', function () {
+    it('validates story has at least 20 characters', function () {
         Livewire::test('admin.partials.pets.form')
             ->fill(fillFormWithValidData())
-            ->set('story', 'Story way too short to be valid')
+            ->set('story', 'Story too short')
             ->call('save')
             ->assertHasErrors(['story' => 'min']);
     });

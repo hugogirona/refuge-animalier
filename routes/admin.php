@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ReportController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -14,6 +15,7 @@ Route::middleware(['auth'])->group(function () {
     Route::livewire('/admin/messages', 'pages::admin.messages.index')->name('messages.index');
     Route::livewire('/admin/messages/{message}', 'pages::admin.messages.show')->name('messages.show');
     Route::livewire('/admin/settings', 'pages::admin.settings.index')->name('settings.index');
+    Route::get('/admin/reports/monthly', [ReportController::class, 'downloadMonthlyReport'])->name('admin.reports.monthly');
 });
 
 
