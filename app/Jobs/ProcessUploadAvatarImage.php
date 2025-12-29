@@ -23,14 +23,17 @@ class ProcessUploadAvatarImage implements ShouldQueue
         $extension = config('avatars.image_type', 'webp');
         $compression = config('avatars.compression', 90);
 
+        $originalDisk = config('avatars.original_disk');
+        $variantDisk  = config('avatars.variant_disk');
+
         $originalPath = config('avatars.original_path') . '/' . $this->newOriginalFileName;
 
-        if (!Storage::disk('local')->exists($originalPath)) {
+        if (!Storage::disk($originalDisk)->exists($originalPath)) {
             return;
         }
 
         $image = Image::read(
-            Storage::disk('local')->get($originalPath)
+            Storage::disk($originalDisk)->get($originalPath)
         );
 
         $fileNameWithoutExt = pathinfo($this->newOriginalFileName, PATHINFO_FILENAME);
@@ -44,7 +47,7 @@ class ProcessUploadAvatarImage implements ShouldQueue
             $newFileName = $fileNameWithoutExt . '.' . $extension;
             $fullVariantPath = $variantFolder . '/' . $newFileName;
 
-            Storage::disk('public')->put(
+            Storage::disk($variantDisk)->put(
                 $fullVariantPath,
                 $variant->encodeByExtension($extension, $compression)
             );

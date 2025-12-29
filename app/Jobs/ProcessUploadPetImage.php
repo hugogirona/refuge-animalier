@@ -4,13 +4,10 @@ namespace App\Jobs;
 
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Laravel\Facades\Image;
-
-
 
 class ProcessUploadPetImage implements ShouldQueue
 {
@@ -24,22 +21,24 @@ class ProcessUploadPetImage implements ShouldQueue
     {
         $sizes = config('pets.sizes');
         $extension = config('pets.image_type', 'webp');
-        $compression = config('pets.compression', config(90));
+        $compression = config('pets.compression', 90);
+
+        $originalDisk = config('pets.original_disk');
+        $variantDisk  = config('pets.variant_disk');
 
         $originalPath = config('pets.original_path') . '/' . $this->newOriginalFileName;
 
-        if (!Storage::disk('local')->exists($originalPath)) {
+        if (!Storage::disk($originalDisk)->exists($originalPath)) {
             return;
         }
 
         $image = Image::read(
-            Storage::disk('local')->get($originalPath)
+            Storage::disk($originalDisk)->get($originalPath)
         );
 
         $fileNameWithoutExt = pathinfo($this->newOriginalFileName, PATHINFO_FILENAME);
 
         foreach ($sizes as $size) {
-
             $variant = clone $image;
 
             $variant->cover($size['width'], $size['height']);
@@ -48,7 +47,7 @@ class ProcessUploadPetImage implements ShouldQueue
             $newFileName = $fileNameWithoutExt . '.' . $extension;
             $fullVariantPath = $variantFolder . '/' . $newFileName;
 
-            Storage::disk('public')->put(
+            Storage::disk($variantDisk)->put(
                 $fullVariantPath,
                 $variant->encodeByExtension($extension, $compression)
             );
