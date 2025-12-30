@@ -4,9 +4,13 @@ use App\Enums\AdoptionRequestStatus;
 use App\Enums\PetStatus;
 use App\Models\AdoptionRequest;
 use App\Models\Pet;
+use App\Models\Shelter;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
+beforeEach(function (){
+    Shelter::factory()->create();
+});
 
 describe('Adoption Form Display (GET)', function () {
 

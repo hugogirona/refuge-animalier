@@ -11,7 +11,7 @@ class ContactMessageController extends Controller
 {
     public function create()
     {
-        $shelter = Shelter::firstOrFail();
+        $shelter = Shelter::first();
 
         return view('pages.public.contact.create', compact('shelter'));
     }

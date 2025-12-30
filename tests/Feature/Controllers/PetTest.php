@@ -4,9 +4,13 @@ use App\Enums\PetSpecies;
 use App\Enums\PetStatus;
 use App\Models\Breed;
 use App\Models\Pet;
+use App\Models\Shelter;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
+beforeEach(function (){
+    Shelter::factory()->create();
+});
 
 describe('Public Pet Listing (Index Page)', function () {
 

@@ -64,14 +64,14 @@ new class extends Component {
             <section class="bg-white rounded-xl border border-neutral-200 p-6">
                 <h2 class="text-2xl md:text-3xl font-bold mb-4">{{ $pet->name }}</h2>
                 <p class="text-xl text-neutral-600 mb-4">
-                    {{ $pet->breed->name ?? 'Race inconnue' }} • {{ $pet->sex->value }}
+                    {{ __('breeds.'. $pet->breed->name)}} • {{ __('public/pets.show.sex_values.' . $pet->sex->value) }}
                 </p>
 
                 @php
                     $animalInfo = [
-                        ['icon' => 'calendar', 'label' => 'Âge', 'value' => $pet->age_text],
-                        ['icon' => 'male', 'label' => 'Sexe', 'value' => $pet->sex->value],
-                        ['icon' => 'paw', 'label' => 'Pelage', 'value' => $pet->coat_color],
+                        ['icon' => 'calendar', 'label' => __('public/pets.show.info.age'), 'value' => $pet->age_text],
+                        ['icon' => $pet->sex->value, 'label' => __('public/pets.show.info.sex'), 'value' => __('public/pets.show.sex_values.' . $pet->sex->value)],
+                        ['icon' => 'paw', 'label' => __('public/pets.show.info.coat'), 'value' => $pet->coat_color],
                     ];
                 @endphp
 
@@ -82,9 +82,12 @@ new class extends Component {
                 <h2 class="text-2xl md:text-3xl font-semibold mb-4">Santé</h2>
                 @php
                     $animalHealth = [
-                        ['icon' => 'calendar', 'label' => 'Dernière visite vétérinaire', 'value' => $pet->last_vet_visit],
-                        ['icon' => 'check', 'label' => 'Stérilisé', 'value' => $pet->sterilized ? 'Oui' : 'Non'],
-                        ['icon' => 'check', 'label' => 'Vaccins', 'value' => $pet->vaccinations ?? '-'],
+                        ['icon' => 'calendar', 'label' => __('public/pets.show.health.last_vet_visit'),'value' => $pet->last_vet_visit?->format('d/m/Y') ?? 'Non renseigné'],
+                         ['icon' => 'check', 'label' => __('public/pets.show.health.sterilized'), 'value' => $pet->sterilized
+                        ? __('public/pets.show.health.yes')
+                        : __('public/pets.show.health.no') ],
+                        ['icon' => 'check', 'label' => __('public/pets.show.health.vaccines'), 'value' => $pet->vaccinations ?? '-'],
+
                     ];
                 @endphp
 
