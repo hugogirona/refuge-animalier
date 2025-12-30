@@ -206,17 +206,20 @@ class Pet extends Model
         }
 
         $fileNameWithoutExt = pathinfo($this->photo_path, PATHINFO_FILENAME);
-        $extension = config('pets.image_type');
+        $extension = config('pets.image_type', 'webp');
 
         $variantPath = sprintf(config('pets.path_to_variant'), $variantName);
         $fullPath = $variantPath . '/' . $fileNameWithoutExt . '.' . $extension;
 
-        if (Storage::disk('public')->exists($fullPath)) {
-            return asset('storage/' . $fullPath);
+        $diskName = config('pets.variant_disk');
+
+        if (Storage::disk($diskName)->exists($fullPath)) {
+            return Storage::disk($diskName)->url($fullPath);
         }
 
         return $this->getPlaceholderUrl();
     }
+
 
     /**
      * Get placeholder image URL
