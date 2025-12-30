@@ -1,5 +1,11 @@
-<section class="hero-section bg-no-repeat bg-[position:center_100%] bg-[length:auto_110%] overflow-auto bg-hero pt-12 pb-20 px-5 md:pt-16 md:pb-24 lg:pt-20 lg:pb-32 mx-auto">
+@php
+    $bgImage = \Illuminate\Support\Facades\Storage::url('images/home/hero-bg_1x.webp');
+@endphp
 
+<section
+    class="hero-section bg-no-repeat bg-position-[center_85%] bg-size-[auto_110%] overflow-auto pt-12 pb-20 px-5 md:pt-16 md:pb-24 lg:pt-20 lg:pb-32 mx-auto"
+    style="background-image: url('{{ $bgImage }}');"
+>
     <div class="container mx-auto max-w-7xl lg:px-8 flex flex-col-reverse md:flex-row md:items-center md:justify-between gap-10 md:gap-12 lg:gap-16">
         <!-- Contenu texte -->
         <div class="flex flex-col space-y-6 items-start md:w-1/2 lg:w-3/5">
@@ -15,7 +21,6 @@
             </x-cta-button>
         </div>
 
-        <!-- Image du chien avec svg blurry -->
         <div class="md:w-1/2 lg:w-3/5 relative overflow-visible">
             <svg class="absolute top-0 left-0 fill-none" xmlns="http://www.w3.org/2000/svg" lenght="auto" viewBox="0 0 803 982" aria-hidden="true">
                 <g filter="url(#filter0_f_768_14819)">
@@ -36,13 +41,13 @@
 
             <picture class="flex justify-center lg:justify-end">
                 <source
-                    srcset="{{ asset('storage/images/home/hero-dog_1x.webp') }} 1x,
-                            {{ asset('storage/images/home/hero-dog_2x.webp') }} 2x,
-                            {{ asset('storage/images/home/hero-dog_3x.webp') }} 3x"
+                    srcset="{{ Storage::url('images/home/hero-dog_1x.webp') }} 1x,
+                            {{ Storage::url('images/home/hero-dog_2x.webp') }} 2x,
+                            {{ Storage::url('images/home/hero-dog_3x.webp') }} 3x"
                     type="image/webp"
                 >
                 <img
-                    src="{{ asset('storage/images/home/hero-dog_2x.webp') }}"
+                    src="{{ Storage::url('images/home/hero-dog_2x.webp') }}"
                     alt="{{ __('public/home.hero.image_alt') }}"
                     class="w-full h-auto max-w-lg md:max-w-xl z-1"
                     loading="eager"

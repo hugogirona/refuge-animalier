@@ -26,6 +26,8 @@
 
     $heightClass = $heights[$height] ?? $heights['md'];
     $overlayClass = $overlays[$overlay] ?? $overlays['dark'];
+
+$getImg = fn($suffix) => \Illuminate\Support\Facades\Storage::url('images/' . $image . $suffix);
 @endphp
 
 <section class="relative {{ $heightClass }} overflow-hidden">
@@ -33,13 +35,13 @@
     <div class="absolute inset-0">
         <picture>
             <source
-                srcset="{{ asset('storage/images/' . $image . '_1x.webp') }} 1x,
-                {{ asset('storage/images/' . $image . '_2x.webp') }} 2x,
-                {{ asset('storage/images/' . $image . '_3x.webp') }} 3x"
+                srcset="{{ $getImg('_1x.webp') }} 1x,
+                        {{ $getImg('_2x.webp') }} 2x,
+                        {{ $getImg('_3x.webp') }} 3x"
                 type="image/webp"
             >
             <img
-                src="{{ asset('storage/images/' . $image . '_2x.webp') }}"
+                src="{{ $getImg('_2x.webp') }}"
                 alt="{{ $image_alt }}"
                 class="w-full h-full object-cover"
                 loading="eager"

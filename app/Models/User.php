@@ -136,12 +136,15 @@ class User extends Authenticatable
         $variantPath = sprintf(config('avatars.path_to_variant'), $variantName);
         $fullPath = $variantPath . '/' . $fileNameWithoutExt . '.' . $extension;
 
-        if (Storage::disk('public')->exists($fullPath)) {
-            return asset('storage/' . $fullPath);
+        $diskName = config('avatars.variant_disk');
+
+        if (Storage::disk($diskName)->exists($fullPath)) {
+            return Storage::disk($diskName)->url($fullPath);
         }
 
         return $this->getPlaceholderUrl();
     }
+
 
     protected function getPlaceholderUrl(): string
     {
