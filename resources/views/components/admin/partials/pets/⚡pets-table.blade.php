@@ -232,7 +232,8 @@ new class extends Component {
 
                     <x-admin.table.td>
                         <img
-                            src="{{ $pet->thumbnail_url }}"
+                            srcset="{{ $pet->thumbnail_url }}"
+                            src="{{ $pet->medium_url }}"
                             alt="{{ $pet->name }}"
                             class="w-12 h-12 rounded-lg object-cover bg-neutral-100"
                         >
@@ -245,14 +246,14 @@ new class extends Component {
 
                     <x-admin.table.td>
                         <div class="text-sm">
-                            <div class="font-medium">{{ $pet->species->value }}</div>
-                            <div class="text-grayscale-text-subtitle">{{ $pet->breed->name ?? 'Inconnue' }}</div>
+                            <div class="font-medium">{{ __('public/pets.filters.' . $pet->species->value )}}</div>
+                            <div class="text-grayscale-text-subtitle">{{ __('breeds.'. $pet->breed->name)}}</div>
                         </div>
                     </x-admin.table.td>
 
                     <x-admin.table.td>
                         <x-admin.status-badge
-                            :status="$pet->status->value"
+                            :status="__('public/pets.show.status.' . $pet->status->value)"
                             :type="$pet->status->color() ?? 'default'"
                         />
                     </x-admin.table.td>

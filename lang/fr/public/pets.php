@@ -22,6 +22,15 @@ return [
         'age' => 'Âge',
         'sex' => 'Sexe',
         'status' => 'Statut',
+        'all' => 'Tous',
+        'dog' => 'Chien',
+        'cat' => 'Chat',
+        'all_races' => 'Toutes les races',
+        'all_sexes' => 'Tous les sexes',
+        'all_ages' => 'Tous les ages',
+        'junior' => 'Junior (- 1 an)',
+        'adult'  => 'Adulte (1 - 8 ans)',
+        'senior' => 'Senior (+ 8 ans)',
     ],
 
     'sort' => [
@@ -35,6 +44,10 @@ return [
     'empty' => [
         'title' => 'Aucun animal trouvé',
         'subtitle' => 'Essayez de modifier vos critères de recherche',
+    ],
+
+    'button' => [
+        'see' => 'Découvrir',
     ],
 
     // Pet Show Page
@@ -80,13 +93,14 @@ return [
         'status' => [
             'available' => 'Disponible',
             'adopted' => 'Adopté',
-            'reserved' => 'Réservé',
+            'adoption_pending' => 'En cours d\'adoption',
             'in_care' => 'En soins',
         ],
 
         'sex_values' => [
             'male' => 'Mâle',
             'female' => 'Femelle',
+            'unknown' => 'Inconnu',
         ],
 
         'share' => [

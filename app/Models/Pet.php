@@ -296,24 +296,31 @@ class Pet extends Model
     public function getAgeTextAttribute(): string
     {
         if (!$this->birth_date) {
-            return 'Âge inconnu';
+            return __('details.age.unknown');
         }
 
+        $now = now();
         $years = $this->birth_date->age;
-        $months = $this->birth_date->diffInMonths(now()) % 12;
+        $months = $this->birth_date->diffInMonths($now) % 12;
 
         if ($years === 0) {
-            return $months . ' mois';
-        }
-
-        if ($months === 0) {
-            return $years . ($years === 1 ? ' an' : ' ans');
+            if ($months === 0) {
+                $days = (int) $this->birth_date->diffInDays($now);
+                return $days <= 1
+                    ? __('details.age.day_singular')
+                    : __('details.age.days_plural', ['count' => $days]);
+            }
+            return $months === 1
+                ? __('details.age.month_singular')
+                : __('details.age.months_plural', ['count' => $months]);
         }
 
         return $years === 1
-            ? "1 an"
-            : "$years ans";
+            ? __('details.age.year_singular')
+            : __('details.age.years_plural', ['count' => $years]);
     }
+
+
 
     /**
      * Get the number of days since arrival.

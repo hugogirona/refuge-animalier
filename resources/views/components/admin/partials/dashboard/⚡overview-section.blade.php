@@ -63,7 +63,9 @@ new class extends Component {
 
         return [
             'values' => $data->pluck('total')->toArray(),
-            'labels' => $data->pluck('species')->map(fn($s) => ucfirst($s->value ?? $s))->toArray(),
+            'labels' => $data->pluck('species')
+                ->map(fn($s) => ucfirst(__('public/pets.filters.' . ($s->value ?? $s))))
+                ->toArray(),
         ];
     }
 

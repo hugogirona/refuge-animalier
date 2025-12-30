@@ -1,6 +1,7 @@
 <?php
 
 use App\Enums\ContactMessageStatus;
+use App\Models\Shelter;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
@@ -8,6 +9,7 @@ uses(RefreshDatabase::class);
 describe('Contact Page Display (GET)', function () {
 
     it('displays the contact form', function () {
+        Shelter::factory()->create();
         $response = $this->get(route('contact.create'));
 
         $response->assertOk()
@@ -15,6 +17,7 @@ describe('Contact Page Display (GET)', function () {
     });
 
     it('pre-fills subject if present in query string', function () {
+        Shelter::factory()->create();
         $response = $this->get(route('contact.create', ['subject' => 'adoption']));
 
         $response->assertOk()

@@ -42,7 +42,6 @@ new class extends Component
                     title="Lien vers le site public site public"
                     label="Retour au site"/>
 
-                <x-admin.notifications-button :count="3" />
 
                 <x-admin.user-menu
                     :userName="$this->user->full_name"

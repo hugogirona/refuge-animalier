@@ -1,8 +1,3 @@
-@php
-    $personalityTraits = ['Calme', 'Affectueux', 'Sociable', 'Doux'];
-@endphp
-
-
 <x-layout :title="$pet->name">
 
     <x-breadcrumb.breadcrumb>
@@ -39,8 +34,7 @@
             <div>
                 <img
                     src="{{ $pet->large_url }}"
-                    srcset="{{ $pet->medium_url }} 600w,
-                {{ $pet->large_url }} 1200w"
+                    srcset="{{ $pet->medium_url }}"
                     sizes="(max-width: 1024px) 100vw, 1200px"
                     alt="{{ __('public/pets.show.image_alt', ['name' => $pet->name, 'breed' => $pet->breed->name, 'age' => $pet->age_text]) }}"
                     class="w-full aspect-video lg:aspect-4/3 object-cover rounded-xl"
@@ -52,15 +46,14 @@
             <section class="bg-white rounded-xl border border-neutral-200 p-6">
                 <h2 class="text-2xl md:text-3xl font-bold mb-4">{{ $pet->name }}</h2>
                 <p class="text-xl text-neutral-600 mb-4">
-                    {{ $pet->breed->name}} • {{ __('public/pets.show.sex_values.' . $pet->sex->value) }}
+                    {{ __('breeds.'. $pet->breed->name)}} • {{ __('public/pets.show.sex_values.' . $pet->sex->value) }}
                 </p>
 
                 @php
                     $animalInfo = [
                         ['icon' => 'calendar', 'label' => __('public/pets.show.info.age'), 'value' => $pet->age_text],
-                        ['icon' => 'male', 'label' => __('public/pets.show.info.sex'), 'value' => __('public/pets.show.sex_values.' . $pet->sex->value)],
+                        ['icon' => $pet->sex->value, 'label' => __('public/pets.show.info.sex'), 'value' => __('public/pets.show.sex_values.' . $pet->sex->value)],
                         ['icon' => 'paw', 'label' => __('public/pets.show.info.coat'), 'value' => $pet->coat_color],
-                        ['icon' => 'weight', 'label' => __('public/pets.show.info.weight'), 'value' => '8 kg'],
                     ];
                 @endphp
 
@@ -71,7 +64,7 @@
                 <h2 class="text-2xl md:text-3xl font-semibold mb-4">{{ __('public/pets.show.health.title') }}</h2>
                 @php
                     $animalHealth = [
-                        ['icon' => 'calendar', 'label' => __('public/pets.show.health.last_vet_visit'), 'value' => $pet->last_vet_visit],
+                        ['icon' => 'calendar', 'label' => __('public/pets.show.health.last_vet_visit'),'value' => $pet->last_vet_visit?->format('d/m/Y') ?? 'Non renseigné'],
                         ['icon' => 'check', 'label' => __('public/pets.show.health.sterilized'), 'value' => $pet->sterilized
                         ? __('public/pets.show.health.yes')
                         : __('public/pets.show.health.no') ],
@@ -84,9 +77,8 @@
         </div>
 
         <!-- Colonne de droite -->
-        <div class="grid grid-rows-[1fr_auto_auto_auto] space-y-4 pb-8 lg:pb-0">
+        <div class="grid grid-rows-[auto_auto_auto_1Fr] space-y-4 pb-8 lg:pb-0">
             <x-public.partials.pet-show.pet-personality
-                :traits="$personalityTraits"
                 :description="$pet->personality"
                 class="min-h-0"
             />

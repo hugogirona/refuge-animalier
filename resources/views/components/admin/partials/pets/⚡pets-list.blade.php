@@ -182,10 +182,11 @@ new class extends Component {
                     >
 
                     <h3 class="font-bold text-lg text-grayscale-text-title">{{ $pet->name }}</h3>
-                    <p class="text-sm text-grayscale-text-subtitle mb-2">{{ $pet->breed->name ?? 'Inconnue' }}</p>
+                    <p class="text-sm text-grayscale-text-subtitle mb-2">{{ __('breeds.'. $pet->breed->name)}}</p>
 
                     <div class="flex flex-wrap justify-center gap-2 mb-4">
-                        <x-admin.status-badge :status="$pet->status->value" :type="$pet->status->color() ?? 'default'"/>
+                        <x-admin.status-badge :status="__('public/pets.show.status.' . $pet->status->value)"
+                                              :type="$pet->status->color() ?? 'default'"/>
                         <x-admin.status-badge :status="$pet->is_published ? 'Publié' : 'Non publié'"
                                               :type="$pet->is_published ? 'success' : 'default'"/>
                     </div>

@@ -20,23 +20,17 @@
 
         </div>
 
-        <!-- Séparateur -->
         <div class="border-t border-neutral-700 mb-8"></div>
 
-        <!-- Copyright et liens légaux -->
-        <div class="text-center space-y-4 lg:flex lg:justify-between">
-            <p class="text-grayscale-negative text-sm md:text-base">
+        <div class="flex flex-col-reverse lg:flex-row justify-between items-center gap-4">
+
+            <p class="text-grayscale-negative text-sm md:text-base text-center lg:text-left">
                 {{ __('public/footer.copyright', ['year' => date('Y')]) }}
             </p>
-            <div class="flex items-center justify-center gap-2 text-sm md:text-base text-grayscale-negative">
-                <a href="{{ route('legal') }}" class="hover:underline underline-offset-2 transition-colors">
-                    {{ __('public/footer.legal.terms') }}
-                </a>
-                <span>•</span>
-                <a href="{{ route('legal') }}" class="hover:underline underline-offset-2 transition-colors">
-                    {{ __('public/footer.legal.privacy') }}
-                </a>
-            </div>
+
+           <x-public.navigation.footer-language/>
+
         </div>
     </div>
 </footer>
+

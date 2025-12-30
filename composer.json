@@ -20,6 +20,7 @@
         "laravel/tinker": "^2.10.1",
         "league/flysystem-aws-s3-v3": "^3.0",
         "livewire/livewire": "^4.0@beta",
+        "mcamara/laravel-localization": "^2.3",
         "nyholm/psr7": "^1.8",
         "railsware/mailtrap-php": "^3.9",
         "symfony/http-client": "^8.0",

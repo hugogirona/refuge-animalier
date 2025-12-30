@@ -14,17 +14,17 @@ class PetController extends Controller
         $filters = [
             [
                 'id' => '',
-                'label' => 'Tous',
+                'label' => __('public/pets.filters.all'),
                 'count' => Pet::query()->available()->count()
             ],
             [
                 'id' => 'dog',
-                'label' => 'Chiens',
+                'label' => __('public/pets.filters.dog'),
                 'count' => Pet::query()->available()->where('species', 'dog')->count()
             ],
             [
                 'id' => 'cat',
-                'label' => 'Chats',
+                'label' => __('public/pets.filters.cat'),
                 'count' => Pet::query()->available()->where('species', 'cat')->count()
 
         ],
@@ -38,9 +38,19 @@ class PetController extends Controller
             ->join('breeds', 'pets.breed_id', '=', 'breeds.id')
             ->select('breeds.id', 'breeds.name')
             ->distinct()
-            ->orderBy('breeds.name')
-            ->pluck('name', 'id')
+            ->get()
+            ->mapWithKeys(function ($breed) {
+                try {
+                    $enum = \App\Enums\PetBreeds::tryFrom($breed->name);
+                    $label = $enum ? $enum->label() : $breed->name;
+                } catch (\Exception $e) {
+                    $label = $breed->name;
+                }
+                return [$breed->id => $label];
+            })
+            ->sort()
             ->toArray();
+
 
 
         if ($species = $request->input('species')) {

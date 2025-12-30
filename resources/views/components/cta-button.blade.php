@@ -6,7 +6,8 @@
     'icon_position' => 'right',
     'external' => false,
     'role' => 'cta',
-    'type' => 'submit'
+    'type' => 'submit',
+    'title'=> null,
 ])
 
 @php
@@ -63,8 +64,9 @@
 @else
     <a
         href="{{ $href }}"
+        title="{{$title}}"
         {{ $attributes->merge(['class' => "inline-flex justify-center items-center gap-2 font-semibold rounded transition-all transform duration-200 {$variantClass} {$sizeClass}"]) }}
-        @if($external) target="_blank" rel="noopener noreferrer" @endif
+        @if($external) target="_blank"  rel="noopener noreferrer" @endif
     >
         @if($iconSvg && $icon_position === 'left')
             {!! $iconSvg !!}

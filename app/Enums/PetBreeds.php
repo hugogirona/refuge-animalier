@@ -319,4 +319,9 @@ enum PetBreeds: string
         return $pool[array_rand($pool)];
     }
 
+    public function label(): string
+    {
+        return __('breeds.' . $this->value);
+    }
+
 }

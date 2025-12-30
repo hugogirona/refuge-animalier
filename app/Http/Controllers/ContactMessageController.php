@@ -5,12 +5,15 @@ namespace App\Http\Controllers;
 use App\Enums\ContactMessageStatus;
 use App\Http\Requests\StoreContactMessageRequest;
 use App\Models\ContactMessage;
+use App\Models\Shelter;
 
 class ContactMessageController extends Controller
 {
     public function create()
     {
-        return view('pages.public.contact.create');
+        $shelter = Shelter::firstOrFail();
+
+        return view('pages.public.contact.create', compact('shelter'));
     }
 
     public function store(StoreContactMessageRequest $request)
