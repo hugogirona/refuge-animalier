@@ -1,6 +1,7 @@
 <?php
 
 use App\Concerns\HandleImages;
+use App\Enums\PetBreeds;
 use App\Events\PetUpdated;
 use App\Models\Pet;
 use App\Models\Breed;
@@ -60,41 +61,59 @@ new class extends Component {
             $this->existing_photo_path = $pet->medium_url;
             $this->is_published = $pet->is_published;
             $this->arrived_at = $pet->arrived_at?->format('Y-m-d');
+            $this->breeds = $this->getBreedsForSpecies($this->species);
+
         } else {
-            $this->sex = PetSex::UNKNOWN->value;
             $this->status = PetStatus::AVAILABLE->value;
+            $this->sex = PetSex::UNKNOWN->value;
         }
+    }
+
+    /**
+     * Helper pour récupérer les races traduites selon l'espèce
+     */
+    private function getBreedsForSpecies(?string $species): array
+    {
+        $query = Breed::orderBy('name');
+
+        if ($species) {
+            $query->where('species', $species);
+        }
+
+        return $query->get()
+            ->mapWithKeys(function ($breed) {
+                $enum = PetBreeds::tryFrom($breed->name);
+                $label = $enum ? $enum->label() : $breed->name;
+                return [$breed->id => $label];
+            })
+            ->toArray();
     }
 
     public function loadSelectOptions(): void
     {
         $this->species_options = [
-            'dog' => __('Chien'),
-            'cat' => __('Chat'),
+            'dog' => __('public/pets.filters.dog'),
+            'cat' => __('public/pets.filters.cat'),
         ];
 
         $this->sex_options = collect(PetSex::cases())
-            ->mapWithKeys(fn($case) => [$case->value => __($case->value)])
+            ->mapWithKeys(fn($case) => [
+                $case->value => __('public/pets.show.sex_values.' . $case->value)
+            ])
             ->toArray();
 
         $this->status_options = collect(PetStatus::cases())
-            ->mapWithKeys(fn($case) => [$case->value => __($case->value)])
+            ->mapWithKeys(fn($case) => [
+                $case->value => __('public/pets.show.status.' . $case->value)
+            ])
             ->toArray();
 
-        $this->breeds = Breed::orderBy('name')
-            ->get()
-            ->pluck('name', 'id')
-            ->toArray();
-
+        $this->breeds = $this->getBreedsForSpecies(null);
     }
 
     public function updatedSpecies($value): void
     {
-        $this->breeds = Breed::where('species', $value)
-            ->orderBy('name')
-            ->get()
-            ->pluck('name', 'id')
-            ->toArray();
+        $this->breeds = $this->getBreedsForSpecies($value);
 
         if ($this->breed_id) {
             $breed = Breed::find($this->breed_id);
@@ -123,18 +142,18 @@ new class extends Component {
             'is_published' => 'boolean',
             'arrived_at' => 'nullable|date|before_or_equal:today',
         ], [
-            'name.required' => 'Le nom est obligatoire',
-            'species.required' => 'L\'espèce est obligatoire',
-            'breed_id.required' => 'La race est obligatoire',
-            'sex.required' => 'Le sexe est obligatoire',
-            'coat_color.required' => 'La couleur du pelage est obligatoire',
-            'personality.required' => 'La personnalité est obligatoire',
-            'personality.min' => 'La personnalité doit contenir au moins 50 caractères',
-            'story.required' => 'L\'histoire est obligatoire',
-            'story.min' => 'L\'histoire doit contenir au moins 100 caractères',
-            'photo.image' => 'Le fichier doit être une image',
-            'photo.mimes' => 'L\'image doit être au format JPEG, ou PNG',
-            'photo.max' => 'L\'image ne doit pas dépasser 2 Mo',
+            'name.required' => __('admin/pet-form.errors.name_required'),
+            'species.required' => __('admin/pet-form.errors.species_required'),
+            'breed_id.required' => __('admin/pet-form.errors.breed_required'),
+            'sex.required' => __('admin/pet-form.errors.sex_required'),
+            'coat_color.required' => __('admin/pet-form.errors.coat_required'),
+            'personality.required' => __('admin/pet-form.errors.personality_required'),
+            'personality.min' => __('admin/pet-form.errors.personality_min', ['min' => 20]),
+            'story.required' => __('admin/pet-form.errors.story_required'),
+            'story.min' => __('admin/pet-form.errors.story_min', ['min' => 20]),
+            'photo.image' => __('admin/pet-form.errors.photo_image'),
+            'photo.mimes' => __('admin/pet-form.errors.photo_mimes'),
+            'photo.max' => __('admin/pet-form.errors.photo_max'),
         ]);
 
         $data = [
@@ -203,29 +222,30 @@ new class extends Component {
 
 <div class="p-6 max-h-[94vh] overflow-y-auto">
     <h2 class="text-2xl font-bold mb-6">
-        {{ $this->isEditing() ? 'Éditer l\'animal' : 'Ajouter un animal' }}
+        {{ $this->isEditing() ? __('admin/pet-form.titles.edit') : __('admin/pet-form.titles.create') }}
     </h2>
 
     <form wire:submit="save" class="space-y-6">
 
+        {{-- SECTION 1 --}}
         <fieldset class="bg-neutral-50 p-4 rounded-lg">
-            <legend class="text-lg font-semibold mb-4">Informations générales</legend>
+            <legend class="text-lg font-semibold mb-4">{{ __('admin/pet-form.titles.general_info') }}</legend>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <x-form.form-input
-                    label="Nom"
+                    :label="__('admin/pet-form.fields.name')"
                     name="name"
                     :required="true"
-                    placeholder="Ex: Moka"
+                    :placeholder="__('admin/pet-form.fields.name_placeholder')"
                     wire:model="name"
                     :error="$errors->first('name')"
                 />
 
                 <x-form.form-select
-                    label="Espèce"
+                    :label="__('admin/pet-form.fields.species')"
                     name="species"
                     :required="true"
-                    placeholder="Sélectionner une espèce"
+                    :placeholder="__('admin/pet-form.fields.species_placeholder')"
                     :options="$species_options"
                     :value="$species"
                     wire:model.live="species"
@@ -233,10 +253,10 @@ new class extends Component {
                 />
 
                 <x-form.form-select
-                    label="Race"
+                    :label="__('admin/pet-form.fields.breed')"
                     name="breed_id"
                     :required="true"
-                    placeholder="Sélectionner une race"
+                    :placeholder="__('admin/pet-form.fields.breed_placeholder')"
                     :options="$breeds"
                     :value="$breed_id"
                     wire:model="breed_id"
@@ -244,10 +264,10 @@ new class extends Component {
                 />
 
                 <x-form.form-select
-                    label="Sexe"
+                    :label="__('admin/pet-form.fields.sex')"
                     name="sex"
                     :required="true"
-                    placeholder="Sélectionner un sexe"
+                    :placeholder="__('admin/pet-form.fields.sex_placeholder')"
                     :options="$sex_options"
                     :value="$sex"
                     wire:model="sex"
@@ -255,16 +275,16 @@ new class extends Component {
                 />
 
                 <x-form.form-input
-                    label="Couleur du pelage"
+                    :label="__('admin/pet-form.fields.coat_color')"
                     name="coat_color"
                     :required="true"
-                    placeholder="Ex: Brun, Noir et blanc..."
+                    :placeholder="__('admin/pet-form.fields.coat_color_placeholder')"
                     wire:model="coat_color"
                     :error="$errors->first('coat_color')"
                 />
 
                 <x-form.form-input
-                    label="Date de naissance"
+                    :label="__('admin/pet-form.fields.birth_date')"
                     name="birth_date"
                     type="date"
                     wire:model="birth_date"
@@ -272,7 +292,7 @@ new class extends Component {
                 />
 
                 <x-form.form-input
-                    label="Date d'arrivée au refuge"
+                    :label="__('admin/pet-form.fields.arrival_date')"
                     name="arrived_at"
                     type="date"
                     wire:model="arrived_at"
@@ -280,10 +300,10 @@ new class extends Component {
                 />
 
                 <x-form.form-select
-                    label="Statut"
+                    :label="__('admin/pet-form.fields.status')"
                     name="status"
                     :required="true"
-                    placeholder="Sélectionner un statut"
+                    :placeholder="__('admin/pet-form.fields.status_placeholder')"
                     :options="$status_options"
                     :value="$status"
                     wire:model="status"
@@ -292,12 +312,13 @@ new class extends Component {
             </div>
         </fieldset>
 
+        {{-- SECTION 2 --}}
         <fieldset class="bg-neutral-50 p-4 rounded-lg">
-            <legend class="text-lg font-semibold mb-4">Santé</legend>
+            <legend class="text-lg font-semibold mb-4">{{ __('admin/pet-form.titles.health') }}</legend>
 
             <div class="flex flex-col gap-4">
                 <x-form.form-input
-                    label="Dernière visite vétérinaire"
+                    :label="__('admin/pet-form.fields.last_vet_visit')"
                     name="last_vet_visit"
                     type="date"
                     wire:model="last_vet_visit"
@@ -305,17 +326,17 @@ new class extends Component {
                 />
 
                 <x-form.form-checkbox
-                    label="Animal stérilisé"
+                    :label="__('admin/pet-form.fields.sterilized')"
                     name="sterilized"
                     :checked="$sterilized"
                     wire:model="sterilized"
                 />
 
                 <x-form.form-textarea
-                    label="Vaccinations et traitements"
+                    :label="__('admin/pet-form.fields.vaccinations')"
                     name="vaccinations"
                     :rows="3"
-                    placeholder="Ex: Vaccins à jour - Prochain rappel en mars 2025"
+                    :placeholder="__('admin/pet-form.fields.vaccinations_placeholder')"
                     :value="$vaccinations"
                     wire:model="vaccinations"
                     :error="$errors->first('vaccinations')"
@@ -323,34 +344,32 @@ new class extends Component {
             </div>
         </fieldset>
 
-
+        {{-- SECTION 3 --}}
         <fieldset class="bg-neutral-50 p-4 rounded-lg">
-            <legend class="text-lg font-semibold mb-4">Description</legend>
+            <legend class="text-lg font-semibold mb-4">{{ __('admin/pet-form.titles.description') }}</legend>
 
             <div class="space-y-4">
-                {{-- Personnalité --}}
                 <x-form.form-textarea
-                    label="Personnalité"
+                    :label="__('admin/pet-form.fields.personality')"
                     name="personality"
                     :required="true"
                     :rows="4"
                     :minLength="20"
                     :showCounter="true"
-                    placeholder="Décrivez la personnalité de l'animal..."
+                    :placeholder="__('admin/pet-form.fields.personality_placeholder')"
                     :value="$personality"
                     wire:model="personality"
                     :error="$errors->first('personality')"
                 />
 
-                {{-- Histoire --}}
                 <x-form.form-textarea
-                    label="Histoire"
+                    :label="__('admin/pet-form.fields.story')"
                     name="story"
                     :required="true"
                     :rows="6"
                     :minLength="20"
                     :showCounter="true"
-                    placeholder="Racontez l'histoire de l'animal..."
+                    :placeholder="__('admin/pet-form.fields.story_placeholder')"
                     :value="$story"
                     wire:model="story"
                     :error="$errors->first('story')"
@@ -358,16 +377,16 @@ new class extends Component {
             </div>
         </fieldset>
 
-        {{-- Section Photo --}}
+        {{-- SECTION 4 --}}
         <fieldset class="bg-neutral-50 p-4 rounded-lg">
-            <legend class="text-lg font-semibold mb-4">Photo</legend>
+            <legend class="text-lg font-semibold mb-4">{{ __('admin/pet-form.titles.photo') }}</legend>
 
             <div>
                 @if($existing_photo_path && !$photo)
                     <div class="mb-4">
-                        <p class="text-sm text-neutral-600 mb-2">Photo actuelle :</p>
+                        <p class="text-sm text-neutral-600 mb-2">{{ __('admin/pet-form.fields.photo_current') }}</p>
                         <img
-                            src="{{ $existing_photo_path }}"
+                            src="{{ asset('storage/' . $existing_photo_path) }}"
                             alt="Photo actuelle"
                             class="w-32 h-32 object-cover rounded-lg"
                         >
@@ -376,7 +395,7 @@ new class extends Component {
 
                 @if($photo)
                     <div class="mb-4">
-                        <p class="text-sm text-neutral-600 mb-2">Nouvelle photo :</p>
+                        <p class="text-sm text-neutral-600 mb-2">{{ __('admin/pet-form.fields.photo_new') }}</p>
                         <img
                             src="{{ $photo->temporaryUrl() }}"
                             alt="Aperçu"
@@ -386,12 +405,12 @@ new class extends Component {
                 @endif
 
                 <div>
-                    <label for="photo" class="block text-sm font-medium text-grayscale-text-subtitle mb-2">
-                        {{ $existing_photo_path ? 'Changer la photo' : 'Ajouter une photo' }}
+                    <label for="pet-photo-upload" class="block text-sm font-medium text-grayscale-text-subtitle mb-2">
+                        {{ $existing_photo_path ? __('admin/pet-form.fields.photo_change') : __('admin/pet-form.fields.photo_add') }}
                     </label>
                     <input
                         type="file"
-                        id="photo"
+                        id="pet-photo-upload"
                         wire:model="photo"
                         accept="image/*"
                         class="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-border-default focus:border-transparent
@@ -402,36 +421,35 @@ new class extends Component {
                     @endif
 
                     <div wire:loading wire:target="photo" class="text-sm text-primary-600 mt-2">
-                        Chargement de l'image...
+                        {{ __('admin/pet-form.fields.photo_loading') }}
                     </div>
                 </div>
             </div>
         </fieldset>
 
-        {{-- Section Publication --}}
+        {{-- SECTION 5 --}}
         @if(auth()->user()->isAdmin())
-        <fieldset class="bg-neutral-50 p-4 rounded-lg">
-            <legend class="text-lg font-semibold mb-4">Publication</legend>
+            <fieldset class="bg-neutral-50 p-4 rounded-lg">
+                <legend class="text-lg font-semibold mb-4">{{ __('admin/pet-form.titles.publication') }}</legend>
 
-            <x-form.form-checkbox
-                label="Publier cet animal sur le site public"
-                name="is_published"
-                :checked="$is_published"
-                wire:model="is_published"
-            />
-        </fieldset>
+                <x-form.form-checkbox
+                    :label="__('admin/pet-form.fields.is_published')"
+                    name="is_published"
+                    :checked="$is_published"
+                    wire:model="is_published"
+                />
+            </fieldset>
         @endif
 
-        {{-- Boutons d'action --}}
+        {{-- ACTIONS --}}
         <div class="flex gap-4 justify-end py-4 border-t border-neutral-200 bg-white">
             <x-cta-button
                 role="button"
                 type="button"
                 variant="secondary"
                 wire:click="$dispatch('close_modal')"
-
             >
-                Annuler
+                {{ __('admin/pet-form.actions.cancel') }}
             </x-cta-button>
 
             <x-cta-button
@@ -444,13 +462,14 @@ new class extends Component {
                 class="w-full"
             >
                 <span wire:loading.remove wire:target="save">
-                    {{ $this->isEditing() ? 'Mettre à jour' : 'Créer' }}
+                    {{ $this->isEditing() ? __('admin/pet-form.actions.update') : __('admin/pet-form.actions.create') }}
                 </span>
                 <span wire:loading wire:target="save">
-                    Enregistrement...
+                    {{ __('admin/pet-form.actions.saving') }}
                 </span>
             </x-cta-button>
         </div>
 
     </form>
 </div>
+

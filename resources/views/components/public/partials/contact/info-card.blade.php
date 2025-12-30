@@ -39,7 +39,7 @@
 
     <div class="flex items-start gap-4 relative z-0">
 
-        <div class="w-12 h-12 {{ $bgClass }} rounded-lg flex items-center justify-center flex-shrink-0">
+        <div class="w-12 h-12 {{ $bgClass }} rounded-lg flex items-center justify-center shrink-0">
             <div class="{{ $textClass }}">
                 {!! $svgContent !!}
             </div>

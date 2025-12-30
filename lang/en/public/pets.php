@@ -22,6 +22,15 @@ return [
         'age' => 'Age',
         'sex' => 'Sex',
         'status' => 'Status',
+        'all' => 'All',
+        'dog' => 'Dog',
+        'cat' => 'Cat',
+        'all_ages' => 'All ages',
+        'all_races' => 'All races',
+        'all_sexes' => 'All sexes',
+        'junior' => 'Junior (- 1 year)',
+        'adult' => 'Adult (1 - 8 years)',
+        'senior' => 'Senior (+ 8 years)',
     ],
 
     'sort' => [
@@ -36,6 +45,11 @@ return [
         'title' => 'No pets found',
         'subtitle' => 'Try adjusting your search criteria',
     ],
+
+    'button' => [
+        'see' => 'See',
+    ],
+
 
     // Pet Show Page
     'show' => [
@@ -79,13 +93,15 @@ return [
         'status' => [
             'available' => 'Available',
             'adopted' => 'Adopted',
-            'reserved' => 'Reserved',
+            'adoption_pending' => 'Adoption pending',
             'in_care' => 'In care',
         ],
 
         'sex_values' => [
             'male' => 'Male',
             'female' => 'Female',
+            'unknown' => 'Unknown',
+
         ],
 
         'share' => [

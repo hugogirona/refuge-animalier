@@ -6,35 +6,43 @@ use App\Http\Controllers\ContactMessageController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PetController;
 use Illuminate\Support\Facades\Route;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
+
+Route::group([
+    'prefix' => LaravelLocalization::setLocale(),
+    'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']
+], function() {
 
 
-Route::get('/',
-    [HomeController::class, 'index'])->name('home');
+    Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('/pets',
-    [PetController::class, 'index'])->name('pets.index');
 
-Route::get('/pets/{pet}',
-    [PetController::class, 'show'])->name('pets.show');
+    Route::get(LaravelLocalization::transRoute('routes.pets'), [PetController::class, 'index'])
+        ->name('pets.index');
 
-Route::get('/adoption/{pet}',
-    [AdoptionRequestController::class, 'create'])->name('adoption.create');
 
-Route::post('/adoption',
-    [AdoptionRequestController::class, 'store'])->name('adoption.store');
+    Route::get(LaravelLocalization::transRoute('routes.pets_show'), [PetController::class, 'show'])
+        ->name('pets.show');
 
-Route::get('/adoption/confirmation/{adoption_request}',
-    [AdoptionRequestController::class, 'confirm'])->name('adoption.confirmation');
 
-Route::get('/about',
-    [AboutController::class, 'index'])->name('about');
+    Route::get(LaravelLocalization::transRoute('routes.adoption_create'), [AdoptionRequestController::class, 'create'])
+        ->name('adoption.create');
 
-Route::get('/contact',
-    [ContactMessageController::class, 'create'])->name('contact.create');
+    Route::post(LaravelLocalization::transRoute('routes.adoption_store'), [AdoptionRequestController::class, 'store'])
+        ->name('adoption.store');
 
-Route::post('/contact',
-    [ContactMessageController::class, 'store'])->name('contact.store');
+    Route::get(LaravelLocalization::transRoute('routes.adoption_confirmation'), [AdoptionRequestController::class, 'confirm'])
+        ->name('adoption.confirmation');
 
-Route::get('/legal', function () {
-    return view('pages.public.legal.index');
-})->name('legal');
+
+    Route::get(LaravelLocalization::transRoute('routes.about'), [AboutController::class, 'index'])
+        ->name('about');
+
+
+    Route::get(LaravelLocalization::transRoute('routes.contact'), [ContactMessageController::class, 'create'])
+        ->name('contact.create');
+
+    Route::post(LaravelLocalization::transRoute('routes.contact'), [ContactMessageController::class, 'store'])
+        ->name('contact.store');
+
+});

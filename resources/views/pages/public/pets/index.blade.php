@@ -40,18 +40,23 @@
                             <div class="w-full sm:w-auto">
                                 <x-search-filter.sort-filter
                                     name="age"
-                                    label="Tous les âges"
-                                    :options="['junior' => 'Junior (- 1 an)', 'adult'  => 'Adulte (1 - 8 ans)', 'senior' => 'Senior (+ 8 ans)']"
+                                    label="{{ __('public/pets.filters.all_ages') }}"
+                                    :options="[
+                                    'junior' => __('public/pets.filters.junior'),
+                                    'adult'  => __('public/pets.filters.adult'),
+                                    'senior' => __('public/pets.filters.senior'),
+                                    ]"
                                     :selected="request('age')"
                                     class="w-full"
                                 />
+
                             </div>
 
                             @if(count($availableBreeds) > 1)
                                 <div class="w-full sm:w-auto">
                                     <x-search-filter.sort-filter
                                         name="breed"
-                                        label="Toutes les races"
+                                        label="{{ __('public/pets.filters.all_races') }}"
                                         :options="$availableBreeds"
                                         :selected="request('breed')"
                                         class="w-full"
@@ -62,8 +67,8 @@
                             <div class="w-full sm:w-auto">
                                 <x-search-filter.sort-filter
                                     name="sex"
-                                    label="Tous les sexes"
-                                    :options="['male' => 'Mâle','female' => 'Femelle']"
+                                    label="{{ __('public/pets.filters.all_sexes') }}"
+                                    :options="['male' => __('public/pets.show.sex_values.male'),'female' => __('public/pets.show.sex_values.female')]"
                                     :selected="request('sex')"
                                     class="w-full"
                                 />

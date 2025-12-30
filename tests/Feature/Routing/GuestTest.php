@@ -3,6 +3,7 @@
 use App\Enums\PetStatus;
 use App\Models\AdoptionRequest;
 use App\Models\Pet;
+use App\Models\Shelter;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
@@ -67,15 +68,9 @@ it('can load the about page', function () {
 });
 
 it('can load the contact page', function () {
+    Shelter::factory()->create();
     $response = $this->get(route('contact.create'));
 
     $response->assertOk()
         ->assertViewIs('pages.public.contact.create');
-});
-
-it('can load the legal page', function () {
-    $response = $this->get(route('legal'));
-
-    $response->assertOk()
-        ->assertViewIs('pages.public.legal.index');
 });

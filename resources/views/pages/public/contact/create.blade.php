@@ -40,7 +40,7 @@
 
                 <div>
                     {{-- Coordonnées Cards --}}
-                    <x-public.partials.contact.contact-infos/>
+                    <x-public.partials.contact.contact-infos :shelter="$shelter"/>
 
                     {{-- Map --}}
                     <x-public.partials.contact.google-map

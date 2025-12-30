@@ -22,6 +22,15 @@ return [
         'age' => 'Leeftijd',
         'sex' => 'Geslacht',
         'status' => 'Status',
+        'all' => 'Alle',
+        'dog' => 'Hond',
+        'cat' => 'Katt',
+        'all_races' => 'Alle rassen',
+        'all_sexes' => 'Alle geslachten',
+        'all_ages' => 'Alle leeftijden',
+        'junior' => 'Junior (- 1 jaar)',
+        'adult' => 'Volwassen (1 - 8 jaar)',
+        'senior' => 'Senior (+ 8 jaar)',
     ],
 
     'sort' => [
@@ -36,6 +45,11 @@ return [
         'title' => 'Geen dieren gevonden',
         'subtitle' => 'Probeer uw zoekcriteria aan te passen',
     ],
+
+    'button' => [
+        'see' => 'Ontdekken',
+    ],
+
 
     // Pet Show Page
     'show' => [
@@ -78,13 +92,14 @@ return [
         'status' => [
             'available' => 'Beschikbaar',
             'adopted' => 'Geadopteerd',
-            'reserved' => 'Gereserveerd',
+            'adoption_pending' => 'Adoptie in behandeling',
             'in_care' => 'In verzorging',
         ],
 
         'sex_values' => [
             'male' => 'Mannelijk',
             'female' => 'Vrouwelijk',
+            'unknown' => 'Onbekend',
         ],
 
         'share' => [
