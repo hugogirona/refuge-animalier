@@ -9,7 +9,7 @@
 <div class="relative w-full sm:w-auto min-w-[180px]">
     <select
         name="{{ $name }}"
-        @if($autoSubmit) onchange="this.form.submit()" @endif
+        @if($autoSubmit)  x-on:change.debounce.300ms="$el.form.submit()"  @endif
         class="w-full pl-4 pr-10 py-2 border border-neutral-300 rounded-lg appearance-none bg-white text-sm text-neutral-700 font-medium cursor-pointer focus:border-primary-border-default transition-colors"
     >
         {{-- Option par défaut (vide) --}}

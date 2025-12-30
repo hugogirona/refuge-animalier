@@ -14,6 +14,7 @@
 
             <x-cta-button
                 href="{{ route('contact.create') }}#faq-section"
+                title="{{ __('public/home.faq.button_text') }}"
             >
                 {{ __('public/home.faq.button_text') }}
             </x-cta-button>

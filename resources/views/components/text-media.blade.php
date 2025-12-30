@@ -7,6 +7,7 @@
     'bg_color' => 'white',
     'button_text' => null,
     'button_href' => null,
+    'button_title' => '',
     'button_variant' => 'secondary',
     'paragraphs' => [],
 ])
@@ -54,7 +55,8 @@
             @if($button_text && $button_href)
                 <x-cta-button
                     href="{{ $button_href }}"
-                variant="{{ $button_variant }}"
+                    variant="{{ $button_variant }}"
+                    title="{{ $button_title }}"
                 >
                     {{ $button_text }}
                 </x-cta-button>

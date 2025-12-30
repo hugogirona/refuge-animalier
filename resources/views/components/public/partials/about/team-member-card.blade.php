@@ -19,8 +19,8 @@
     </div>
 
     {{-- Name --}}
-    <h4 class="font-semibold text-lg text-neutral-900 mb-1">
+    <p class="font-semibold text-lg text-neutral-900 mb-1">
         {{ $name }}
-    </h4>
+    </p>
 </div>
 

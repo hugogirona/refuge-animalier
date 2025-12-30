@@ -12,7 +12,7 @@
                 name="{{ $name }}"
                 value="{{ $filter['id'] }}"
                 class="peer sr-only"
-                onchange="this.form.submit()"
+                x-on:change.debounce.300ms="$el.form.submit()"
                 {{ (string)$current === (string)$filter['id'] ? 'checked' : '' }}
             >
             <span class="block px-4 py-2 rounded-full border-2 text-sm font-medium transition-all duration-200
