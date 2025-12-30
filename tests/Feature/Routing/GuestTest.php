@@ -8,6 +8,10 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
+beforeEach(function (){
+    Shelter::factory()->create();
+});
+
 it('can load the home page', function () {
     $response = $this->get(route('home'));
 
@@ -68,7 +72,6 @@ it('can load the about page', function () {
 });
 
 it('can load the contact page', function () {
-    Shelter::factory()->create();
     $response = $this->get(route('contact.create'));
 
     $response->assertOk()

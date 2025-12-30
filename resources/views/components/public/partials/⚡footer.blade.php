@@ -1,3 +1,19 @@
+<?php
+
+use App\Models\Shelter;
+use Livewire\Component;
+
+new class extends Component {
+
+    public ?Shelter $shelter = null;
+
+    public function mount(): void
+    {
+        $this->shelter = Shelter::first();
+    }
+};
+?>
+
 <footer class="bg-grayscale-text-body text-white py-8 px-5">
     <div class="container mx-auto px-5 md:px-8 max-w-6xl">
         <div class="mb-8 flex justify-center">
@@ -7,16 +23,14 @@
                     fill="#F97316"/>
             </svg>
         </div>
+
         <div class="flex flex-col lg:flex-row justify-between items-center lg:items-start mb-10 gap-12">
 
             <!-- Navigation Links -->
-            <x-public.navigation.footer-nav />
+            <x-public.navigation.footer-nav/>
 
             <!-- Informations -->
-            <x-public.navigation.footer-infos/>
-
-            <!--Derniers arrivants -->
-{{--            <x-public.navigation.footer-pet/>--}}
+            <x-public.navigation.footer-infos :shelter="$shelter"/>
 
         </div>
 
@@ -28,9 +42,8 @@
                 {{ __('public/footer.copyright', ['year' => date('Y')]) }}
             </p>
 
-           <x-public.navigation.footer-language/>
+            <x-public.navigation.footer-language/>
 
         </div>
     </div>
 </footer>
-

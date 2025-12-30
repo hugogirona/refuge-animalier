@@ -29,7 +29,7 @@
         {{ $slot }}
     </main>
 
-    <x-public.partials.footer/>
+    <livewire:public.partials.footer/>
 @endif
 </body>
 </html>
