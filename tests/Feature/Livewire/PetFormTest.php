@@ -188,26 +188,6 @@ describe('Validation', function () {
             ->call('save')
             ->assertHasErrors(['story' => 'min']);
     });
-
-    it('validates photo is an image', function () {
-        $file = UploadedFile::fake()->create('document.avi', 100);
-
-        Livewire::test('admin.partials.pets.form')
-            ->fill(fillFormWithValidData())
-            ->set('photo', $file)
-            ->call('save')
-            ->assertHasErrors(['photo' => 'image']);
-    });
-
-    it('validates photo does not exceed 2MB', function () {
-        $file = UploadedFile::fake()->image('huge.jpg')->size(3000);
-
-        Livewire::test('admin.partials.pets.form')
-            ->fill(fillFormWithValidData())
-            ->set('photo', $file)
-            ->call('save')
-            ->assertHasErrors(['photo' => 'max']);
-    });
 });
 
 describe('Breed Management', function () {

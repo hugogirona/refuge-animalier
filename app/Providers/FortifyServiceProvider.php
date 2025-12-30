@@ -17,6 +17,7 @@ use Illuminate\Support\Str;
 use Laravel\Fortify\Actions\RedirectIfTwoFactorAuthenticatable;
 use Laravel\Fortify\Fortify;
 use Laravel\Fortify\Http\Responses\LogoutResponse;
+use Laravel\Fortify\Http\Responses\PasswordResetResponse;
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -50,6 +51,10 @@ class FortifyServiceProvider extends ServiceProvider
 
         Fortify::requestPasswordResetLinkView(function () {
             return view('pages.admin.auth.forgot-password');
+        });
+
+        Fortify::resetPasswordView(function ($request) {
+            return view('pages.admin.auth.reset-password', ['request' => $request]);
         });
 
         RedirectIfAuthenticated::redirectUsing(function () {

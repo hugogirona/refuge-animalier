@@ -18,7 +18,12 @@
 </div>
 
 <div class="bg-white rounded-xl shadow-xl border border-neutral-200 p-8 flex flex-col gap-6">
-
+    @if (session('status'))
+        <div class="mb-6 p-4 rounded-lg bg-success-surface-default-subtle text-success-text-default text-sm font-medium flex items-center gap-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            {{ session('status') }}
+        </div>
+    @endif
     <form method="POST" action="{{ route('login.store')}}" class="space-y-5" novalidate>
         @csrf
 
