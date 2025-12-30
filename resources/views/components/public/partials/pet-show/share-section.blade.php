@@ -14,6 +14,7 @@
         <x-cta-button
             icon="copy"
             variant="secondary"
+            title="{{ __('public/pets.show.share.copy_link') }}"
             size="md"
             @click.prevent="
                 navigator.clipboard.writeText(window.location.href);

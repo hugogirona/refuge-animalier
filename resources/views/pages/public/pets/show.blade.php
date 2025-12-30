@@ -21,7 +21,9 @@
             </span>
         </div>
         <div class="hidden md:block">
-            <x-cta-button variant="secondary" href="{{ route('adoption.create', $pet) }}">
+            <x-cta-button variant="secondary"
+                          title="{{ __('public/pets.show.cta_button', ['name' => $pet->name]) }}"
+                          href="{{ route('adoption.create', $pet) }}">
                 {{ __('public/pets.show.cta_button', ['name' => $pet->name]) }}
             </x-cta-button>
         </div>
@@ -29,7 +31,6 @@
 
     <div class="px-4 lg:px-8 py-8 max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-[minmax(320px,1fr)_2fr] gap-6">
 
-        <!-- Colonne de gauche -->
         <div class="flex flex-col gap-4">
             <div>
                 <img
@@ -86,7 +87,10 @@
                 :story="$pet->story"
                 :arrivalDate="$pet->arrived_at"></x-public.partials.pet-show.pet-story>
             <div class="lg:hidden md:flex justify-center">
-                <x-cta-button href="{{ route('adoption.create', $pet) }}" size="md" class="w-full md:w-auto">
+                <x-cta-button href="{{ route('adoption.create', $pet) }}"
+                              title="{{ __('public/pets.show.cta_button', ['name' =>  $pet->name]) }}"
+                              size="md"
+                              class="w-full md:w-auto">
                     {{ __('public/pets.show.cta_button', ['name' =>  $pet->name]) }}
                 </x-cta-button>
             </div>

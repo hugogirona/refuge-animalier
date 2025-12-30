@@ -18,14 +18,20 @@
 <body class="bg-white overflow-visible min-w-[360px]" x-data="{ menuOpen: false }"
       x-effect="document.body.style.overflow = menuOpen ? 'hidden' : ''">
 
+<a href="#main-content"
+   title="{{ __('link-title.main-content') }}"
+   class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-[45%] focus:z-50 focus:px-4 focus:py-2 focus:bg-white focus:text-primary-surface-default-light focus:font-bold focus:shadow-lg focus:rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-surface-default transition-transform">
+    {{ __('link-title.main-content') }}
+</a>
+
 @if(request()->routeIs('login') || request()->routeIs('password.request') )
-    <main>
+    <main id="main-content">
         {{ $slot }}
     </main>
 @else
     <x-public.partials.header/>
 
-    <main class="pt-16 md:pt-20 overflow-visible">
+    <main id="main-content" class="pt-16 md:pt-20 overflow-visible">
         {{ $slot }}
     </main>
 

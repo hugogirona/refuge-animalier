@@ -43,9 +43,9 @@
                     <x-public.partials.contact.contact-infos :shelter="$shelter"/>
 
                     {{-- Map --}}
-                    <x-public.partials.contact.google-map
-                        embedUrl="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2519.2291!2d4.3517!3d50.8503!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNTDCsDUxJzAxLjEiTiA0wrAyMScwNi4xIkU!5e0!3m2!1sfr!2sbe!4v1234567890"
-                    />
+{{--                    <x-public.partials.contact.google-map--}}
+{{--                        embedUrl="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2519.2291!2d4.3517!3d50.8503!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNTDCsDUxJzAxLjEiTiA0wrAyMScwNi4xIkU!5e0!3m2!1sfr!2sbe!4v1234567890"--}}
+{{--                    />--}}
                 </div>
             </div>
         </div>

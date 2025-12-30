@@ -1,7 +1,4 @@
-<nav class="text-center lg:text-left lg:order-first">
-    <h2 class="text-xl md:text-2xl font-bold mb-6 text-grayscale-text-disabled!">
-        {{ __('public/footer.navigation.title') }}
-    </h2>
+<nav class="text-center lg:text-left lg:order-first" aria-label="footer navigation">
     <ul class="flex flex-col items-center space-y-3 text-center lg:items-start">
         <li>
             <x-public.navigation.footer-link

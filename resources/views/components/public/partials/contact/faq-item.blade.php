@@ -1,4 +1,3 @@
-
 @props([
     'question',
     'answer',
@@ -7,16 +6,16 @@
 
 <div class="bg-neutral-50 rounded-xl border border-neutral-200 overflow-hidden">
     <button
-        @click="openFaq = openFaq === {{ $index }} ? null : {{ $index }}"
+        x-on:click="openFaq = openFaq === {{ $index }} ? null : {{ $index }}"
         class="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-neutral-100 transition-colors"
         type="button"
+        x-bind:aria-expanded="openFaq === {{ $index }}"
     >
         <span class="font-semibold text-grayscale-text-body pr-4">{{ $question }}</span>
+
         <svg
-
-
-            class="w-5 h-5 text-grayscale-text-subtitle transition-transform duration-300 flex-shrink-0 fill-none"
-            :class="{ 'rotate-180': openFaq === {{ $index }} }"
+            class="w-5 h-5 text-grayscale-text-subtitle transition-transform duration-300 shrink-0 fill-none"
+            x-bind:class="{ 'rotate-180': openFaq === {{ $index }} }"
             stroke="currentColor"
             viewBox="0 0 24 24"
         >

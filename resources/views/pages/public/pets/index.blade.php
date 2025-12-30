@@ -24,18 +24,20 @@
             <div class="mx-auto px-4 lg:px-6 py-3 lg:py-4">
 
                 <form action="{{ route('pets.index') }}" method="GET" class="flex flex-col gap-3 md:gap-4">
-                    <div class="flex items-center overflow-x-auto hide-scrollbar -mx-4 px-4 md:mx-0 md:px-0 md:overflow-visible">
+                    <fieldset class="flex items-center overflow-x-auto hide-scrollbar -mx-4 px-4 md:mx-0 md:px-0 md:overflow-visible">
+                        <legend class="sr-only">{{ __('Filtrer par espèce') }}</legend>
                         <x-search-filter.filter-chip
                             name="species"
                             :filters="$filters"
                             :current="request('species', '')"
                             class="flex-nowrap"
                         />
-                    </div>
+                    </fieldset>
 
                     <div class="flex flex-wrap items-center gap-3 border-t border-neutral-100 pt-3 md:border-none md:pt-0">
 
-                        <div class="contents sm:flex sm:flex-wrap sm:gap-3 grid-cols-2 gap-2 w-full sm:w-auto">
+                        <fieldset class="contents sm:flex sm:flex-wrap sm:gap-3 grid-cols-2 gap-2 w-full sm:w-auto">
+                            <legend class="sr-only">{{ __('Liste de filtre avancés') }}</legend>
 
                             <div class="w-full sm:w-auto">
                                 <x-search-filter.sort-filter
@@ -73,7 +75,7 @@
                                     class="w-full"
                                 />
                             </div>
-                        </div>
+                        </fieldset>
 
                         @if(request()->anyFilled(['species', 'age', 'sex', 'breed']))
                             <a href="{{ route('pets.index') }}"

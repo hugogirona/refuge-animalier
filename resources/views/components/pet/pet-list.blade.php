@@ -30,6 +30,7 @@
                 <x-cta-button
                     href="{{ route('pets.index') }}"
                     icon="arrow-right"
+                    title="{{ __('public/home.pets.button_text') }}"
                 >
                     {{ __('public/home.pets.button_text') }}
                 </x-cta-button>

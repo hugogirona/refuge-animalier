@@ -21,6 +21,7 @@
     image_ratio="video"
     bg_color="bg-primary-surface-default-subtle"
     :button_text="__('public/home.hero.about_button_text')"
+    :button_title="__('public/home.hero.about_button_text')"
     :button_href="route('about')"
     :paragraphs="__('public/home.hero.about_paragraphs')"
 />
