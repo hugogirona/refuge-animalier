@@ -13,6 +13,17 @@ new class extends Component {
         $this->pet = $pet->load(['breed', 'creator']);
     }
 
+    #[On('pet-saved')]
+    public function refreshPet($id = null): void
+    {
+        if ($id && (string)$id !== (string)$this->pet->id) {
+            return;
+        }
+
+        $this->pet->refresh();
+        $this->pet->load(['breed', 'creator']);
+    }
+
     public function edit(): void
     {
         $this->dispatch('open_modal',
