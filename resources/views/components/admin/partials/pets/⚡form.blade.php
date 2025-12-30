@@ -386,19 +386,8 @@ new class extends Component {
                     <div class="mb-4">
                         <p class="text-sm text-neutral-600 mb-2">{{ __('admin/pet-form.fields.photo_current') }}</p>
                         <img
-                            src="{{ asset('storage/' . $existing_photo_path) }}"
+                            src="{{ $existing_photo_path}}"
                             alt="Photo actuelle"
-                            class="w-32 h-32 object-cover rounded-lg"
-                        >
-                    </div>
-                @endif
-
-                @if($photo)
-                    <div class="mb-4">
-                        <p class="text-sm text-neutral-600 mb-2">{{ __('admin/pet-form.fields.photo_new') }}</p>
-                        <img
-                            src="{{ $photo->temporaryUrl() }}"
-                            alt="Aperçu"
                             class="w-32 h-32 object-cover rounded-lg"
                         >
                     </div>

@@ -47,12 +47,3 @@ Route::group([
 
 });
 
-Route::get('/debug-s3', function() {
-    try {
-        // Test d'écriture
-        Illuminate\Support\Facades\Storage::disk('s3')->put('test.txt', 'Hello World from Laravel Cloud');
-        return 'Upload réussi ! Vérifiez votre bucket R2.';
-    } catch (\Exception $e) {
-        return 'Erreur : ' . $e->getMessage();
-    }
-});
