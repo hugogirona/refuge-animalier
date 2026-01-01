@@ -4,9 +4,11 @@ use App\Enums\AdoptionRequestStatus;
 use App\Enums\PetStatus;
 use App\Models\AdoptionRequest;
 use Livewire\Attributes\Computed;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 
-new class extends Component {
+new #[Title('Demande d\'adoption')]
+class extends Component {
 
     public AdoptionRequest $adoption;
 
@@ -148,7 +150,7 @@ new class extends Component {
             'status' => AdoptionRequestStatus::PENDING,
             'adopted_at' => null,
             'processed_by' => auth()->user()->id,
-            ]);
+        ]);
 
         $this->adoption->pet->update([
             'status' => PetStatus::ADOPTION_PENDING,

@@ -3,9 +3,11 @@
 use App\Enums\ContactMessageStatus;
 use App\Models\ContactMessage;
 use Livewire\Attributes\On;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 
-new class extends Component {
+new #[Title('Messages')]
+class extends Component {
     public int $messages_count = 0;
     public int $new_messages_count = 0;
 

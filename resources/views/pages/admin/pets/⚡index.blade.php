@@ -1,9 +1,11 @@
 <?php
 
 use App\Models\Pet;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 
-new class extends Component {
+new #[Title('Animaux')]
+class extends Component {
     public int $pets_count = 0;
 
     public function mount(): void

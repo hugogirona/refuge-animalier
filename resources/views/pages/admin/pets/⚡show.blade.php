@@ -2,9 +2,11 @@
 
 use App\Models\Pet;
 use Livewire\Attributes\On;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 
-new class extends Component {
+new #[Title('Détail de l\'animal')]
+class extends Component {
     public Pet $pet;
 
     public function mount(Pet $pet): void

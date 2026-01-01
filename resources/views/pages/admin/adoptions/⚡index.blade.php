@@ -1,9 +1,11 @@
 <?php
 
 use App\Models\AdoptionRequest;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 
-new class extends Component {
+new #[Title('Adoptions')]
+class extends Component {
     public int $adoptions_count = 0;
 
     public function mount(): void

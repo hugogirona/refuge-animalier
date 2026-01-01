@@ -1,9 +1,11 @@
 <?php
 
 use App\Models\User;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 
-new class extends Component {
+new #[Title('Utilisateurs')]
+class extends Component {
     public int $users_count = 0;
 
     public function mount(): void
@@ -67,7 +69,7 @@ new class extends Component {
 
         {{-- Desktop: Table --}}
         <template x-if="isDesktop">
-            <livewire:admin.partials.users.users-table />
+            <livewire:admin.partials.users.users-table/>
         </template>
     </div>
 </main>

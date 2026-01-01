@@ -1,10 +1,12 @@
 <?php
 
 use Livewire\Attributes\On;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 use App\Enums\UserRoles;
 
-new class extends Component {
+new #[Title('Paramètres')]
+class extends Component {
 
     #[On('profile-updated')]
     #[On('shelter-updated')]
