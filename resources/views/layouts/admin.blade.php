@@ -18,11 +18,10 @@
     <link rel="shortcut icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
-    <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
-
     @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     @endif
+    <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
 
     {{ $head ?? '' }}
 </head>
