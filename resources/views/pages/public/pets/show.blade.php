@@ -46,8 +46,22 @@
 
             <section class="bg-white rounded-xl border border-neutral-200 p-6">
                 <h2 class="text-2xl md:text-3xl font-bold mb-4">{{ $pet->name }}</h2>
-                <p class="text-xl text-neutral-600 mb-4">
-                    {{ __('breeds.'. $pet->breed->name)}} • {{ __('public/pets.show.sex_values.' . $pet->sex->value) }}
+                <p class="text-xl text-neutral-600 mb-4 flex items-center gap-2">
+
+                    <a href="{{ route('pets.index', ['breed' => $pet->breed_id]) }}"
+                       class="hover:text-primary-600 hover:underline transition-colors"
+                       title="Voir tous les {{ __('breeds.'. $pet->breed->name) }}">
+                        {{ __('breeds.'. $pet->breed->name) }}
+                    </a>
+
+                    <span>•</span>
+
+                    <a href="{{ route('pets.index', ['sex' => $pet->sex->value]) }}"
+                       class="hover:text-primary-600 hover:underline transition-colors"
+                       title="Voir tous les animaux de sexe {{ __('public/pets.show.sex_values.' . $pet->sex->value) }}">
+                        {{ __('public/pets.show.sex_values.' . $pet->sex->value) }}
+                    </a>
+
                 </p>
 
                 @php
